@@ -28,4 +28,22 @@ export class InfoController {
   async getPCardInfo(@Query('cardId') cardId) {
     return this.infoService.getPCardInfo(cardId);
   }
+
+  @Get('scardinfo')
+  async getSCardList() { }
+
+  @Get('latestpinfo')
+  async getLatestInfo() {
+    return this.infoService.getLatestPInfo();
+  }
+
+  @Get('latestsinfo')
+  async getLatestSInfo() {
+    return this.infoService.getLatestSInfo();
+  }
+
+  @Get('updatehistory')
+  async getUpdateHistory() {
+    return this.infoService.getUpdateHistory();
+  }
 }
