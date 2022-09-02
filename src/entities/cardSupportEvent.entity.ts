@@ -14,7 +14,7 @@ export class CardSupportEvent {
   @PrimaryGeneratedColumn({ type: "int", name: "EventIndex" })
   eventIndex: number;
 
-  @Column("bigint", { name: "EnzaID" })
+  @Column("bigint", { name: "EnzaID", comment: "EnzaID", select: false })
   enzaId: string;
 
   @Column("int", { name: "EventID" })

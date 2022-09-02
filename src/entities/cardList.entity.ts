@@ -7,7 +7,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { CardIdeaMark } from "./cardIdeaMark.entity";
 import { CardIdolEvent } from "./cardIdolEvent.entity";
 import { Idol } from "./idol.entity";
 import { CardMemoryAppeal } from "./cardMemoryAppeal.entity";
@@ -28,7 +27,7 @@ export class CardList {
   })
   cardIndex: number;
 
-  @Column("bigint", { name: "EnzaID", comment: "enza ID" })
+  @Column("bigint", { name: "EnzaID", comment: "enza ID", select: false })
   enzaId: string;
 
   @Column("int", { name: "IdolID" })
@@ -55,17 +54,14 @@ export class CardList {
   @Column("text", { name: "GetMethod", nullable: true })
   getMethod: string | null;
 
+  @Column("text", { name: "IdeaMark", nullable: true })
+  ideaMark: string | null;
+
   @Column("text", { name: "CardHash", nullable: true, select: false })
   cardHash: string | null;
 
   @Column("date", { name: "ReleaseDate", nullable: true })
   releaseDate: string | null;
-
-  @OneToMany(
-    () => CardIdeaMark,
-    (cardIdeaMark) => cardIdeaMark.enza
-  )
-  cardIdeaMarks: CardIdeaMark[];
 
   @OneToMany(
     () => CardIdolEvent,

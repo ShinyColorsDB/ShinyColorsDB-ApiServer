@@ -15,7 +15,7 @@ export class CardPanel {
   @PrimaryGeneratedColumn({ type: "int", name: "TableIndex" })
   tableIndex: number;
 
-  @Column("bigint", { name: "EnzaID" })
+  @Column("bigint", { name: "EnzaID", select: false })
   enzaId: string;
 
   @Column("bigint", { name: "PanelID" })

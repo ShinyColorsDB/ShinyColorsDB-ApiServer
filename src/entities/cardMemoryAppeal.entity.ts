@@ -14,7 +14,7 @@ export class CardMemoryAppeal {
   @PrimaryGeneratedColumn({ type: "int", name: "MemoryIndex" })
   memoryIndex: number;
 
-  @Column("bigint", { name: "EnzaID" })
+  @Column("bigint", { name: "EnzaID", select: false })
   enzaId: string;
 
   @Column("bigint", { name: "MemoryID" })

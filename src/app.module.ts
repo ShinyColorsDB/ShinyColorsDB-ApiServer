@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { InfoModule } from './info/info.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { DataSource } from 'typeorm';
-import { CardIdeaMark } from './entities/cardIdeaMark.entity';
 import { CardIdolEvent } from './entities/cardIdolEvent.entity';
 import { CardList } from './entities/cardList.entity';
 import { CardMemoryAppeal } from './entities/cardMemoryAppeal.entity';
@@ -16,10 +14,13 @@ import { CardSupportSkill } from './entities/cardSupportSkill.entity';
 import { Idol } from './entities/idol.entity';
 import { IdolDress } from './entities/idolDress.entity';
 import { Unit } from './entities/unit.entity';
+import { SpineModule } from './spine/spine.module';
+import { InfoModule } from './info/info.module';
 
 @Module({
   imports: [
     InfoModule,
+    SpineModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -28,7 +29,7 @@ import { Unit } from './entities/unit.entity';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [CardIdeaMark, CardIdolEvent, CardList, CardMemoryAppeal, CardPanel, CardProficiency, CardSupportEvent, CardSupportSkill, Idol, IdolDress, Unit],
+      entities: [CardIdolEvent, CardList, CardMemoryAppeal, CardPanel, CardProficiency, CardSupportEvent, CardSupportSkill, Idol, IdolDress, Unit],
       logging: true,
       synchronize: false,
     }),

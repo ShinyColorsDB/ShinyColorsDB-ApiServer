@@ -17,7 +17,7 @@ export class IdolDress {
   @Column("int", { name: "IdolID" })
   idolId: number;
 
-  @Column("bigint", { name: "EnzaID" })
+  @Column("bigint", { name: "EnzaID", select: false })
   enzaId: string;
 
   @Column("text", { name: "DressName" })

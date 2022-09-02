@@ -14,7 +14,7 @@ export class CardProficiency {
   @PrimaryGeneratedColumn({ type: "int", name: "ProficiencyIndex" })
   proficiencyIndex: number;
 
-  @Column("bigint", { name: "EnzaID" })
+  @Column("bigint", { name: "EnzaID", select: false })
   enzaId: string;
 
   @Column("text", { name: "Proficiency" })

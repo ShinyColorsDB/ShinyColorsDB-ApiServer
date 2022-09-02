@@ -7,7 +7,6 @@ import { Unit } from '../entities/unit.entity';
 @Injectable()
 export class InfoService {
   constructor(private dataSource: DataSource) {}
-  //private readonly cats: Cat[] = [];
 
   async getIdollist(): Promise<Idol[]> {
     return this.dataSource.getRepository(Idol).find({
@@ -51,14 +50,23 @@ export class InfoService {
       .addOrderBy('memoryAppeals.memoryId', 'ASC')
       .addOrderBy('idolEvents.eventId', 'ASC')
       .where('pcard.cardUuid = :cardUuid', { cardUuid: cardUuid })
-      .getOne();
+      .getOne();;
   }
 
-  async getSCardInfo(): Promise<CardList[]> {
+  async getSCardInfo(cardUuid: string): Promise<CardList> {
     return this.dataSource
       .getRepository(CardList)
       .createQueryBuilder('scard')
-      .getMany();
+      .leftJoinAndSelect('scard.idol', 'idol')
+      .leftJoinAndSelect('scard.cardSupportEvents', 'supportEvents')
+      .leftJoinAndSelect('scard.cardSupportSkills', 'supportSkills')
+      .leftJoinAndSelect('scard.cardProficiencies', 'proficiencies')
+      .leftJoinAndSelect('scard.cardPanels', 'panels')
+      .orderBy('supportEvents.eventId', 'ASC')
+      .addOrderBy('supportSkills.skillId', 'ASC')
+      .addOrderBy('panels.panelId', 'ASC')
+      .where('scard.cardUuid = :cardUuid', { cardUuid: cardUuid })
+      .getOne();
   }
 
   async getLatestPInfo(): Promise<CardList[]> {
@@ -79,6 +87,26 @@ export class InfoService {
       .createQueryBuilder('cardList')
       .orderBy('cardList.releaseDate', 'DESC')
       .limit(10)
+      .getMany();
+  }
+
+  async getPcardList(): Promise<CardList[]> {
+    return this.dataSource
+      .getRepository(CardList)
+      .createQueryBuilder('cardList')
+      .where('cardList.cardType REGEXP "P_"')
+      .orderBy('cardList.idolId', 'ASC')
+      .addOrderBy('cardList.enzaId', 'ASC')
+      .getMany();
+  }
+
+  async getScardList(): Promise<CardList[]> {
+    return this.dataSource
+      .getRepository(CardList)
+      .createQueryBuilder('cardList')
+      .where('cardList.cardType REGEXP "S_"')
+      .orderBy('cardList.idolId', 'ASC')
+      .addOrderBy('cardList.enzaId', 'ASC')
       .getMany();
   }
 }
