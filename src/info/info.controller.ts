@@ -76,18 +76,28 @@ export class InfoController {
       pList = await this.infoService.getPcardList(),
       sList = await this.infoService.getScardList();
 
-    let siteStr = "";
+    let siteStr = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    siteStr += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+    siteStr += this.generateUrl('https://shinycolors.moe/');
+
     for (let i of iList) {
-      siteStr += `https://shinycolors.moe/idolinfo?idolid=${i.idolId}\n`;
+      siteStr += this.generateUrl(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`);
     }
 
     for (let p of pList) {
-      siteStr += `https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}\n`;
+      siteStr += this.generateUrl(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`);
     }
 
     for (let s of sList) {
-      siteStr += `https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}\n`;
+      siteStr += this.generateUrl(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`);
     }
+
+    siteStr += `</urlset>`;
     return siteStr;
+  }
+
+  generateUrl(url: string): string {
+    return `<url><loc>${url}</loc></url>\n`;
   }
 }
