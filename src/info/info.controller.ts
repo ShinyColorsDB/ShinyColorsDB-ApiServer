@@ -96,8 +96,4 @@ export class InfoController {
 
     return siteMap.end({ prettyPrint: true });
   }
-
-  generateUrl(url: string): string {
-    return `<url><loc>${url}</loc></url>\n`;
-  }
 }
