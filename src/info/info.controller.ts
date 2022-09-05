@@ -1,5 +1,6 @@
 import { Controller, Get, Header, HttpException, HttpStatus, NotFoundException, Query, UnprocessableEntityException } from '@nestjs/common';
 import { InfoService } from './info.service';
+import * as xmlbuilder2 from 'xmlbuilder2';
 
 @Controller('info')
 export class InfoController {
@@ -77,25 +78,23 @@ export class InfoController {
       pList = await this.infoService.getPcardList(),
       sList = await this.infoService.getScardList();
 
-    let siteStr = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-    siteStr += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-
-    siteStr += this.generateUrl('https://shinycolors.moe/');
+    let siteMap = xmlbuilder2.create({ version: '1.0', encoding: 'utf-8' })
+      .ele('urlset', { xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
+    siteMap.ele('url').ele('loc').txt('https://shinycolors.moe/').up();
 
     for (let i of iList) {
-      siteStr += this.generateUrl(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`);
+      siteMap.ele('url').ele('loc').txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`).up();
     }
 
     for (let p of pList) {
-      siteStr += this.generateUrl(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`);
+      siteMap.ele('url').ele('loc').txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`).up();
     }
 
     for (let s of sList) {
-      siteStr += this.generateUrl(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`);
+      siteMap.ele('url').ele('loc').txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`).up();
     }
 
-    siteStr += `</urlset>`;
-    return siteStr;
+    return siteMap.end({ prettyPrint: true });
   }
 
   generateUrl(url: string): string {
