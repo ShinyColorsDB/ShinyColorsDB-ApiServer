@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, NotFoundException, Query, UnprocessableEntityException } from '@nestjs/common';
+import { Controller, Get, Header, HttpException, HttpStatus, NotFoundException, Query, UnprocessableEntityException } from '@nestjs/common';
 import { InfoService } from './info.service';
 
 @Controller('info')
@@ -71,6 +71,7 @@ export class InfoController {
   }
 
   @Get('sitelist')
+  @Header('Content-Type', 'text/xml')
   async getSiteList() {
     const iList = await this.infoService.getIdollist(),
       pList = await this.infoService.getPcardList(),
