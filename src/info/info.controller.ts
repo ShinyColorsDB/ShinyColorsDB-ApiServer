@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpException, HttpStatus, NotFoundException, Query, UnprocessableEntityException } from '@nestjs/common';
+import { Controller, Get, Header, Headers, HttpException, HttpStatus, NotFoundException, Query, UnprocessableEntityException } from '@nestjs/common';
 import { InfoService } from './info.service';
 import * as xmlbuilder2 from 'xmlbuilder2';
 
@@ -12,10 +12,17 @@ export class InfoController {
   }
 
   @Get('idolinfo')
-  async getIdolInfo(@Query('idolId') idolId: number) {
+  async getIdolInfo(
+    @Query('idolId') idolId: number,
+    @Headers('CF-IPCountry') country: string,
+    @Headers('X-Forwarded-For') forwarder: string
+  ) {
     if (isNaN(idolId) || idolId < 1 || idolId > 25) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
     }
+    console.log(`${country} user accessing iInfo ${idolId}`);
+    console.log(`Forwarded by ${forwarder}`);
+
     return await this.infoService.getIdolInfo(idolId);
   }
 
@@ -25,12 +32,18 @@ export class InfoController {
   }
 
   @Get('pcardinfo')
-  async getPCardInfo(@Query('cardId') cardId: string) {
+  async getPCardInfo(
+    @Query('cardId') cardId: string,
+    @Headers('CF-IPCountry') country: string,
+    @Headers('X-Forwarded-For') forwarder: string
+  ) {
     if (!cardId) {
       throw new UnprocessableEntityException('Card Id is required');
     }
 
     const thisCard = await this.infoService.getPCardInfo(cardId);
+    console.log(`${country} user accessing pCard ${thisCard.cardName}`);
+    console.log(`Forwarded by ${forwarder}`);
 
     if (thisCard) {
       return thisCard;
@@ -41,12 +54,18 @@ export class InfoController {
   }
 
   @Get('scardinfo')
-  async getSCardInfo(@Query('cardId') cardId: string) {
+  async getSCardInfo(
+    @Query('cardId') cardId: string,
+    @Headers('CF-IPCountry') country: string,
+    @Headers('X-Forwarded-For') forwarder: string
+  ) {
     if (!cardId) {
       throw new UnprocessableEntityException('Card Id is required');
     }
 
     const thisCard = await this.infoService.getSCardInfo(cardId);
+    console.log(`${country} user accessing sCard ${thisCard.cardName}`);
+    console.log(`Forwarded by ${forwarder}`);
 
     if (thisCard) {
       return thisCard;

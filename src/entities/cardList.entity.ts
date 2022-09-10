@@ -54,7 +54,7 @@ export class CardList {
   @Column("text", { name: "GetMethod", nullable: true })
   getMethod: string | null;
 
-  @Column("text", { name: "IdeaMark", nullable: true })
+  @Column("text", { name: "IdeaMark", nullable: true, default: null })
   ideaMark: string | null;
 
   @Column("text", { name: "CardHash", nullable: true, select: false })

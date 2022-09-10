@@ -26,13 +26,13 @@ export class CardIdolEvent {
   @Column("text", { name: "EventTitle" })
   eventTitle: string;
 
-  @Column("int", { name: "EventOp1", nullable: true })
+  @Column("int", { name: "EventOp1", nullable: true, default: null })
   eventOp1: number | null;
 
-  @Column("int", { name: "EventOp2", nullable: true })
+  @Column("int", { name: "EventOp2", nullable: true, default: null })
   eventOp2: number | null;
 
-  @Column("int", { name: "EventOp3", nullable: true })
+  @Column("int", { name: "EventOp3", nullable: true, default: null })
   eventOp3: number | null;
 
   @ManyToOne(

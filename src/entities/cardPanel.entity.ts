@@ -39,7 +39,7 @@ export class CardPanel {
   @Column("tinyint", { name: "PanelReleaseByEvent", width: 1 })
   panelReleaseByEvent: boolean;
 
-  @Column("text", { name: "PanelReleaseDesc", nullable: true })
+  @Column("text", { name: "PanelReleaseDesc", nullable: true, default: null })
   panelReleaseDesc: string | null;
 
   @Column("text", { name: "SkillTitle" })
@@ -54,25 +54,25 @@ export class CardPanel {
   @Column("json", { name: "SkillEffects" })
   skillEffects: object;
 
-  @Column("bigint", { name: "LinkSkillID", nullable: true })
+  @Column("bigint", { name: "LinkSkillID", nullable: true, default: null })
   linkSkillId: string | null;
 
-  @Column("text", { name: "LinkSkillDesc", nullable: true })
+  @Column("text", { name: "LinkSkillDesc", nullable: true, default: null })
   linkSkillDesc: string | null;
 
-  @Column("text", { name: "LinkWith", nullable: true })
+  @Column("text", { name: "LinkWith", nullable: true, default: null })
   linkWith: string | null;
 
-  @Column("json", { name: "LinkEffects", nullable: true })
+  @Column("json", { name: "LinkEffects", nullable: true, default: null })
   linkEffects: object | null;
 
-  @Column("bigint", { name: "PlusSkillID", nullable: true })
+  @Column("bigint", { name: "PlusSkillID", nullable: true, default: null })
   plusSkillId: string | null;
 
-  @Column("text", { name: "PlusSkillDesc", nullable: true })
+  @Column("text", { name: "PlusSkillDesc", nullable: true, default: null })
   plusSkillDesc: string | null;
 
-  @Column("text", { name: "PlusSkillEffects", nullable: true })
+  @Column("text", { name: "PlusSkillEffects", nullable: true, default: null })
   plusSkillEffects: object | null;
 
   @ManyToOne(
