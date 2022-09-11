@@ -23,6 +23,9 @@ export class CardIdolEvent {
   @Column("int", { name: "EventID" })
   eventId: number;
 
+  @Column("text", { name: "EventHash", nullable: true, select: false })
+  eventHash: string | null;
+
   @Column("text", { name: "EventTitle" })
   eventTitle: string;
 

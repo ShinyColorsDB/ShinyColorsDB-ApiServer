@@ -31,7 +31,7 @@ export class CardPanel {
   panelSlot: number;
 
   @Column("tinyint", { name: "PanelIsGold", width: 1 })
-  panelIsGold: boolean;
+  panelIsGold: number;
 
   @Column("int", { name: "PanelReleaseEvolution" })
   panelReleaseEvolution: number;

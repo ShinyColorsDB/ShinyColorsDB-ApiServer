@@ -1,5 +1,9 @@
 export interface UpdatePCard {
+    idolId: string;
     idol: {
+        character: {
+            id: string;
+        }
         hash: string;
         id: string;
         name: string;
@@ -10,12 +14,28 @@ export interface UpdatePCard {
             id: string;
             title: string;
         }[];
-        produveIdolEvents: {
+        produceIdolEvents: {
             eventCategoryName: string;
             hash: string;
             id: string;
             idolId: string;
             title: string;
+        }[];
+        memoryAppeals: {
+            comment: string;
+            id: string;
+            memoryAppealEffects: any[];
+            name: string;
+            linkSkill?: {
+                comment: string;
+                id: string;
+                linkSkillCharacters: {
+                    character: {
+                        id: string;
+                    };
+                }[];
+                skillEffects: any[];
+            }
         }[];
         skillPanels: {
             evolutionStage: number;

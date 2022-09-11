@@ -65,7 +65,8 @@ export class CardList {
 
   @OneToMany(
     () => CardIdolEvent,
-    (cardIdolEvent) => cardIdolEvent.enza
+    (cardIdolEvent) => cardIdolEvent.enza,
+    { cascade: ['insert', 'update'] }
   )
   cardIdolEvents: CardIdolEvent[];
 
@@ -78,28 +79,36 @@ export class CardList {
 
   @OneToMany(
     () => CardMemoryAppeal,
-    (cardMemoryAppeal) => cardMemoryAppeal.enza
+    (cardMemoryAppeal) => cardMemoryAppeal.enza,
+    { cascade: ['insert', 'update'] }
   )
   cardMemoryAppeals: CardMemoryAppeal[];
 
-  @OneToMany(() => CardPanel, (cardPanel) => cardPanel.enza)
+  @OneToMany(
+    () => CardPanel,
+    (cardPanel) => cardPanel.enza,
+    { cascade: ['insert', 'update'] }
+  )
   cardPanels: CardPanel[];
 
   @OneToMany(
     () => CardProficiency,
-    (cardProficiency) => cardProficiency.enza
+    (cardProficiency) => cardProficiency.enza,
+    { cascade: ['insert', 'update'] }
   )
   cardProficiencies: CardProficiency[];
 
   @OneToMany(
     () => CardSupportEvent,
-    (cardSupportEvent) => cardSupportEvent.enza
+    (cardSupportEvent) => cardSupportEvent.enza,
+    { cascade: ['insert', 'update'] }
   )
   cardSupportEvents: CardSupportEvent[];
 
   @OneToMany(
     () => CardSupportSkill,
-    (cardSupportSkill) => cardSupportSkill.enza
+    (cardSupportSkill) => cardSupportSkill.enza,
+    { cascade: ['insert', 'update'] }
   )
   cardSupportSkills: CardSupportSkill[];
 }

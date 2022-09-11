@@ -32,7 +32,7 @@ import { UpdateModule } from './update/update.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [CardIdolEvent, CardList, CardMemoryAppeal, CardPanel, CardProficiency, CardSupportEvent, CardSupportSkill, Idol, IdolDress, Unit],
-      logging: false,
+      logging: true,
       synchronize: process.env.ENV_PRODUCTION != "true",
     }),
   ],

@@ -1,6 +1,8 @@
 export interface UpdateSCard {
     musicSupportProficiencyBonuses: { proficiency: string, value: number }[];
+    supportIdolId: string;
     supportIdol: {
+        character: { id: string },
         hash: string;
         id: string;
         ideaMark: string;
@@ -61,7 +63,6 @@ export interface UpdateSCard {
                 attribute: string;
             }
             supportSkillLevel: number;
-
         }[]
     }
 }
