@@ -27,7 +27,7 @@ export class CardList {
   })
   cardIndex: number;
 
-  @Column("bigint", { name: "EnzaID", comment: "enza ID", select: false })
+  @Column("bigint", { name: "EnzaID", comment: "enza ID" })
   enzaId: string;
 
   @Column("int", { name: "IdolID" })
