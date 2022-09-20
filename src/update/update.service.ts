@@ -49,6 +49,13 @@ export class UpdateService {
         newCard.cardPanels = this.UpdateUtilities.getPanels(payload.idol.skillPanels);
         await this.dataSource.getRepository(CardList).save(newCard);
         await this.UpdateUtilities.getPImage(payload.idolId, payload.idol.hash, bigPic1, bigPic2, smlPic);
+
+        if (this.UpdateUtilities.isPSSR(payload.idolId)) {
+            this.UpdateUtilities.getPSSRMovie(payload.idolId, payload.idol.hash);
+        }
+        else if (this.UpdateUtilities.isPSR(payload.idolId)) {
+            this.UpdateUtilities.getPSRMovie(payload.idolId, payload.idol.hash);
+        }
     }
 
     async updateSCard(payload: UpdateSCard) {
@@ -123,6 +130,5 @@ export class UpdateService {
             throw new ConflictException("Already Exist");
         }
     }
-
 
 }

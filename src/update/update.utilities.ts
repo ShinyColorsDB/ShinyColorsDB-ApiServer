@@ -13,8 +13,11 @@ export class UpdateUtilities {
     idolFesPath: string = "/assets/images/content/idols/fes_card/";
     idolIconPath: string = "/assets/images/content/idols/icon/";
 
-    supportIdolCardPath = "/assets/images/content/support_idols/card/";
-    supportIdolIconPath = "/assets/images/content/support_idols/icon/";
+    idolCardMovie: string = "/assets/movies/idols/card/";
+    idolCostumeMovie: string = "/assets/movies/idols/card_costume/";
+
+    supportIdolCardPath: string = "/assets/images/content/support_idols/card/";
+    supportIdolIconPath: string = "/assets/images/content/support_idols/icon/";
 
     removeSpace(name: string): string {
         const nameMatch = name.match(/(【.*】)(.*)/);
@@ -345,10 +348,42 @@ export class UpdateUtilities {
         return new Promise<void>((resolve, reject) => {
             fetch(`https://shinycolors.enza.fun/assets/${hashedPath}`).then(async res => {
                 if (res.status !== 200) reject();
-                fs.writeFileSync(`U:/ShinyColorsDB-Static/pictures/${type}/${uuid}.${subFn}`, Buffer.from(await res.arrayBuffer()));
+                fs.writeFileSync(`${process.env.FILE_STATIC_PATH}/pictures/${type}/${uuid}.${subFn}`, Buffer.from(await res.arrayBuffer()));
                 resolve();
             });
         });
+    }
+
+    async getPSSRMovie(enzaId: string, hash: string) {
+        const idolMoviePath = `${this.idolCardMovie}${hash}_${enzaId}.mp4`,
+            idolCostumeMoviePath = `${this.idolCostumeMovie}${hash}_${enzaId}.mp4`;
+        const hash1 = this.getHash(idolMoviePath), hash2 = this.getHash(idolCostumeMoviePath);
+        await this.getMovie(hash1, "card", enzaId);
+        await this.getMovie(hash2, "card_costume", enzaId);
+    }
+
+    async getPSRMovie(enzaId: string, hash: string) {
+        const idolCostumeMoviePath = `${this.idolCostumeMovie}${hash}_${enzaId}.mp4`;
+        const hash2 = this.getHash(idolCostumeMoviePath);
+        await this.getMovie(hash2, "card_costume", enzaId);
+    }
+
+    getMovie(hashedPath: string, savePath: string, cardId: string) {
+        return new Promise<void>((resolve, reject) => {
+            fetch(`https://shinycolors.enza.fun/assets/${hashedPath}.mp4`).then(async res => {
+                if (res.status !== 200) reject();
+                fs.writeFileSync(`${process.env.FILE_ASSETS_PATH}/movies/idols/${savePath}/${cardId}.mp4`, Buffer.from(await res.arrayBuffer()));
+                resolve();
+            });
+        });
+    }
+
+    isPSR(cardId: string) {
+        return cardId[0] == '1' && cardId[2] == '3';
+    }
+
+    isPSSR(cardId: string) {
+        return cardId[0] == '1' && cardId[2] == '4';
     }
 }
 
