@@ -35,6 +35,7 @@ export class InfoService {
       .where('unit.unitId != :id1', { id1: 8 })
       .andWhere('unit.unitId != :id2', { id2: 0 })
       .orderBy('unit.unitId', 'ASC')
+      .addOrderBy('idol.idolId', 'ASC')
       .getMany();
   }
 
