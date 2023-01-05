@@ -1,4 +1,12 @@
-import { Controller, Get, Header, Headers, HttpException, HttpStatus, NotFoundException, Query, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Header,
+  Headers,
+  NotFoundException,
+  Query,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InfoService } from './info.service';
 import * as xmlbuilder2 from 'xmlbuilder2';
 
@@ -15,7 +23,7 @@ export class InfoController {
   async getIdolInfo(
     @Query('idolId') idolId: number,
     @Headers('CF-IPCountry') country: string,
-    @Headers('X-Forwarded-For') forwarder: string
+    @Headers('X-Forwarded-For') forwarder: string,
   ) {
     if (isNaN(idolId) || idolId < 1 || idolId > 25) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
@@ -35,7 +43,7 @@ export class InfoController {
   async getPCardInfo(
     @Query('cardId') cardId: string,
     @Headers('CF-IPCountry') country: string,
-    @Headers('X-Forwarded-For') forwarder: string
+    @Headers('X-Forwarded-For') forwarder: string,
   ) {
     if (!cardId) {
       throw new UnprocessableEntityException('Card Id is required');
@@ -47,8 +55,7 @@ export class InfoController {
 
     if (thisCard) {
       return thisCard;
-    }
-    else {
+    } else {
       throw new NotFoundException(`Card Id ${cardId} not found`);
     }
   }
@@ -57,7 +64,7 @@ export class InfoController {
   async getSCardInfo(
     @Query('cardId') cardId: string,
     @Headers('CF-IPCountry') country: string,
-    @Headers('X-Forwarded-For') forwarder: string
+    @Headers('X-Forwarded-For') forwarder: string,
   ) {
     if (!cardId) {
       throw new UnprocessableEntityException('Card Id is required');
@@ -69,8 +76,7 @@ export class InfoController {
 
     if (thisCard) {
       return thisCard;
-    }
-    else {
+    } else {
       throw new NotFoundException(`Card Id ${cardId} not found`);
     }
   }
@@ -97,22 +103,53 @@ export class InfoController {
       pList = await this.infoService.getPcardList(),
       sList = await this.infoService.getScardList();
 
-    let siteMap = xmlbuilder2.create({ version: '1.0', encoding: 'utf-8' })
+    const siteMap = xmlbuilder2
+      .create({ version: '1.0', encoding: 'utf-8' })
       .ele('urlset', { xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
     siteMap.ele('url').ele('loc').txt('https://shinycolors.moe/').up();
 
-    for (let i of iList) {
-      siteMap.ele('url').ele('loc').txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`).up();
+    for (const i of iList) {
+      siteMap
+        .ele('url')
+        .ele('loc')
+        .txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`)
+        .up();
     }
 
-    for (let p of pList) {
-      siteMap.ele('url').ele('loc').txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`).up();
+    for (const p of pList) {
+      siteMap
+        .ele('url')
+        .ele('loc')
+        .txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`)
+        .up();
     }
 
-    for (let s of sList) {
-      siteMap.ele('url').ele('loc').txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`).up();
+    for (const s of sList) {
+      siteMap
+        .ele('url')
+        .ele('loc')
+        .txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`)
+        .up();
     }
 
     return siteMap.end({ prettyPrint: true });
+  }
+
+  @Get('getLimitedTable')
+  @Header('Content-Type', 'application/json')
+  async getLimitedTable() {
+    return await this.infoService.getTableByType(0);
+  }
+
+  @Get('getGeneralTable')
+  @Header('Content-Type', 'application/json')
+  async getGeneralTable() {
+    return await this.infoService.getTableByType(1);
+  }
+
+  @Get('getAllTable')
+  @Header('Content-Type', 'application/json')
+  async getAllTable() {
+    return await this.infoService.getTableByType(2);
   }
 }

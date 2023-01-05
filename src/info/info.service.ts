@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CardList } from 'src/entities/cardList.entity';
-import { DataSource, Between,  } from 'typeorm';
+import { DataSource, Between, Brackets } from 'typeorm';
 import { Idol } from '../entities/idol.entity';
 import { Unit } from '../entities/unit.entity';
 
@@ -51,7 +51,7 @@ export class InfoService {
       .addOrderBy('memoryAppeals.memoryId', 'ASC')
       .addOrderBy('idolEvents.eventId', 'ASC')
       .where('pcard.cardUuid = :cardUuid', { cardUuid: cardUuid })
-      .getOne();;
+      .getOne();
   }
 
   async getSCardInfo(cardUuid: string): Promise<CardList> {
@@ -109,5 +109,88 @@ export class InfoService {
       .orderBy('cardList.idolId', 'ASC')
       .addOrderBy('cardList.enzaId', 'ASC')
       .getMany();
+  }
+
+  async getTableByType(type: number) {
+    const produceList = [],
+      supportList = [];
+
+    for (const k of await this.getIdollist()) {
+      produceList.push(await this.getGap(k.idolId, type, 0));
+      supportList.push(await this.getGap(k.idolId, type, 1));
+    }
+
+    return {
+      produce: produceList,
+      support: supportList,
+    };
+  }
+
+  /**
+   * @param {number} idolId
+   * @param {number} queryType
+   * 0: `limited only`,
+   * 1: `general only`,
+   * 2: `all`
+   * @param {number} cardType
+   * 0: P, 1: S
+   **/
+  async getGap(
+    idolId: number,
+    queryType: number,
+    cardType: number,
+  ): Promise<CardList> {
+    const src = this.dataSource
+      .getRepository(CardList)
+      .createQueryBuilder('cardList');
+
+    switch (queryType) {
+      case 0:
+        src.where(
+          new Brackets((q) => {
+            q.where('cardList.getMethod = :getMethod1', {
+              getMethod1: 'LimitedGasha',
+            }).orWhere('cardList.getMethod = :getMethod2', {
+              getMethod2: 'TwilightCollect',
+            });
+          }),
+        );
+        break;
+      case 1:
+        src.where('cardList.getMethod = :getMethod', {
+          getMethod: 'GeneralGasha',
+        });
+        break;
+      case 2:
+        src.where(
+          new Brackets((q) => {
+            q.where('cardList.getMethod = :getMethod1', {
+              getMethod1: 'LimitedGasha',
+            })
+              .orWhere('cardList.getMethod = :getMethod2', {
+                getMethod2: 'GeneralGasha',
+              })
+              .orWhere('cardList.getMethod = :getMethod3', {
+                getMethod3: 'TwilightCollect',
+              });
+          }),
+        );
+        break;
+    }
+
+    switch (cardType) {
+      case 0:
+        src.andWhere('cardList.cardType = "P_SSR"');
+        break;
+      case 1:
+        src.andWhere('cardList.cardType = "S_SSR"');
+        break;
+    }
+
+    src
+      .andWhere('cardList.idolId = :idolId', { idolId: idolId })
+      .orderBy('cardList.releaseDate', 'DESC');
+
+    return src.getOne();
   }
 }
