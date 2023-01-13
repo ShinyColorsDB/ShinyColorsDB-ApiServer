@@ -5,8 +5,8 @@ import { UpdateService } from './update.service';
 import { UpdateController } from './update.controller';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Idol])],
-    controllers: [UpdateController],
-    providers: [UpdateService],
+  imports: [TypeOrmModule.forFeature([Idol])],
+  controllers: [UpdateController],
+  providers: [UpdateService],
 })
-export class UpdateModule { }
+export class UpdateModule {}

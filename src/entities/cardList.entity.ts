@@ -5,110 +5,121 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { CardIdolEvent } from "./cardIdolEvent.entity";
-import { Idol } from "./idol.entity";
-import { CardMemoryAppeal } from "./cardMemoryAppeal.entity";
-import { CardPanel } from "./cardPanel.entity";
-import { CardProficiency } from "./cardProficiency.entity";
-import { CardSupportEvent } from "./cardSupportEvent.entity";
-import { CardSupportSkill } from "./cardSupportSkill.entity";
+} from 'typeorm';
+import { CardIdolEvent } from './cardIdolEvent.entity';
+import { Idol } from './idol.entity';
+import { CardMemoryAppeal } from './cardMemoryAppeal.entity';
+import { CardPanel } from './cardPanel.entity';
+import { CardProficiency } from './cardProficiency.entity';
+import { CardSupportEvent } from './cardSupportEvent.entity';
+import { CardSupportSkill } from './cardSupportSkill.entity';
+import { CardProduceAptitude } from './cardProduceAptitude.entity';
+import { CardSupportFightSkill } from './cardSupportFightSkill.entity';
 
-@Index("Index", ["cardIndex"], { unique: true })
-@Index("IdolID", ["idolId"], {})
-@Index("EnzaID", ["enzaId"], {})
-@Entity("SCDB_CardList", { schema: "shinycolors_dev2" })
+@Index('Index', ['cardIndex'], { unique: true })
+@Index('IdolID', ['idolId'], {})
+@Index('EnzaID', ['enzaId'], {})
+@Entity('SCDB_CardList', { schema: 'shinycolors_dev2' })
 export class CardList {
   @PrimaryGeneratedColumn({
-    type: "int",
-    name: "CardIndex",
-    comment: "self defined index",
+    type: 'int',
+    name: 'CardIndex',
+    comment: 'self defined index',
   })
   cardIndex: number;
 
-  @Column("bigint", { name: "EnzaID", comment: "enza ID" })
+  @Column('bigint', { name: 'EnzaID', comment: 'enza ID' })
   enzaId: string;
 
-  @Column("int", { name: "IdolID" })
+  @Column('int', { name: 'IdolID' })
   idolId: number;
 
-  @Column("text", { name: "CardName" })
+  @Column('text', { name: 'CardName' })
   cardName: string;
 
-  @Column("text", { name: "CardUUID" })
+  @Column('text', { name: 'CardUUID' })
   cardUuid: string;
 
-  @Column("text", { name: "BigPic1", nullable: true })
+  @Column('text', { name: 'BigPic1', nullable: true })
   bigPic1: string | null;
 
-  @Column("text", { name: "BigPic2", nullable: true })
+  @Column('text', { name: 'BigPic2', nullable: true })
   bigPic2: string | null;
 
-  @Column("text", { name: "SmlPic", nullable: true })
+  @Column('text', { name: 'SmlPic', nullable: true })
   smlPic: string | null;
 
-  @Column("text", { name: "CardType" })
+  @Column('text', { name: 'CardType' })
   cardType: string;
 
-  @Column("text", { name: "GetMethod", nullable: true })
+  @Column('text', { name: 'GetMethod', nullable: true })
   getMethod: string | null;
 
-  @Column("text", { name: "IdeaMark", nullable: true, default: null })
+  @Column('text', { name: 'IdeaMark', nullable: true, default: null })
   ideaMark: string | null;
 
-  @Column("text", { name: "CardHash", nullable: true, select: false })
+  @Column('text', { name: 'CardHash', nullable: true, select: false })
   cardHash: string | null;
 
-  @Column("date", { name: "ReleaseDate", nullable: true })
+  @Column('date', { name: 'ReleaseDate', nullable: true })
   releaseDate: string | null;
 
-  @OneToMany(
-    () => CardIdolEvent,
-    (cardIdolEvent) => cardIdolEvent.enza,
-    { cascade: ['insert', 'update'] }
-  )
+  @OneToMany(() => CardIdolEvent, (cardIdolEvent) => cardIdolEvent.enza, {
+    cascade: ['insert', 'update'],
+  })
   cardIdolEvents: CardIdolEvent[];
 
   @ManyToOne(() => Idol, (idol) => idol.cardLists, {
-    onDelete: "NO ACTION",
-    onUpdate: "CASCADE",
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: "IdolID", referencedColumnName: "idolId" }])
+  @JoinColumn([{ name: 'IdolID', referencedColumnName: 'idolId' }])
   idol: Idol;
 
   @OneToMany(
     () => CardMemoryAppeal,
     (cardMemoryAppeal) => cardMemoryAppeal.enza,
-    { cascade: ['insert', 'update'] }
+    { cascade: ['insert', 'update'] },
   )
   cardMemoryAppeals: CardMemoryAppeal[];
 
-  @OneToMany(
-    () => CardPanel,
-    (cardPanel) => cardPanel.enza,
-    { cascade: ['insert', 'update'] }
-  )
+  @OneToMany(() => CardPanel, (cardPanel) => cardPanel.enza, {
+    cascade: ['insert', 'update'],
+  })
   cardPanels: CardPanel[];
 
-  @OneToMany(
-    () => CardProficiency,
-    (cardProficiency) => cardProficiency.enza,
-    { cascade: ['insert', 'update'] }
-  )
+  @OneToMany(() => CardProficiency, (cardProficiency) => cardProficiency.enza, {
+    cascade: ['insert', 'update'],
+  })
   cardProficiencies: CardProficiency[];
 
   @OneToMany(
     () => CardSupportEvent,
     (cardSupportEvent) => cardSupportEvent.enza,
-    { cascade: ['insert', 'update'] }
+    { cascade: ['insert', 'update'] },
   )
   cardSupportEvents: CardSupportEvent[];
 
   @OneToMany(
     () => CardSupportSkill,
     (cardSupportSkill) => cardSupportSkill.enza,
-    { cascade: ['insert', 'update'] }
+    { cascade: ['insert', 'update'] },
   )
   cardSupportSkills: CardSupportSkill[];
+
+  @OneToMany(
+    () => CardProduceAptitude,
+    (cardProduceAptitude) => cardProduceAptitude.enza,
+    { cascade: ['insert', 'update'] },
+  )
+  cardProduceAptitudes: CardProduceAptitude[];
+
+  @OneToOne(
+    () => CardSupportFightSkill,
+    (scdbSupportFightSkill) => scdbSupportFightSkill.enza,
+    { cascade: ['insert', 'update'] },
+  )
+  cardSupportFightSkills: CardSupportFightSkill[];
 }

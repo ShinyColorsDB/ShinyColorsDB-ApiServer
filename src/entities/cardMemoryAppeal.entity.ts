@@ -5,47 +5,46 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { CardList } from "./cardList.entity";
+} from 'typeorm';
+import { CardList } from './cardList.entity';
 
-@Index("CardIndex", ["enzaId"], {})
-@Entity("SCDB_CardMemoryAppeal", { schema: "shinycolors_dev2" })
+@Index('CardIndex', ['enzaId'], {})
+@Entity('SCDB_CardMemoryAppeal', { schema: 'shinycolors_dev2' })
 export class CardMemoryAppeal {
-  @PrimaryGeneratedColumn({ type: "int", name: "MemoryIndex" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'MemoryIndex' })
   memoryIndex: number;
 
-  @Column("bigint", { name: "EnzaID", select: false })
+  @Column('bigint', { name: 'EnzaID', select: false })
   enzaId: string;
 
-  @Column("bigint", { name: "MemoryID" })
+  @Column('bigint', { name: 'MemoryID' })
   memoryId: string;
 
-  @Column("text", { name: "MemoryTitle" })
+  @Column('text', { name: 'MemoryTitle' })
   memoryTitle: string;
 
-  @Column("text", { name: "MemoryDesc" })
+  @Column('text', { name: 'MemoryDesc' })
   memoryDesc: string;
 
-  @Column("json", { name: "MemoryEffects" })
+  @Column('json', { name: 'MemoryEffects' })
   memoryEffects: object;
 
-  @Column("bigint", { name: "MemoryLinkSkillID" })
+  @Column('bigint', { name: 'MemoryLinkSkillID' })
   memoryLinkSkillId: string;
 
-  @Column("text", { name: "LinkSkillDesc", nullable: true })
+  @Column('text', { name: 'LinkSkillDesc', nullable: true })
   linkSkillDesc: string | null;
 
-  @Column("text", { name: "LinkWith", nullable: true })
+  @Column('text', { name: 'LinkWith', nullable: true })
   linkWith: string | null;
 
-  @Column("json", { name: "LinkEffects", nullable: true })
+  @Column('json', { name: 'LinkEffects', nullable: true })
   linkEffects: object | null;
 
-  @ManyToOne(
-    () => CardList,
-    (cardList) => cardList.cardMemoryAppeals,
-    { onDelete: "RESTRICT", onUpdate: "CASCADE" }
-  )
-  @JoinColumn([{ name: "EnzaID", referencedColumnName: "enzaId" }])
+  @ManyToOne(() => CardList, (cardList) => cardList.cardMemoryAppeals, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
   enza: CardList;
 }
