@@ -3,8 +3,6 @@ import {
   Get,
   Header,
   Headers,
-  HttpException,
-  HttpStatus,
   NotFoundException,
   Query,
   UnprocessableEntityException,
@@ -135,5 +133,23 @@ export class InfoController {
     }
 
     return siteMap.end({ prettyPrint: true });
+  }
+
+  @Get('getLimitedTable')
+  @Header('Content-Type', 'application/json')
+  async getLimitedTable() {
+    return await this.infoService.getTableByType(0);
+  }
+
+  @Get('getGeneralTable')
+  @Header('Content-Type', 'application/json')
+  async getGeneralTable() {
+    return await this.infoService.getTableByType(1);
+  }
+
+  @Get('getAllTable')
+  @Header('Content-Type', 'application/json')
+  async getAllTable() {
+    return await this.infoService.getTableByType(2);
   }
 }

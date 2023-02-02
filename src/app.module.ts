@@ -13,6 +13,8 @@ import { CardSupportSkill } from './entities/cardSupportSkill.entity';
 import { Idol } from './entities/idol.entity';
 import { IdolDress } from './entities/idolDress.entity';
 import { Unit } from './entities/unit.entity';
+import { CardProduceAptitude } from './entities/cardProduceAptitude.entity';
+import { CardSupportFightSkill } from './entities/cardSupportFightSkill.entity';
 /* Other modules */
 import { SpineModule } from './spine/spine.module';
 import { InfoModule } from './info/info.module';
@@ -39,11 +41,13 @@ import { UpdateModule } from './update/update.module';
         CardProficiency,
         CardSupportEvent,
         CardSupportSkill,
+        CardProduceAptitude,
+        CardSupportFightSkill,
         Idol,
         IdolDress,
         Unit,
       ],
-      logging: true,
+      logging: false,
       synchronize: process.env.ENV_PRODUCTION != 'true',
     }),
   ],

@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CardIdolEvent } from './cardIdolEvent.entity';
@@ -14,6 +15,8 @@ import { CardPanel } from './cardPanel.entity';
 import { CardProficiency } from './cardProficiency.entity';
 import { CardSupportEvent } from './cardSupportEvent.entity';
 import { CardSupportSkill } from './cardSupportSkill.entity';
+import { CardProduceAptitude } from './cardProduceAptitude.entity';
+import { CardSupportFightSkill } from './cardSupportFightSkill.entity';
 
 @Index('Index', ['cardIndex'], { unique: true })
 @Index('IdolID', ['idolId'], {})
@@ -105,4 +108,18 @@ export class CardList {
     { cascade: ['insert', 'update'] },
   )
   cardSupportSkills: CardSupportSkill[];
+
+  @OneToMany(
+    () => CardProduceAptitude,
+    (cardProduceAptitude) => cardProduceAptitude.enza,
+    { cascade: ['insert', 'update'] },
+  )
+  cardProduceAptitudes: CardProduceAptitude[];
+
+  @OneToOne(
+    () => CardSupportFightSkill,
+    (scdbSupportFightSkill) => scdbSupportFightSkill.enza,
+    { cascade: ['insert', 'update'] },
+  )
+  cardSupportFightSkills: CardSupportFightSkill[];
 }
