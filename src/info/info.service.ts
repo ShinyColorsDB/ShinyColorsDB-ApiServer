@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CardList } from 'src/entities/cardList.entity';
-import { DataSource, Between,  } from 'typeorm';
+import { DataSource, Between } from 'typeorm';
 import { Idol } from '../entities/idol.entity';
 import { Unit } from '../entities/unit.entity';
 
@@ -50,7 +50,7 @@ export class InfoService {
       .addOrderBy('memoryAppeals.memoryId', 'ASC')
       .addOrderBy('idolEvents.eventId', 'ASC')
       .where('pcard.cardUuid = :cardUuid', { cardUuid: cardUuid })
-      .getOne();;
+      .getOne();
   }
 
   async getSCardInfo(cardUuid: string): Promise<CardList> {

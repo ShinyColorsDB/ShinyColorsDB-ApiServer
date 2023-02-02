@@ -3,15 +3,15 @@ import { SpineService } from './spine.service';
 
 @Controller('spine')
 export class SpineController {
-    constructor(private spineService: SpineService) { }
+  constructor(private spineService: SpineService) {}
 
-    @Get('idollist')
-    async getIdolList() {
-        return await this.spineService.getIdollist();
-    }
+  @Get('idollist')
+  async getIdolList() {
+    return await this.spineService.getIdollist();
+  }
 
-    @Get('dresslist')
-    async getDressList(@Query('idolId') idolId: number) {
-        return await this.spineService.getDressList(idolId);
-    }
+  @Get('dresslist')
+  async getDressList(@Query('idolId') idolId: number) {
+    return await this.spineService.getDressList(idolId);
+  }
 }

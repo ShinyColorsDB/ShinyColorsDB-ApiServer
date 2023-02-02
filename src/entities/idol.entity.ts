@@ -6,81 +6,81 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { CardList } from "./cardList.entity";
-import { IdolDress } from "./idolDress.entity";
-import { Unit } from "./unit.entity";
+} from 'typeorm';
+import { CardList } from './cardList.entity';
+import { IdolDress } from './idolDress.entity';
+import { Unit } from './unit.entity';
 
-@Index("IdolID", ["idolId"], { unique: true })
-@Index("IdolName_2", ["idolName"], { unique: true })
-@Index("Unit", ["unitId"], {})
-@Index("IdolName", ["idolName"], {})
-@Entity("SCDB_Idols", { schema: "shinycolors_dev2" })
+@Index('IdolID', ['idolId'], { unique: true })
+@Index('IdolName_2', ['idolName'], { unique: true })
+@Index('Unit', ['unitId'], {})
+@Index('IdolName', ['idolName'], {})
+@Entity('SCDB_Idols', { schema: 'shinycolors_dev2' })
 export class Idol {
-  @PrimaryGeneratedColumn({ type: "int", name: "IdolID" })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'IdolID' })
   idolId: number;
 
-  @Column("varchar", { name: "IdolName", unique: true, length: 6 })
+  @Column('varchar', { name: 'IdolName', unique: true, length: 6 })
   idolName: string;
 
-  @Column("text", { name: "Hiragana" })
+  @Column('text', { name: 'Hiragana' })
   hiragana: string;
 
-  @Column("text", { name: "NickName" })
+  @Column('text', { name: 'NickName' })
   nickName: string;
 
-  @Column("int", { name: "UnitID" })
+  @Column('int', { name: 'UnitID' })
   unitId: number;
 
-  @Column("int", { name: "Age" })
+  @Column('int', { name: 'Age' })
   age: number;
 
-  @Column("text", { name: "BloodType" })
+  @Column('text', { name: 'BloodType' })
   bloodType: string;
 
-  @Column("text", { name: "Birthday" })
+  @Column('text', { name: 'Birthday' })
   birthday: string;
 
-  @Column("text", { name: "StarSign" })
+  @Column('text', { name: 'StarSign' })
   starSign: string;
 
-  @Column("int", { name: "Height" })
+  @Column('int', { name: 'Height' })
   height: number;
 
-  @Column("int", { name: "Weight" })
+  @Column('int', { name: 'Weight' })
   weight: number;
 
-  @Column("text", { name: "ThreeSize" })
+  @Column('text', { name: 'ThreeSize' })
   threeSize: string;
 
-  @Column("text", { name: "UsedHand" })
+  @Column('text', { name: 'UsedHand' })
   usedHand: string;
 
-  @Column("text", { name: "Interest" })
+  @Column('text', { name: 'Interest' })
   interest: string;
 
-  @Column("text", { name: "SpecialSkill" })
+  @Column('text', { name: 'SpecialSkill' })
   specialSkill: string;
 
-  @Column("text", { name: "BirthPlace" })
+  @Column('text', { name: 'BirthPlace' })
   birthPlace: string;
 
-  @Column("text", { name: "PreCV", nullable: true })
+  @Column('text', { name: 'PreCV', nullable: true })
   preCv: string | null;
 
-  @Column("text", { name: "CV" })
+  @Column('text', { name: 'CV' })
   cv: string;
 
-  @Column("text", { name: "Hirameki" })
+  @Column('text', { name: 'Hirameki' })
   hirameki: string;
 
-  @Column("text", { name: "Color1" })
+  @Column('text', { name: 'Color1' })
   color1: string;
 
-  @Column("text", { name: "Color2" })
+  @Column('text', { name: 'Color2' })
   color2: string;
 
-  @Column("text", { name: "IdolHash", select: false })
+  @Column('text', { name: 'IdolHash', select: false })
   idolHash: string;
 
   @OneToMany(() => CardList, (cardList) => cardList.idol)
@@ -90,9 +90,9 @@ export class Idol {
   idolDress: IdolDress[];
 
   @ManyToOne(() => Unit, (unit) => unit.idols, {
-    onDelete: "NO ACTION",
-    onUpdate: "CASCADE",
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: "UnitID", referencedColumnName: "unitId" }])
+  @JoinColumn([{ name: 'UnitID', referencedColumnName: 'unitId' }])
   unit: Unit;
 }

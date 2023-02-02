@@ -5,8 +5,8 @@ import { SpineService } from './spine.service';
 import { SpineController } from './spine.controller';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Idol])],
-    controllers: [SpineController],
-    providers: [SpineService],
+  imports: [TypeOrmModule.forFeature([Idol])],
+  controllers: [SpineController],
+  providers: [SpineService],
 })
-export class SpineModule { }
+export class SpineModule {}
