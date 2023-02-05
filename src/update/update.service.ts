@@ -55,6 +55,7 @@ export class UpdateService {
       console.error('Card already exists');
       return true;
     } else {
+      console.log('Saving cardId ' + enzaId + ' to filesystem');
       return false;
     }
   }
