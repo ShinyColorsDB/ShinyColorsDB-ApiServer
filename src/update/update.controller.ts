@@ -8,41 +8,35 @@ import { UpdateSCard } from '../interfaces/updatescard';
 export class UpdateController {
   constructor(private updateService: UpdateService) {}
 
-  @Post('pcardinfo')
+  @Post('newcardinfo')
   @HttpCode(201)
-  async newPcardInfo(
+  async newCardInfo(
     @Body() payload: JSON,
     @Headers('X-CREDENTIAL') credential: string,
+    @Headers('X-TOKEN') token: string,
   ): Promise<any> {
     this.updateService.checkPayload(payload);
     this.updateService.checkCredential(credential);
-    await this.updateService.checkCardExistence(
-      (payload as any as UpdatePCard).idolId,
-    );
-
-    this.updateService.saveJsonFile(
-      payload,
-      (payload as any as UpdatePCard).idolId + '.json',
-    );
-    this.updateService.updatePCard(payload as any as UpdatePCard);
-  }
-
-  @Post('scardinfo')
-  @HttpCode(201)
-  async newScardInfo(
-    @Body() payload: JSON,
-    @Headers('X-CREDENTIAL') credential: string,
-  ): Promise<any> {
-    this.updateService.checkPayload(payload);
-    this.updateService.checkCredential(credential);
-    await this.updateService.checkCardExistence(
-      (payload as any as UpdateSCard).supportIdolId,
-    );
-
-    this.updateService.saveJsonFile(
-      payload,
-      (payload as any as UpdateSCard).supportIdolId + '.json',
-    );
-    this.updateService.updateSCard(payload as any as UpdateSCard);
+    this.updateService.checkToken(token);
+    if (payload.hasOwnProperty('idolId')) {
+      const idolId: string = (payload as any as UpdatePCard).idolId;
+      if (this.updateService.checkCardExistence(idolId)) {
+        return;
+      }
+      this.updateService.saveJsonFile(
+        payload,
+        (payload as any as UpdatePCard).idolId + '.json',
+      );
+    } else if (payload.hasOwnProperty('supportIdolId')) {
+      const supportIdolId: string = (payload as any as UpdateSCard)
+        .supportIdolId;
+      if (this.updateService.checkCardExistence(supportIdolId)) {
+        return;
+      }
+      this.updateService.saveJsonFile(
+        payload,
+        (payload as any as UpdateSCard).supportIdolId + '.json',
+      );
+    }
   }
 }

@@ -121,5 +121,5 @@ export class CardList {
     (scdbSupportFightSkill) => scdbSupportFightSkill.enza,
     { cascade: ['insert', 'update'] },
   )
-  cardSupportFightSkills: CardSupportFightSkill[];
+  cardSupportFightSkills: CardSupportFightSkill;
 }
