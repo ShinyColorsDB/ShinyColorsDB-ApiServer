@@ -36,7 +36,7 @@ export class UpdateService {
   }
 
   saveJsonFile(payload: JSON, fileName: string) {
-    console.log(fileName);
+    console.log('Saving cardId ' + fileName + ' to filesystem');
     fs.writeFileSync(
       path.join(process.env.FILE_CARDJSON_PATH, fileName),
       JSON.stringify(payload),
@@ -55,7 +55,6 @@ export class UpdateService {
       console.error('Card already exists');
       return true;
     } else {
-      console.log('Saving cardId ' + enzaId + ' to filesystem');
       return false;
     }
   }

@@ -19,8 +19,9 @@ export class UpdateController {
     this.updateService.checkCredential(credential);
     this.updateService.checkToken(token);
     if (payload.hasOwnProperty('idolId')) {
+      console.log('new Produce card');
       const idolId: string = (payload as any as UpdatePCard).idolId;
-      if (this.updateService.checkCardExistence(idolId)) {
+      if (await this.updateService.checkCardExistence(idolId)) {
         return;
       }
       this.updateService.saveJsonFile(
@@ -28,9 +29,10 @@ export class UpdateController {
         (payload as any as UpdatePCard).idolId + '.json',
       );
     } else if (payload.hasOwnProperty('supportIdolId')) {
+      console.log('new Support card');
       const supportIdolId: string = (payload as any as UpdateSCard)
         .supportIdolId;
-      if (this.updateService.checkCardExistence(supportIdolId)) {
+      if (await this.updateService.checkCardExistence(supportIdolId)) {
         return;
       }
       this.updateService.saveJsonFile(
