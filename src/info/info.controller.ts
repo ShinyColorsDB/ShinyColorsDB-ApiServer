@@ -106,29 +106,48 @@ export class InfoController {
     const siteMap = xmlbuilder2
       .create({ version: '1.0', encoding: 'utf-8' })
       .ele('urlset', { xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
-    siteMap.ele('url').ele('loc').txt('https://shinycolors.moe/').up();
+    siteMap.ele('url')
+        .ele('loc').txt('https://shinycolors.moe/').up()
+        .ele('lastmod').txt('2021-05-25').up()
+        .ele('changefreq').txt('yearly').up()
+        .ele('priority').txt('1').up();
 
     for (const i of iList) {
       siteMap
         .ele('url')
-        .ele('loc')
-        .txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`)
+        .ele('loc').txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`)
+        .up()
+        .ele('lastmod').txt('2021-05-25')
+        .up()
+        .ele('changefreq').txt('yearly')
+        .up()
+        .ele('priority').txt('0.8')
         .up();
     }
 
     for (const p of pList) {
       siteMap
         .ele('url')
-        .ele('loc')
-        .txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`)
+        .ele('loc').txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`)
+        .up()
+        .ele('lastmod').txt(p.lastModified)
+        .up()
+        .ele('changefreq').txt('monthly')
+        .up()
+        .ele('priority').txt('0.6')
         .up();
     }
 
     for (const s of sList) {
       siteMap
         .ele('url')
-        .ele('loc')
-        .txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`)
+        .ele('loc').txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`)
+        .up()
+        .ele('lastmod').txt(s.lastModified)
+        .up()
+        .ele('changefreq').txt('monthly')
+        .up()
+        .ele('priority').txt('0.6')
         .up();
     }
 

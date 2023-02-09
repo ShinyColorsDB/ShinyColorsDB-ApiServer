@@ -66,6 +66,9 @@ export class CardList {
   @Column('date', { name: 'ReleaseDate', nullable: true })
   releaseDate: string | null;
 
+  @Column('date', { name: 'LastModified', nullable: true })
+  lastModified: string | null;
+
   @OneToMany(() => CardIdolEvent, (cardIdolEvent) => cardIdolEvent.enza, {
     cascade: ['insert', 'update'],
   })
