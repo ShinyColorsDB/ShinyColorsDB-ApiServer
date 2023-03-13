@@ -106,52 +106,97 @@ export class InfoController {
     const siteMap = xmlbuilder2
       .create({ version: '1.0', encoding: 'utf-8' })
       .ele('urlset', { xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
-    siteMap.ele('url')
-        .ele('loc').txt('https://shinycolors.moe/').up()
-        .ele('lastmod').txt('2021-05-25').up()
-        .ele('changefreq').txt('yearly').up()
-        .ele('priority').txt('1').up();
+    siteMap
+      .ele('url')
+      .ele('loc')
+      .txt('https://shinycolors.moe/')
+      .up()
+      .ele('lastmod')
+      .txt('2021-05-25')
+      .up()
+      .ele('changefreq')
+      .txt('yearly')
+      .up()
+      .ele('priority')
+      .txt('1')
+      .up();
 
     for (const i of iList) {
       siteMap
         .ele('url')
-        .ele('loc').txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`)
+        .ele('loc')
+        .txt(`https://shinycolors.moe/idolinfo?idolid=${i.idolId}`)
         .up()
-        .ele('lastmod').txt('2021-05-25')
+        .ele('lastmod')
+        .txt('2021-05-25')
         .up()
-        .ele('changefreq').txt('yearly')
+        .ele('changefreq')
+        .txt('yearly')
         .up()
-        .ele('priority').txt('0.8')
+        .ele('priority')
+        .txt('0.8')
         .up();
     }
 
     for (const p of pList) {
       siteMap
         .ele('url')
-        .ele('loc').txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`)
+        .ele('loc')
+        .txt(`https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}`)
         .up()
-        .ele('lastmod').txt(p.lastModified)
+        .ele('lastmod')
+        .txt(p.lastModified)
         .up()
-        .ele('changefreq').txt('monthly')
+        .ele('changefreq')
+        .txt('monthly')
         .up()
-        .ele('priority').txt('0.6')
+        .ele('priority')
+        .txt('0.6')
         .up();
     }
 
     for (const s of sList) {
       siteMap
         .ele('url')
-        .ele('loc').txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`)
+        .ele('loc')
+        .txt(`https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}`)
         .up()
-        .ele('lastmod').txt(s.lastModified)
+        .ele('lastmod')
+        .txt(s.lastModified)
         .up()
-        .ele('changefreq').txt('monthly')
+        .ele('changefreq')
+        .txt('monthly')
         .up()
-        .ele('priority').txt('0.6')
+        .ele('priority')
+        .txt('0.6')
         .up();
     }
 
     return siteMap.end({ prettyPrint: true });
+  }
+
+  @Get('sitelist2')
+  @Header('Content-Type', 'text/plain')
+  async getSiteList2() {
+    const iList = await this.infoService.getIdollist(),
+      pList = await this.infoService.getPcardList(),
+      sList = await this.infoService.getScardList();
+
+    let sitelist2 = 'https://shinycolors.moe/\n';
+
+    for (const i of iList) {
+      sitelist2 += `https://shinycolors.moe/idolinfo?idolid=${i.idolId}\n`;
+    }
+
+    for (const p of pList) {
+      sitelist2 += `https://shinycolors.moe/pcardinfo?uuid=${p.cardUuid}\n`;
+    }
+
+    for (const s of sList) {
+      sitelist2 += `https://shinycolors.moe/scardinfo?uuid=${s.cardUuid}\n`;
+    }
+
+    return sitelist2;
   }
 
   @Get('getLimitedTable')
