@@ -11,7 +11,7 @@ export class InfoService {
   async getIdollist(): Promise<Idol[]> {
     return this.dataSource.getRepository(Idol).find({
       select: ['idolId', 'idolName'],
-      where: { idolId: Between(1, 25) },
+      where: { idolId: Between(1, 26) },
       order: { idolId: 'ASC' },
     });
   }
@@ -32,7 +32,7 @@ export class InfoService {
       .getRepository(Unit)
       .createQueryBuilder('unit')
       .leftJoinAndSelect('unit.idols', 'idol')
-      .where('unit.unitId != :id1', { id1: 8 })
+      .where('unit.unitId != :id1', { id1: 9 })
       .andWhere('unit.unitId != :id2', { id2: 0 })
       .orderBy('unit.unitId', 'ASC')
       .addOrderBy('idol.idolId', 'ASC')

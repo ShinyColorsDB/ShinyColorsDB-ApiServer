@@ -25,7 +25,7 @@ export class InfoController {
     @Headers('CF-IPCountry') country: string,
     @Headers('X-Forwarded-For') forwarder: string,
   ) {
-    if (isNaN(idolId) || idolId < 1 || idolId > 25) {
+    if (isNaN(idolId) || idolId < 1 || idolId > 26) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
     }
     console.log(`${country} user accessing iInfo ${idolId}`);
