@@ -6,11 +6,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CardList } from './cardList.entity';
+import { ScdbCardList } from './ScdbCardList.entity';
 
 @Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardMemoryAppeal', { schema: 'shinycolors_dev2' })
-export class CardMemoryAppeal {
+@Entity('SCDB_CardMemoryAppeal', { schema: 'shinycolors' })
+export class ScdbCardMemoryAppeal {
   @PrimaryGeneratedColumn({ type: 'int', name: 'MemoryIndex' })
   memoryIndex: number;
 
@@ -41,10 +41,11 @@ export class CardMemoryAppeal {
   @Column('json', { name: 'LinkEffects', nullable: true })
   linkEffects: object | null;
 
-  @ManyToOne(() => CardList, (cardList) => cardList.cardMemoryAppeals, {
-    onDelete: 'RESTRICT',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(
+    () => ScdbCardList,
+    (scdbCardList) => scdbCardList.cardMemoryAppeals,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
+  )
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
-  enza: CardList;
+  enza: ScdbCardList;
 }

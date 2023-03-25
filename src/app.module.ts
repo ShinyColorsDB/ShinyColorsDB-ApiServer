@@ -3,18 +3,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 /* Entities */
-import { CardIdolEvent } from './entities/cardIdolEvent.entity';
-import { CardList } from './entities/cardList.entity';
-import { CardMemoryAppeal } from './entities/cardMemoryAppeal.entity';
-import { CardPanel } from './entities/cardPanel.entity';
-import { CardProficiency } from './entities/cardProficiency.entity';
-import { CardSupportEvent } from './entities/cardSupportEvent.entity';
-import { CardSupportSkill } from './entities/cardSupportSkill.entity';
-import { Idol } from './entities/idol.entity';
-import { IdolDress } from './entities/idolDress.entity';
-import { Unit } from './entities/unit.entity';
-import { CardProduceAptitude } from './entities/cardProduceAptitude.entity';
-import { CardSupportFightSkill } from './entities/cardSupportFightSkill.entity';
+import { ScdbCardIdolEvent } from './entities/ScdbCardIdolEvent.entity';
+import { ScdbCardList } from './entities/ScdbCardList.entity';
+import { ScdbCardMemoryAppeal } from './entities/ScdbCardMemoryAppeal';
+import { ScdbCardPanel } from './entities/ScdbCardPanel.entity';
+import { ScdbCardProficiency } from './entities/ScdbCardProficiency.entity';
+import { ScdbCardSupportEvent } from './entities/ScdbCardSupportEvent.entity';
+import { ScdbCardSupportSkill } from './entities/ScdbCardSupportSkill.entity';
+import { ScdbIdols } from './entities/ScdbIdols.entity';
+import { ScdbIdolDress } from './entities/ScdbIdolDress.entity';
+import { ScdbUnits } from './entities/ScdbUnits.entity';
+import { ScdbProduceAptitude } from './entities/ScdbProduceAptitude.entity';
+import { ScdbSupportFightSkill } from './entities/ScdbSupportFightSkill.entity';
+import { ScdbSpinePreset } from './entities/ScdbSpinePreset.entity';
 /* Other modules */
 import { SpineModule } from './spine/spine.module';
 import { InfoModule } from './info/info.module';
@@ -34,18 +35,19 @@ import { UpdateModule } from './update/update.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [
-        CardIdolEvent,
-        CardList,
-        CardMemoryAppeal,
-        CardPanel,
-        CardProficiency,
-        CardSupportEvent,
-        CardSupportSkill,
-        CardProduceAptitude,
-        CardSupportFightSkill,
-        Idol,
-        IdolDress,
-        Unit,
+        ScdbCardIdolEvent,
+        ScdbCardList,
+        ScdbCardMemoryAppeal,
+        ScdbCardPanel,
+        ScdbCardProficiency,
+        ScdbCardSupportEvent,
+        ScdbCardSupportSkill,
+        ScdbIdols,
+        ScdbIdolDress,
+        ScdbUnits,
+        ScdbProduceAptitude,
+        ScdbSupportFightSkill,
+        ScdbSpinePreset,
       ],
       logging: false,
       synchronize: process.env.ENV_PRODUCTION != 'true',

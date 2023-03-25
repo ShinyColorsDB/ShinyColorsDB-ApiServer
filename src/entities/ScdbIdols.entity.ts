@@ -7,16 +7,18 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CardList } from './cardList.entity';
-import { IdolDress } from './idolDress.entity';
-import { Unit } from './unit.entity';
+import { ScdbCardList } from './ScdbCardList.entity';
+import { ScdbIdolDress } from './ScdbIdolDress.entity';
+import { ScdbUnits } from './ScdbUnits.entity';
+import { ScdbSpinePreset } from './ScdbSpinePreset.entity';
 
 @Index('IdolID', ['idolId'], { unique: true })
 @Index('IdolName_2', ['idolName'], { unique: true })
+@Index('IDX_d6dc406e941c2d9876683d456b', ['idolName'], { unique: true })
 @Index('Unit', ['unitId'], {})
 @Index('IdolName', ['idolName'], {})
-@Entity('SCDB_Idols', { schema: 'shinycolors_dev2' })
-export class Idol {
+@Entity('SCDB_Idols', { schema: 'shinycolors' })
+export class ScdbIdols {
   @PrimaryGeneratedColumn({ type: 'int', name: 'IdolID' })
   idolId: number;
 
@@ -83,16 +85,19 @@ export class Idol {
   @Column('text', { name: 'IdolHash', select: false })
   idolHash: string;
 
-  @OneToMany(() => CardList, (cardList) => cardList.idol)
-  cardLists: CardList[];
+  @OneToMany(() => ScdbCardList, (scdbCardList) => scdbCardList.idol)
+  cardLists: ScdbCardList[];
 
-  @OneToMany(() => IdolDress, (idoldress) => idoldress.idol)
-  idolDress: IdolDress[];
+  @OneToMany(() => ScdbIdolDress, (scdbIdolDress) => scdbIdolDress.idol)
+  idolDresses: ScdbIdolDress[];
 
-  @ManyToOne(() => Unit, (unit) => unit.idols, {
+  @ManyToOne(() => ScdbUnits, (scdbUnits) => scdbUnits.idols, {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'UnitID', referencedColumnName: 'unitId' }])
-  unit: Unit;
+  unit: ScdbUnits;
+
+  @OneToMany(() => ScdbSpinePreset, (scdbSpinePreset) => scdbSpinePreset.idol)
+  spinePresets: ScdbSpinePreset[];
 }

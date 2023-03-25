@@ -5,11 +5,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Idol } from './idol.entity';
+import { ScdbIdols } from './ScdbIdols.entity';
 
 @Index('UnitID', ['unitId'], { unique: true })
-@Entity('SCDB_Units', { schema: 'shinycolors_dev2' })
-export class Unit {
+@Entity('SCDB_Units', { schema: 'shinycolors' })
+export class ScdbUnits {
   @PrimaryGeneratedColumn({ type: 'int', name: 'UnitID' })
   unitId: number;
 
@@ -28,6 +28,6 @@ export class Unit {
   @Column('text', { name: 'UnitPV' })
   unitPv: string;
 
-  @OneToMany(() => Idol, (idol) => idol.unit)
-  idols: Idol[];
+  @OneToMany(() => ScdbIdols, (scdbIdols) => scdbIdols.unit)
+  idols: ScdbIdols[];
 }

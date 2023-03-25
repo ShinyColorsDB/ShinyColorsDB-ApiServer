@@ -8,7 +8,7 @@ import * as path from 'path';
 import { isEmpty, isNotEmptyObject } from 'class-validator';
 import { DataSource } from 'typeorm';
 
-import { CardList } from 'src/entities/cardList.entity';
+import { ScdbCardList } from '../entities/ScdbCardList.entity';
 
 @Injectable()
 export class UpdateService {
@@ -47,7 +47,7 @@ export class UpdateService {
     if (
       isEmpty(enzaId) ||
       (await this.dataSource
-        .getRepository(CardList)
+        .getRepository(ScdbCardList)
         .createQueryBuilder('cardlist')
         .where('cardlist.enzaId = :enzaId', { enzaId: enzaId })
         .getOne()) != null

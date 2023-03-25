@@ -1,24 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { CardList } from 'src/entities/cardList.entity';
+import { ScdbCardList } from 'src/entities/ScdbCardList.entity';
 import { DataSource, Between, Brackets } from 'typeorm';
-import { Idol } from '../entities/idol.entity';
-import { Unit } from '../entities/unit.entity';
+import { ScdbIdols } from '../entities/ScdbIdols.entity';
+import { ScdbUnits } from '../entities/ScdbUnits.entity';
 
 @Injectable()
 export class InfoService {
   constructor(private dataSource: DataSource) {}
 
-  async getIdollist(): Promise<Idol[]> {
-    return this.dataSource.getRepository(Idol).find({
+  async getIdollist(): Promise<ScdbIdols[]> {
+    return this.dataSource.getRepository(ScdbIdols).find({
       select: ['idolId', 'idolName'],
       where: { idolId: Between(1, 26) },
       order: { idolId: 'ASC' },
     });
   }
 
-  async getIdolInfo(id: number): Promise<Idol> {
+  async getIdolInfo(id: number): Promise<ScdbIdols> {
     return this.dataSource
-      .getRepository(Idol)
+      .getRepository(ScdbIdols)
       .createQueryBuilder('idol')
       .leftJoinAndSelect('idol.unit', 'unit')
       .leftJoinAndSelect('idol.cardLists', 'cardList')
@@ -27,9 +27,9 @@ export class InfoService {
       .getOne();
   }
 
-  async getUnitInfo(): Promise<Unit[]> {
+  async getUnitInfo(): Promise<ScdbUnits[]> {
     return this.dataSource
-      .getRepository(Unit)
+      .getRepository(ScdbUnits)
       .createQueryBuilder('unit')
       .leftJoinAndSelect('unit.idols', 'idol')
       .where('unit.unitId != :id1', { id1: 9 })
@@ -39,9 +39,9 @@ export class InfoService {
       .getMany();
   }
 
-  async getPCardInfo(cardUuid: string): Promise<CardList> {
+  async getPCardInfo(cardUuid: string): Promise<ScdbCardList> {
     return this.dataSource
-      .getRepository(CardList)
+      .getRepository(ScdbCardList)
       .createQueryBuilder('pcard')
       .leftJoinAndSelect('pcard.idol', 'idol')
       .leftJoinAndSelect('pcard.cardIdolEvents', 'idolEvents')
@@ -55,9 +55,9 @@ export class InfoService {
       .getOne();
   }
 
-  async getSCardInfo(cardUuid: string): Promise<CardList> {
+  async getSCardInfo(cardUuid: string): Promise<ScdbCardList> {
     return this.dataSource
-      .getRepository(CardList)
+      .getRepository(ScdbCardList)
       .createQueryBuilder('scard')
       .leftJoinAndSelect('scard.idol', 'idol')
       .leftJoinAndSelect('scard.cardSupportEvents', 'supportEvents')
@@ -72,30 +72,30 @@ export class InfoService {
       .getOne();
   }
 
-  async getLatestPInfo(): Promise<CardList[]> {
+  async getLatestPInfo(): Promise<ScdbCardList[]> {
     return this.dataSource.query(
       'select SCDB_CardList.EnzaID as enzaId, SCDB_CardList.IdolID as idolId, SCDB_CardList.CardName as cardName, SCDB_CardList.CardUUID as cardUuid, SCDB_CardList.BigPic1 as bigPic1, SCDB_CardList.CardType as cardType, SCDB_CardList.ReleaseDate as releaseDate from SCDB_CardList, (select IdolID, max(ReleaseDate) as re from SCDB_CardList where SCDB_CardList.CardType REGEXP "P_" group by IdolID) latest where SCDB_CardList.IdolID=latest.IdolID and SCDB_CardList.ReleaseDate=latest.re ORDER BY SCDB_CardList.IdolID;',
     );
   }
 
-  async getLatestSInfo(): Promise<CardList[]> {
+  async getLatestSInfo(): Promise<ScdbCardList[]> {
     return this.dataSource.query(
       'select SCDB_CardList.EnzaID as enzaId, SCDB_CardList.IdolID as idolId, SCDB_CardList.CardName as cardName, SCDB_CardList.CardUUID as cardUuid, SCDB_CardList.BigPic1 as bigPic1, SCDB_CardList.CardType as cardType, SCDB_CardList.ReleaseDate as releaseDate from SCDB_CardList, (select IdolID, max(ReleaseDate) as re from SCDB_CardList where SCDB_CardList.CardType REGEXP "S_" group by IdolID) latest where SCDB_CardList.IdolID=latest.IdolID and SCDB_CardList.ReleaseDate=latest.re ORDER BY SCDB_CardList.IdolID;',
     );
   }
 
-  async getUpdateHistory(): Promise<CardList[]> {
+  async getUpdateHistory(): Promise<ScdbCardList[]> {
     return this.dataSource
-      .getRepository(CardList)
+      .getRepository(ScdbCardList)
       .createQueryBuilder('cardList')
       .orderBy('cardList.releaseDate', 'DESC')
       .limit(10)
       .getMany();
   }
 
-  async getPcardList(): Promise<CardList[]> {
+  async getPcardList(): Promise<ScdbCardList[]> {
     return this.dataSource
-      .getRepository(CardList)
+      .getRepository(ScdbCardList)
       .createQueryBuilder('cardList')
       .where('cardList.cardType REGEXP "P_"')
       .orderBy('cardList.idolId', 'ASC')
@@ -103,9 +103,9 @@ export class InfoService {
       .getMany();
   }
 
-  async getScardList(): Promise<CardList[]> {
+  async getScardList(): Promise<ScdbCardList[]> {
     return this.dataSource
-      .getRepository(CardList)
+      .getRepository(ScdbCardList)
       .createQueryBuilder('cardList')
       .where('cardList.cardType REGEXP "S_"')
       .orderBy('cardList.idolId', 'ASC')
@@ -118,8 +118,10 @@ export class InfoService {
       supportList = [];
 
     for (const k of await this.getIdollist()) {
-      produceList.push(await this.getGap(k.idolId, type, 0));
-      supportList.push(await this.getGap(k.idolId, type, 1));
+      const pElement = await this.getGap(k.idolId, type, 0),
+        sElement = await this.getGap(k.idolId, type, 1);
+      if (pElement) produceList.push(pElement);
+      if (sElement) supportList.push(sElement);
     }
 
     return {
@@ -141,9 +143,9 @@ export class InfoService {
     idolId: number,
     queryType: number,
     cardType: number,
-  ): Promise<CardList> {
+  ): Promise<ScdbCardList> {
     const src = this.dataSource
-      .getRepository(CardList)
+      .getRepository(ScdbCardList)
       .createQueryBuilder('cardList');
 
     switch (queryType) {

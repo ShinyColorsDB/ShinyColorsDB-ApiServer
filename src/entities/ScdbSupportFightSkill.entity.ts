@@ -3,18 +3,18 @@ import {
   Entity,
   Index,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CardList } from './cardList.entity';
+import { ScdbCardList } from './ScdbCardList.entity';
 
 @Index('EnzaId', ['enzaId'], {})
-@Entity('SCDB_SupportFightSkill', { schema: 'shinycolors_dev2' })
-export class CardSupportFightSkill {
+@Entity('SCDB_SupportFightSkill', { schema: 'shinycolors' })
+export class ScdbSupportFightSkill {
   @PrimaryGeneratedColumn({ type: 'int', name: 'FtIndex' })
   ftIndex: number;
 
-  @Column('bigint', { name: 'EnzaId' })
+  @Column('bigint', { name: 'EnzaID' })
   enzaId: string;
 
   @Column('text', { name: 'FtComment' })
@@ -35,10 +35,11 @@ export class CardSupportFightSkill {
   @Column('json', { name: 'FtPerfect' })
   ftPerfect: object;
 
-  @OneToOne(() => CardList, (cardList) => cardList.cardSupportFightSkills, {
-    onDelete: 'RESTRICT',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'EnzaId', referencedColumnName: 'enzaId' }])
-  enza: CardList;
+  @ManyToOne(
+    () => ScdbCardList,
+    (scdbCardList) => scdbCardList.cardSupportFightSkills,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
+  )
+  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  enza: ScdbCardList;
 }

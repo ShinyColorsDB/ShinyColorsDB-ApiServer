@@ -6,11 +6,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CardList } from './cardList.entity';
+import { ScdbCardList } from './ScdbCardList.entity';
 
 @Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardSupportEvent', { schema: 'shinycolors_dev2' })
-export class CardSupportEvent {
+@Entity('SCDB_CardSupportEvent', { schema: 'shinycolors' })
+export class ScdbCardSupportEvent {
   @PrimaryGeneratedColumn({ type: 'int', name: 'EventIndex' })
   eventIndex: number;
 
@@ -38,10 +38,11 @@ export class CardSupportEvent {
   @Column('int', { name: 'EventAddSp' })
   eventAddSp: number;
 
-  @ManyToOne(() => CardList, (cardList) => cardList.cardSupportEvents, {
-    onDelete: 'RESTRICT',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(
+    () => ScdbCardList,
+    (scdbCardList) => scdbCardList.cardSupportEvents,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
+  )
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
-  enza: CardList;
+  enza: ScdbCardList;
 }

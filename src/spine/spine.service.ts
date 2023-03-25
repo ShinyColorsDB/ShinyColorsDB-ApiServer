@@ -1,20 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { IdolDress } from 'src/entities/idolDress.entity';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import { ScdbIdolDress } from '../entities/ScdbIdolDress.entity';
+import { ScdbIdols } from '../entities/ScdbIdols.entity';
+import { ScdbSpinePreset } from '../entities/ScdbSpinePreset.entity';
+
 import { DataSource } from 'typeorm';
-import { Idol } from '../entities/idol.entity';
 
 @Injectable()
 export class SpineService {
   constructor(private dataSource: DataSource) {}
 
-  async getIdollist(): Promise<Idol[]> {
-    return this.dataSource.getRepository(Idol).find({
+  async getIdollist(): Promise<ScdbIdols[]> {
+    return this.dataSource.getRepository(ScdbIdols).find({
       select: ['idolId', 'idolName', 'nickName'],
       order: { idolId: 'ASC' },
     });
   }
 
-  async getDressList(idolId: number): Promise<IdolDress[]> {
+  async getDressList(idolId: number): Promise<ScdbIdolDress[]> {
+    if (idolId == undefined) {
+      throw new UnprocessableEntityException(
+        'Query variable `idolId` is required',
+      );
+    }
     if (idolId < 0 || idolId > 26) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
     }
@@ -23,5 +34,14 @@ export class SpineService {
         idolId.toString() +
         ' ORDER BY FIELD (`DressType`, "P_SSR", "P_SR", "Anniversary", "Mizugi", "Special", "FesReward", "FesTour", "Other"), `EnzaId`',
     );
+  }
+
+  async getSpinePreset(idolId: number): Promise<ScdbSpinePreset[]> {
+    return this.dataSource
+      .getRepository(ScdbSpinePreset)
+      .createQueryBuilder('preset')
+      .where('preset.idolId = :idolId', { idolId: idolId })
+      .orderBy('preset.presetId', 'ASC')
+      .getMany();
   }
 }

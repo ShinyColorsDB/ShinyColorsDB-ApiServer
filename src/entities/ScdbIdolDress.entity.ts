@@ -6,11 +6,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Idol } from './idol.entity';
+import { ScdbIdols } from './ScdbIdols.entity';
 
 @Index('IdolID', ['idolId'], {})
-@Entity('SCDB_IdolDress', { schema: 'shinycolors_dev2' })
-export class IdolDress {
+@Entity('SCDB_IdolDress', { schema: 'shinycolors' })
+export class ScdbIdolDress {
   @PrimaryGeneratedColumn({ type: 'int', name: 'DressIndex' })
   dressIndex: number;
 
@@ -44,10 +44,10 @@ export class IdolDress {
   @Column('tinyint', { name: 'Exist', width: 1 })
   exist: boolean;
 
-  @ManyToOne(() => Idol, (idol) => idol.idolDress, {
+  @ManyToOne(() => ScdbIdols, (scdbIdols) => scdbIdols.idolDresses, {
     onDelete: 'RESTRICT',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'IdolID', referencedColumnName: 'idolId' }])
-  idol: Idol;
+  idol: ScdbIdols;
 }

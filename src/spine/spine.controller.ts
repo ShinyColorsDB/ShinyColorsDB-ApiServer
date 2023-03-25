@@ -14,4 +14,9 @@ export class SpineController {
   async getDressList(@Query('idolId') idolId: number) {
     return await this.spineService.getDressList(idolId);
   }
+
+  @Get('spinepreset')
+  async getSpinePreset(@Query('idolId') idolId: number) {
+    return await this.spineService.getSpinePreset(idolId);
+  }
 }
