@@ -155,7 +155,7 @@ export class InfoService {
             q.where('cardList.getMethod = :getMethod1', {
               getMethod1: 'LimitedGasha',
             }).orWhere('cardList.getMethod = :getMethod2', {
-              getMethod2: 'TwilightCollect',
+              getMethod2: 'TwilightCollection',
             });
           }),
         );
