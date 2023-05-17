@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ScdbCardIdolEvent } from './ScdbCardIdolEvent.entity';
@@ -114,7 +115,7 @@ export class ScdbCardList {
   )
   cardProduceAptitudes: ScdbProduceAptitude[];
 
-  @OneToMany(
+  @OneToOne(
     () => ScdbSupportFightSkill,
     (scdbSupportFightSkill) => scdbSupportFightSkill.enza,
   )
