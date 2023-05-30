@@ -72,10 +72,34 @@ export class InfoService {
       .getOne();
   }
 
+  /*
   async getLatestPInfo(): Promise<ScdbCardList[]> {
     return this.dataSource.query(
       'select SCDB_CardList.EnzaID as enzaId, SCDB_CardList.IdolID as idolId, SCDB_CardList.CardName as cardName, SCDB_CardList.CardUUID as cardUuid, SCDB_CardList.BigPic1 as bigPic1, SCDB_CardList.CardType as cardType, SCDB_CardList.ReleaseDate as releaseDate from SCDB_CardList, (select IdolID, max(ReleaseDate) as re from SCDB_CardList where SCDB_CardList.CardType REGEXP "P_" group by IdolID) latest where SCDB_CardList.IdolID=latest.IdolID and SCDB_CardList.ReleaseDate=latest.re and SCDB_CardList.CardType REGEXP "P_" ORDER BY SCDB_CardList.IdolID;',
     );
+  }
+  */
+  async getLatestPInfo(): Promise<ScdbCardList[]> {
+    return this.dataSource
+      .getRepository(ScdbCardList)
+      .createQueryBuilder('t1')
+      .innerJoin(
+        (subQuery) => {
+          return subQuery
+            .select('IdolId')
+            .addSelect('MAX(releaseDate)', 'maxReleaseDate')
+            .from(ScdbCardList, 'sub')
+            .where('sub.CardType REGEXP :regexp', { regexp: 'P_' })
+            .groupBy('sub.IdolId');
+        },
+        't2',
+        't1.IdolId = t2.IdolId AND t1.releaseDate = t2.maxReleaseDate',
+      )
+      .where('t1.CardType REGEXP :regexp', { regexp: 'P_' })
+      .orderBy('t1.IdolId')
+      .addOrderBy('t1.releaseDate', 'ASC')
+      .addOrderBy('t1.enzaId', 'ASC')
+      .getMany();
   }
 
   async getLatestSInfo(): Promise<ScdbCardList[]> {
