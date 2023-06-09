@@ -6,6 +6,10 @@ import { ScdbUnits } from '../entities/ScdbUnits.entity';
 
 @Injectable()
 export class InfoService {
+  readonly TWILIGHT = 'TwilightCollection';
+  readonly MYSONG = 'MySongCollection';
+  readonly LIMITED = 'LimitedGasha';
+  readonly GENERAL = 'GeneralGasha';
   constructor(private dataSource: DataSource) {}
 
   async getIdollist(): Promise<ScdbIdols[]> {
@@ -175,29 +179,32 @@ export class InfoService {
         src.where(
           new Brackets((q) => {
             q.where('cardList.getMethod = :getMethod1', {
-              getMethod1: 'LimitedGasha',
+              getMethod1: this.LIMITED,
             }).orWhere('cardList.getMethod = :getMethod2', {
-              getMethod2: 'TwilightCollection',
+              getMethod2: this.TWILIGHT,
             });
           }),
         );
         break;
       case 1:
         src.where('cardList.getMethod = :getMethod', {
-          getMethod: 'GeneralGasha',
+          getMethod: this.GENERAL,
         });
         break;
       case 2:
         src.where(
           new Brackets((q) => {
             q.where('cardList.getMethod = :getMethod1', {
-              getMethod1: 'LimitedGasha',
+              getMethod1: this.LIMITED,
             })
               .orWhere('cardList.getMethod = :getMethod2', {
-                getMethod2: 'GeneralGasha',
+                getMethod2: this.GENERAL,
               })
               .orWhere('cardList.getMethod = :getMethod3', {
-                getMethod3: 'TwilightCollect',
+                getMethod3: this.TWILIGHT,
+              })
+              .orWhere('cardList.getMethod = :getMethod4', {
+                getMethod4: this.MYSONG,
               });
           }),
         );

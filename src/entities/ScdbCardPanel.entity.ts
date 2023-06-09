@@ -75,6 +75,18 @@ export class ScdbCardPanel {
   @Column('text', { name: 'PlusSkillEffects', nullable: true })
   plusSkillEffects: string | null;
 
+  @Column('bigint', { name: 'ExchangeSkillID', nullable: true })
+  exchangeSkillId: string | null;
+
+  @Column('text', { name: 'ExchangeSkillDesc', nullable: true })
+  exchangeSkillDesc: string | null;
+
+  @Column('text', { name: 'ExchangeWith', nullable: true })
+  exchangeWith: string | null;
+
+  @Column('text', { name: 'ExchangeSkillEffects', nullable: true })
+  exchangeSkillEffects: string | null;
+
   @ManyToOne(() => ScdbCardList, (scdbCardList) => scdbCardList.cardPanels, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
