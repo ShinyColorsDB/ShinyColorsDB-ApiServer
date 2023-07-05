@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { DataSource } from 'typeorm';
 /* Entities */
 import { ScdbCardIdolEvent } from './entities/ScdbCardIdolEvent.entity';
@@ -16,16 +17,21 @@ import { ScdbUnits } from './entities/ScdbUnits.entity';
 import { ScdbProduceAptitude } from './entities/ScdbProduceAptitude.entity';
 import { ScdbSupportFightSkill } from './entities/ScdbSupportFightSkill.entity';
 import { ScdbSpinePreset } from './entities/ScdbSpinePreset.entity';
+import { ScdbCardle } from './entities/ScdbCardle.entity';
+
 /* Other modules */
 import { SpineModule } from './spine/spine.module';
 import { InfoModule } from './info/info.module';
 import { UpdateModule } from './update/update.module';
+import { CardleModule } from './cardle/cardle.module';
+import { ScdbCardleChunk } from './entities/ScdbCardleChunk.entity';
 
 @Module({
   imports: [
     InfoModule,
     SpineModule,
     UpdateModule,
+    CardleModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -48,10 +54,13 @@ import { UpdateModule } from './update/update.module';
         ScdbProduceAptitude,
         ScdbSupportFightSkill,
         ScdbSpinePreset,
+        ScdbCardle,
+        ScdbCardleChunk,
       ],
       logging: false,
       synchronize: process.env.ENV_PRODUCTION != 'true',
     }),
+    ScheduleModule.forRoot(),
   ],
 })
 export class AppModule {
