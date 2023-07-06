@@ -21,27 +21,22 @@ export class CardleService {
       .addSelect('cardlist.cardType')
       .orderBy('RAND()')
       .getOne();
-    //console.log(cardToday);
-    const newCardle = this.dataSource.getRepository(ScdbCardle).create({
-      cardleDate: new Date(),
-      enzaId: cardToday.enzaId,
-      cardleType: cardToday.cardType.startsWith('P')
-        ? Math.floor(Math.random() * 2)
-        : 0,
-    });
-    const result = await this.dataSource
-      .getRepository(ScdbCardle)
-      .save(newCardle);
 
-    for (let k = 0; k < 6; k++) {
-      const newCardleChunk = this.dataSource
-        .getRepository(ScdbCardleChunk)
-        .create({
-          cardleIndex: result.cardleIndex,
-          chunkX: this._randomNumber(1036),
-          chunkY: this._randomNumber(540),
-        });
-      await this.dataSource.getRepository(ScdbCardle).save(newCardleChunk);
+    //console.log(cardToday);
+    const newCardle = new ScdbCardle();
+    newCardle.cardleDate = new Date();
+    newCardle.cardleType = cardToday.cardType.startsWith('P')
+      ? Math.floor(Math.random() * 2)
+      : 0;
+    newCardle.enzaId = cardToday.enzaId;
+    await this.dataSource.getRepository(ScdbCardle).save(newCardle);
+
+    for (let i = 0; i < 6; i++) {
+      const newChunk = new ScdbCardleChunk();
+      newChunk.chunkX = this._randomNumber(1036);
+      newChunk.chunkY = this._randomNumber(540);
+      newChunk.cardleIndex2 = newCardle;
+      await this.dataSource.getRepository(ScdbCardleChunk).save(newChunk);
     }
   }
 
