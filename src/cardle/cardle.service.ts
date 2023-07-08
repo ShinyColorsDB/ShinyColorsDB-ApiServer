@@ -22,9 +22,9 @@ export class CardleService {
       .orderBy('RAND()')
       .getOne();
 
-    //console.log(cardToday);
+    const today = new Date();
     const newCardle = new ScdbCardle();
-    newCardle.cardleDate = new Date();
+    newCardle.cardleDate = new Date(today.setDate(today.getDate() + 1));
     newCardle.cardleType = cardToday.cardType.startsWith('P')
       ? Math.floor(Math.random() * 2)
       : 0;
