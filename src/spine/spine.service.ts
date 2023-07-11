@@ -26,9 +26,11 @@ export class SpineService {
         'Query variable `idolId` is required',
       );
     }
-    if (idolId < 0 || idolId > 26) {
+
+    if (idolId < 0 || (idolId > 26 && idolId < 801) || idolId > 803) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
     }
+
     return this.dataSource.query(
       'SELECT SCDB_IdolDress.IdolId as idolId, SCDB_IdolDress.DressName as dressName, SCDB_IdolDress.DressUUID as dressUuid, SCDB_IdolDress.Sml_Cloth0 as sml_Cloth0, SCDB_IdolDress.Sml_Cloth1 as sml_Cloth1, SCDB_IdolDress.Big_Cloth0 as big_Cloth0, SCDB_IdolDress.Big_Cloth1 as big_Cloth1, SCDB_IdolDress.DressType as dressType, SCDB_IdolDress.Exist as exist FROM `SCDB_IdolDress` WHERE `IdolID` = ' +
         idolId.toString() +

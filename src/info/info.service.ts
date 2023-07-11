@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ScdbCardList } from 'src/entities/ScdbCardList.entity';
-import { DataSource, Between, Brackets } from 'typeorm';
+import { DataSource, Brackets, Not } from 'typeorm';
 import { ScdbIdols } from '../entities/ScdbIdols.entity';
 import { ScdbUnits } from '../entities/ScdbUnits.entity';
 
@@ -15,7 +15,7 @@ export class InfoService {
   async getIdollist(): Promise<ScdbIdols[]> {
     return this.dataSource.getRepository(ScdbIdols).find({
       select: ['idolId', 'idolName'],
-      where: { idolId: Between(1, 26) },
+      where: { idolId: Not(0) },
       order: { idolId: 'ASC' },
     });
   }
@@ -36,8 +36,7 @@ export class InfoService {
       .getRepository(ScdbUnits)
       .createQueryBuilder('unit')
       .leftJoinAndSelect('unit.idols', 'idol')
-      .where('unit.unitId != :id1', { id1: 9 })
-      .andWhere('unit.unitId != :id2', { id2: 0 })
+      .where('unit.unitId != :id1', { id1: 0 })
       .orderBy('unit.unitId', 'ASC')
       .addOrderBy('idol.idolId', 'ASC')
       .getMany();
