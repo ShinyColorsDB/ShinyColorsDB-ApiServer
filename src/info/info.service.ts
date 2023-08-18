@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ScdbCardList } from 'src/entities/ScdbCardList.entity';
+import { ScdbCardList } from 'src/entities/ScdbCardList';
 import { DataSource, Brackets, Not } from 'typeorm';
-import { ScdbIdols } from '../entities/ScdbIdols.entity';
-import { ScdbUnits } from '../entities/ScdbUnits.entity';
+import { ScdbIdols } from '../entities/ScdbIdols';
+import { ScdbUnits } from '../entities/ScdbUnits';
 
 @Injectable()
 export class InfoService {
@@ -49,8 +49,10 @@ export class InfoService {
       .leftJoinAndSelect('pcard.idol', 'idol')
       .leftJoinAndSelect('pcard.cardIdolEvents', 'idolEvents')
       .leftJoinAndSelect('pcard.cardMemoryAppeals', 'memoryAppeals')
+      .leftJoinAndSelect('memoryAppeals.extraEffect', 'extraMemoryEffect')
       .leftJoinAndSelect('pcard.cardPanels', 'panels')
-      .leftJoinAndSelect('pcard.cardProduceAptitudes', 'aptitudes')
+      .leftJoinAndSelect('panels.extraEffect', 'extraPanelEffect')
+      .leftJoinAndSelect('pcard.cardProduceAptitude', 'aptitudes')
       .orderBy('panels.panelId', 'ASC')
       .addOrderBy('memoryAppeals.memoryId', 'ASC')
       .addOrderBy('idolEvents.eventId', 'ASC')
@@ -67,7 +69,8 @@ export class InfoService {
       .leftJoinAndSelect('scard.cardSupportSkills', 'supportSkills')
       .leftJoinAndSelect('scard.cardProficiencies', 'proficiencies')
       .leftJoinAndSelect('scard.cardPanels', 'panels')
-      .leftJoinAndSelect('scard.cardSupportFightSkills', 'supportFightSkills')
+      .leftJoinAndSelect('panels.extraEffect', 'extraPanelEffect')
+      .leftJoinAndSelect('scard.supportFightSkills', 'supportFightSkills')
       .orderBy('supportEvents.eventId', 'ASC')
       .addOrderBy('supportSkills.skillId', 'ASC')
       .addOrderBy('panels.panelId', 'ASC')

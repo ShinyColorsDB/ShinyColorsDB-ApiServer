@@ -6,15 +6,15 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardList } from './ScdbCardList.entity';
+import { ScdbCardList } from './ScdbCardList';
 
 @Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardSupportEvent', { schema: 'shinycolors' })
+@Entity('SCDB_CardSupportEvent', { schema: 'dev_shinycolors' })
 export class ScdbCardSupportEvent {
   @PrimaryGeneratedColumn({ type: 'int', name: 'EventIndex' })
   eventIndex: number;
 
-  @Column('bigint', { name: 'EnzaID', comment: 'EnzaID', select: false })
+  @Column('bigint', { name: 'EnzaID', comment: 'EnzaID' })
   enzaId: string;
 
   @Column('int', { name: 'EventID' })
@@ -38,11 +38,10 @@ export class ScdbCardSupportEvent {
   @Column('int', { name: 'EventAddSp' })
   eventAddSp: number;
 
-  @ManyToOne(
-    () => ScdbCardList,
-    (scdbCardList) => scdbCardList.cardSupportEvents,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
-  )
+  @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardSupportEvents, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

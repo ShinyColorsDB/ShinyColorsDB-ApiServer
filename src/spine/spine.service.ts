@@ -3,9 +3,9 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { ScdbIdolDress } from '../entities/ScdbIdolDress.entity';
-import { ScdbIdols } from '../entities/ScdbIdols.entity';
-import { ScdbSpinePreset } from '../entities/ScdbSpinePreset.entity';
+import { ScdbIdolDress } from '../entities/ScdbIdolDress';
+import { ScdbIdols } from '../entities/ScdbIdols';
+import { ScdbSpinePreset } from '../entities/ScdbSpinePreset';
 
 import { DataSource } from 'typeorm';
 

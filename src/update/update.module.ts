@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ScdbIdols } from '../entities/ScdbIdols.entity';
+import { ScdbIdols } from '../entities/ScdbIdols';
 import { UpdateService } from './update.service';
 import { UpdateController } from './update.controller';
 

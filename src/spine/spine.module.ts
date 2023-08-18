@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ScdbIdols } from '../entities/ScdbIdols.entity';
+import { ScdbIdols } from '../entities/ScdbIdols';
 import { SpineService } from './spine.service';
 import { SpineController } from './spine.controller';
 

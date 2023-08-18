@@ -8,21 +8,21 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardIdolEvent } from './ScdbCardIdolEvent.entity';
-import { ScdbIdols } from './ScdbIdols.entity';
+import { ScdbCardIdolEvent } from './ScdbCardIdolEvent';
+import { ScdbIdols } from './ScdbIdols';
 import { ScdbCardMemoryAppeal } from './ScdbCardMemoryAppeal';
-import { ScdbCardPanel } from './ScdbCardPanel.entity';
-import { ScdbCardProficiency } from './ScdbCardProficiency.entity';
-import { ScdbCardSupportEvent } from './ScdbCardSupportEvent.entity';
-import { ScdbCardSupportSkill } from './ScdbCardSupportSkill.entity';
-import { ScdbProduceAptitude } from './ScdbProduceAptitude.entity';
-import { ScdbSupportFightSkill } from './ScdbSupportFightSkill.entity';
-import { ScdbCardle } from './ScdbCardle.entity';
+import { ScdbCardPanel } from './ScdbCardPanel';
+import { ScdbCardProficiency } from './ScdbCardProficiency';
+import { ScdbCardSupportEvent } from './ScdbCardSupportEvent';
+import { ScdbCardSupportSkill } from './ScdbCardSupportSkill';
+import { ScdbCardle } from './ScdbCardle';
+import { ScdbProduceAptitude } from './ScdbProduceAptitude';
+import { ScdbSupportFightSkill } from './ScdbSupportFightSkill';
 
 @Index('Index', ['cardIndex'], { unique: true })
 @Index('IdolID', ['idolId'], {})
 @Index('EnzaID', ['enzaId'], {})
-@Entity('SCDB_CardList', { schema: 'shinycolors' })
+@Entity('SCDB_CardList', { schema: 'dev_shinycolors' })
 export class ScdbCardList {
   @PrimaryGeneratedColumn({
     type: 'int',
@@ -61,7 +61,7 @@ export class ScdbCardList {
   @Column('text', { name: 'IdeaMark', nullable: true })
   ideaMark: string | null;
 
-  @Column('text', { name: 'CardHash', nullable: true, select: false })
+  @Column('text', { name: 'CardHash', nullable: true })
   cardHash: string | null;
 
   @Column('date', { name: 'ReleaseDate', nullable: true })
@@ -70,13 +70,10 @@ export class ScdbCardList {
   @Column('date', { name: 'LastModified', nullable: true })
   lastModified: string | null;
 
-  @OneToMany(
-    () => ScdbCardIdolEvent,
-    (scdbCardIdolEvent) => scdbCardIdolEvent.enza,
-  )
+  @OneToMany(() => ScdbCardIdolEvent, (cardIdolEvent) => cardIdolEvent.enza)
   cardIdolEvents: ScdbCardIdolEvent[];
 
-  @ManyToOne(() => ScdbIdols, (scdbIdols) => scdbIdols.cardLists, {
+  @ManyToOne(() => ScdbIdols, (idols) => idols.cardLists, {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   })
@@ -85,43 +82,43 @@ export class ScdbCardList {
 
   @OneToMany(
     () => ScdbCardMemoryAppeal,
-    (scdbCardMemoryAppeal) => scdbCardMemoryAppeal.enza,
+    (cardMemoryAppeal) => cardMemoryAppeal.enza,
   )
   cardMemoryAppeals: ScdbCardMemoryAppeal[];
 
-  @OneToMany(() => ScdbCardPanel, (scdbCardPanel) => scdbCardPanel.enza)
+  @OneToMany(() => ScdbCardPanel, (cardPanel) => cardPanel.enza)
   cardPanels: ScdbCardPanel[];
 
   @OneToMany(
     () => ScdbCardProficiency,
-    (scdbCardProficiency) => scdbCardProficiency.enza,
+    (cardProficiency) => cardProficiency.enza,
   )
   cardProficiencies: ScdbCardProficiency[];
 
   @OneToMany(
     () => ScdbCardSupportEvent,
-    (scdbCardSupportEvent) => scdbCardSupportEvent.enza,
+    (cardSupportEvent) => cardSupportEvent.enza,
   )
   cardSupportEvents: ScdbCardSupportEvent[];
 
   @OneToMany(
     () => ScdbCardSupportSkill,
-    (scdbCardSupportSkill) => scdbCardSupportSkill.enza,
+    (cardSupportSkill) => cardSupportSkill.enza,
   )
   cardSupportSkills: ScdbCardSupportSkill[];
 
+  @OneToMany(() => ScdbCardle, (cardle) => cardle.enza)
+  cardles: ScdbCardle[];
+
   @OneToMany(
     () => ScdbProduceAptitude,
-    (scdbProduceAptitude) => scdbProduceAptitude.enza,
+    (cardProduceAptitude) => cardProduceAptitude.enza,
   )
-  cardProduceAptitudes: ScdbProduceAptitude[];
+  cardProduceAptitude: ScdbProduceAptitude[];
 
   @OneToOne(
     () => ScdbSupportFightSkill,
-    (scdbSupportFightSkill) => scdbSupportFightSkill.enza,
+    (supportFightSkill) => supportFightSkill.enza,
   )
-  cardSupportFightSkills: ScdbSupportFightSkill[];
-
-  @OneToMany(() => ScdbCardle, (cardle) => cardle.enza)
-  cardles: ScdbCardle[];
+  supportFightSkills: ScdbSupportFightSkill[];
 }

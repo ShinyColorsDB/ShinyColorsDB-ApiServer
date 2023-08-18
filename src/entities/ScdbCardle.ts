@@ -7,22 +7,25 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardList } from './ScdbCardList.entity';
-import { ScdbCardleChunk } from './ScdbCardleChunk.entity';
+import { ScdbCardList } from './ScdbCardList';
+import { ScdbCardleChunk } from './ScdbCardleChunk';
 
-@Index('EnzaId', ['enzaId'], {})
-@Entity('SCDB_Cardle', { schema: 'shinycolors' })
+@Index('SCDB_Cradle_ibfk_1', ['enzaId'], {})
+@Entity('SCDB_Cardle', { schema: 'dev_shinycolors' })
 export class ScdbCardle {
   @PrimaryGeneratedColumn({ type: 'int', name: 'CardleIndex' })
   cardleIndex: number;
 
-  @Column('date', { name: 'CardleDate' })
+  @Column('timestamp', { name: 'CardleDate' })
   cardleDate: Date;
 
   @Column('bigint', { name: 'EnzaId' })
   enzaId: string;
 
-  @Column('int', { name: 'CardleType' })
+  @Column('int', {
+    name: 'CardleType',
+    comment: '0 for S & P normal, 1 for costume ',
+  })
   cardleType: number;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardles, {

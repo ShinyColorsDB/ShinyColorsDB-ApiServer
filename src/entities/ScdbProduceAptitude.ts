@@ -6,10 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardList } from './ScdbCardList.entity';
+import { ScdbCardList } from './ScdbCardList';
 
 @Index('EnzaID', ['enzaId'], {})
-@Entity('SCDB_ProduceAptitude', { schema: 'shinycolors' })
+@Entity('SCDB_ProduceAptitude', { schema: 'dev_shinycolors' })
 export class ScdbProduceAptitude {
   @PrimaryGeneratedColumn({ type: 'int', name: 'AptIndex' })
   aptIndex: number;
@@ -35,11 +35,10 @@ export class ScdbProduceAptitude {
   @Column('text', { name: 'AptStepType' })
   aptStepType: string;
 
-  @ManyToOne(
-    () => ScdbCardList,
-    (scdbCardList) => scdbCardList.cardProduceAptitudes,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
-  )
+  @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardProduceAptitude, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

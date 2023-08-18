@@ -8,7 +8,7 @@ import * as path from 'path';
 import { isEmpty, isNotEmptyObject } from 'class-validator';
 import { DataSource } from 'typeorm';
 
-import { ScdbCardList } from '../entities/ScdbCardList.entity';
+import { ScdbCardList } from '../entities/ScdbCardList';
 
 @Injectable()
 export class UpdateService {

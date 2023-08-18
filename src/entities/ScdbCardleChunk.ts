@@ -6,10 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardle } from './ScdbCardle.entity';
+import { ScdbCardle } from './ScdbCardle';
 
 @Index('CardleIndex', ['cardleIndex'], {})
-@Entity('SCDB_CardleChunk', { schema: 'shinycolors' })
+@Entity('SCDB_CardleChunk', { schema: 'dev_shinycolors' })
 export class ScdbCardleChunk {
   @PrimaryGeneratedColumn({ type: 'int', name: 'ChunkIndex' })
   chunkIndex: number;
@@ -23,7 +23,7 @@ export class ScdbCardleChunk {
   @Column('int', { name: 'ChunkY' })
   chunkY: number;
 
-  @ManyToOne(() => ScdbCardle, (scdbCardle) => scdbCardle.cardleChunks, {
+  @ManyToOne(() => ScdbCardle, (cardle) => cardle.cardleChunks, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

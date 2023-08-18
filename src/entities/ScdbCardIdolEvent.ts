@@ -6,15 +6,15 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardList } from './ScdbCardList.entity';
+import { ScdbCardList } from './ScdbCardList';
 
 @Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardIdolEvent', { schema: 'shinycolors' })
+@Entity('SCDB_CardIdolEvent', { schema: 'dev_shinycolors' })
 export class ScdbCardIdolEvent {
   @PrimaryGeneratedColumn({ type: 'int', name: 'EventIndex' })
   eventIndex: number;
 
-  @Column('bigint', { name: 'EnzaID', comment: 'EnzaID', select: false })
+  @Column('bigint', { name: 'EnzaID', comment: 'EnzaID' })
   enzaId: string;
 
   @Column('text', { name: 'EventCategory' })
@@ -23,7 +23,7 @@ export class ScdbCardIdolEvent {
   @Column('int', { name: 'EventID' })
   eventId: number;
 
-  @Column('text', { name: 'EventHash', nullable: true, select: false })
+  @Column('text', { name: 'EventHash', nullable: true })
   eventHash: string | null;
 
   @Column('text', { name: 'EventTitle' })
@@ -38,11 +38,10 @@ export class ScdbCardIdolEvent {
   @Column('int', { name: 'EventOp3', nullable: true })
   eventOp3: number | null;
 
-  @ManyToOne(
-    () => ScdbCardList,
-    (scdbCardList) => scdbCardList.cardIdolEvents,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
-  )
+  @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardIdolEvents, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

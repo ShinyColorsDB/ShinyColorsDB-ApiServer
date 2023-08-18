@@ -3,13 +3,13 @@ import {
   Entity,
   Index,
   JoinColumn,
-  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardList } from './ScdbCardList.entity';
+import { ScdbCardList } from './ScdbCardList';
 
 @Index('EnzaId', ['enzaId'], {})
-@Entity('SCDB_SupportFightSkill', { schema: 'shinycolors' })
+@Entity('SCDB_SupportFightSkill', { schema: 'dev_shinycolors' })
 export class ScdbSupportFightSkill {
   @PrimaryGeneratedColumn({ type: 'int', name: 'FtIndex' })
   ftIndex: number;
@@ -35,11 +35,10 @@ export class ScdbSupportFightSkill {
   @Column('json', { name: 'FtPerfect' })
   ftPerfect: object;
 
-  @ManyToOne(
-    () => ScdbCardList,
-    (scdbCardList) => scdbCardList.cardSupportFightSkills,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
-  )
+  @OneToOne(() => ScdbCardList, (cardList) => cardList.supportFightSkills, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

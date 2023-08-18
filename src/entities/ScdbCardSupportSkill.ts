@@ -6,15 +6,15 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbCardList } from './ScdbCardList.entity';
+import { ScdbCardList } from './ScdbCardList';
 
 @Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardSupportSkill', { schema: 'shinycolors' })
+@Entity('SCDB_CardSupportSkill', { schema: 'dev_shinycolors' })
 export class ScdbCardSupportSkill {
   @PrimaryGeneratedColumn({ type: 'int', name: 'SkillIndex' })
   skillIndex: number;
 
-  @Column('bigint', { name: 'EnzaID', select: false })
+  @Column('bigint', { name: 'EnzaID' })
   enzaId: string;
 
   @Column('text', { name: 'SkillID' })
@@ -38,11 +38,10 @@ export class ScdbCardSupportSkill {
   @Column('int', { name: 'SkillLevel' })
   skillLevel: number;
 
-  @ManyToOne(
-    () => ScdbCardList,
-    (scdbCardList) => scdbCardList.cardSupportSkills,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
-  )
+  @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardSupportSkills, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

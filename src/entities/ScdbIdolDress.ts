@@ -6,10 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbIdols } from './ScdbIdols.entity';
+import { ScdbIdols } from './ScdbIdols';
 
 @Index('IdolID', ['idolId'], {})
-@Entity('SCDB_IdolDress', { schema: 'shinycolors' })
+@Entity('SCDB_IdolDress', { schema: 'dev_shinycolors' })
 export class ScdbIdolDress {
   @PrimaryGeneratedColumn({ type: 'int', name: 'DressIndex' })
   dressIndex: number;
@@ -17,7 +17,7 @@ export class ScdbIdolDress {
   @Column('int', { name: 'IdolID' })
   idolId: number;
 
-  @Column('bigint', { name: 'EnzaID', select: false })
+  @Column('bigint', { name: 'EnzaID' })
   enzaId: string;
 
   @Column('text', { name: 'DressName' })

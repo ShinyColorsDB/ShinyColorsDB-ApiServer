@@ -6,10 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ScdbIdols } from './ScdbIdols.entity';
+import { ScdbIdols } from './ScdbIdols';
 
 @Index('IdolID', ['idolId'], {})
-@Entity('SCDB_SpinePreset', { schema: 'shinycolors' })
+@Entity('SCDB_SpinePreset', { schema: 'dev_shinycolors' })
 export class ScdbSpinePreset {
   @PrimaryGeneratedColumn({ type: 'int', name: 'PresetIndex' })
   presetIndex: number;
@@ -50,7 +50,7 @@ export class ScdbSpinePreset {
   @Column('text', { name: 'ReleaseCondition' })
   releaseCondition: string;
 
-  @ManyToOne(() => ScdbIdols, (scdbIdols) => scdbIdols.spinePresets, {
+  @ManyToOne(() => ScdbIdols, (idols) => idols.spinePresets, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

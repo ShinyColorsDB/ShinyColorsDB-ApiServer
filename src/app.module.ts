@@ -4,27 +4,28 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DataSource } from 'typeorm';
 /* Entities */
-import { ScdbCardIdolEvent } from './entities/ScdbCardIdolEvent.entity';
-import { ScdbCardList } from './entities/ScdbCardList.entity';
+import { ScdbCardIdolEvent } from './entities/ScdbCardIdolEvent';
+import { ScdbCardList } from './entities/ScdbCardList';
 import { ScdbCardMemoryAppeal } from './entities/ScdbCardMemoryAppeal';
-import { ScdbCardPanel } from './entities/ScdbCardPanel.entity';
-import { ScdbCardProficiency } from './entities/ScdbCardProficiency.entity';
-import { ScdbCardSupportEvent } from './entities/ScdbCardSupportEvent.entity';
-import { ScdbCardSupportSkill } from './entities/ScdbCardSupportSkill.entity';
-import { ScdbIdols } from './entities/ScdbIdols.entity';
-import { ScdbIdolDress } from './entities/ScdbIdolDress.entity';
-import { ScdbUnits } from './entities/ScdbUnits.entity';
-import { ScdbProduceAptitude } from './entities/ScdbProduceAptitude.entity';
-import { ScdbSupportFightSkill } from './entities/ScdbSupportFightSkill.entity';
-import { ScdbSpinePreset } from './entities/ScdbSpinePreset.entity';
-import { ScdbCardle } from './entities/ScdbCardle.entity';
+import { ScdbCardPanel } from './entities/ScdbCardPanel';
+import { ScdbExtraSkillEffect } from './entities/ScdbExtraSkillEffect';
+import { ScdbCardProficiency } from './entities/ScdbCardProficiency';
+import { ScdbCardSupportEvent } from './entities/ScdbCardSupportEvent';
+import { ScdbCardSupportSkill } from './entities/ScdbCardSupportSkill';
+import { ScdbIdols } from './entities/ScdbIdols';
+import { ScdbIdolDress } from './entities/ScdbIdolDress';
+import { ScdbUnits } from './entities/ScdbUnits';
+import { ScdbProduceAptitude } from './entities/ScdbProduceAptitude';
+import { ScdbSupportFightSkill } from './entities/ScdbSupportFightSkill';
+import { ScdbSpinePreset } from './entities/ScdbSpinePreset';
+import { ScdbCardle } from './entities/ScdbCardle';
 
 /* Other modules */
 import { SpineModule } from './spine/spine.module';
 import { InfoModule } from './info/info.module';
 import { UpdateModule } from './update/update.module';
 import { CardleModule } from './cardle/cardle.module';
-import { ScdbCardleChunk } from './entities/ScdbCardleChunk.entity';
+import { ScdbCardleChunk } from './entities/ScdbCardleChunk';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ScdbCardleChunk } from './entities/ScdbCardleChunk.entity';
         ScdbCardList,
         ScdbCardMemoryAppeal,
         ScdbCardPanel,
+        ScdbExtraSkillEffect,
         ScdbCardProficiency,
         ScdbCardSupportEvent,
         ScdbCardSupportSkill,

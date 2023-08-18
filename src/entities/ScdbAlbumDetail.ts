@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('SCDB_AlbumDetail', { schema: 'shinycolors' })
+@Entity('SCDB_AlbumDetail', { schema: 'dev_shinycolors' })
 export class ScdbAlbumDetail {
   @PrimaryGeneratedColumn({ type: 'int', name: 'DetailIndex' })
   detailIndex: number;
