@@ -11,7 +11,7 @@ import { ScdbExtraSkillEffect } from './ScdbExtraSkillEffect';
 
 @Index('CardIndex', ['enzaId'], {})
 @Index('ExtraSkillEffectIndex', ['extraSkillIndex'], {})
-@Entity('SCDB_CardPanel', { schema: 'dev_shinycolors' })
+@Entity('SCDB_CardPanel', { schema: 'shinycolors' })
 export class ScdbCardPanel {
   @PrimaryGeneratedColumn({ type: 'int', name: 'TableIndex' })
   tableIndex: number;

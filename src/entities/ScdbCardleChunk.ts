@@ -9,7 +9,7 @@ import {
 import { ScdbCardle } from './ScdbCardle';
 
 @Index('CardleIndex', ['cardleIndex'], {})
-@Entity('SCDB_CardleChunk', { schema: 'dev_shinycolors' })
+@Entity('SCDB_CardleChunk', { schema: 'shinycolors' })
 export class ScdbCardleChunk {
   @PrimaryGeneratedColumn({ type: 'int', name: 'ChunkIndex' })
   chunkIndex: number;

@@ -9,7 +9,7 @@ import {
 import { ScdbCardList } from './ScdbCardList';
 
 @Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardSupportEvent', { schema: 'dev_shinycolors' })
+@Entity('SCDB_CardSupportEvent', { schema: 'shinycolors' })
 export class ScdbCardSupportEvent {
   @PrimaryGeneratedColumn({ type: 'int', name: 'EventIndex' })
   eventIndex: number;

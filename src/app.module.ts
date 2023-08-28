@@ -19,6 +19,7 @@ import { ScdbProduceAptitude } from './entities/ScdbProduceAptitude';
 import { ScdbSupportFightSkill } from './entities/ScdbSupportFightSkill';
 import { ScdbSpinePreset } from './entities/ScdbSpinePreset';
 import { ScdbCardle } from './entities/ScdbCardle';
+import { ScdbSupportSkillList } from './entities/ScdbSupportSkillList';
 
 /* Other modules */
 import { SpineModule } from './spine/spine.module';
@@ -58,6 +59,7 @@ import { ScdbCardleChunk } from './entities/ScdbCardleChunk';
         ScdbSpinePreset,
         ScdbCardle,
         ScdbCardleChunk,
+        ScdbSupportSkillList,
       ],
       logging: false,
       synchronize: process.env.ENV_PRODUCTION != 'true',

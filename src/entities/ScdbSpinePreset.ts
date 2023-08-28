@@ -9,7 +9,7 @@ import {
 import { ScdbIdols } from './ScdbIdols';
 
 @Index('IdolID', ['idolId'], {})
-@Entity('SCDB_SpinePreset', { schema: 'dev_shinycolors' })
+@Entity('SCDB_SpinePreset', { schema: 'shinycolors' })
 export class ScdbSpinePreset {
   @PrimaryGeneratedColumn({ type: 'int', name: 'PresetIndex' })
   presetIndex: number;

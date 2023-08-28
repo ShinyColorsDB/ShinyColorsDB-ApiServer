@@ -12,7 +12,7 @@ import { ScdbExtraSkillEffect } from './ScdbExtraSkillEffect';
 
 @Index('CardIndex', ['enzaId'], {})
 @Index('ExtraSkillEffectIndex', ['extraSkillIndex'], {})
-@Entity('SCDB_CardMemoryAppeal', { schema: 'dev_shinycolors' })
+@Entity('SCDB_CardMemoryAppeal', { schema: 'shinycolors' })
 export class ScdbCardMemoryAppeal {
   @PrimaryGeneratedColumn({ type: 'int', name: 'MemoryIndex' })
   memoryIndex: number;

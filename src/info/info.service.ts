@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ScdbCardList } from 'src/entities/ScdbCardList';
 import { DataSource, Brackets, Not } from 'typeorm';
+
+import { ScdbCardList } from '../entities/ScdbCardList';
 import { ScdbIdols } from '../entities/ScdbIdols';
 import { ScdbUnits } from '../entities/ScdbUnits';
+import { ScdbSupportSkillList } from '../entities/ScdbSupportSkillList';
+
+import { QuerySupportSkill } from '../interfaces/querysupportskill';
 
 @Injectable()
 export class InfoService {
@@ -158,6 +162,10 @@ export class InfoService {
     };
   }
 
+  async getSupportSkillList(): Promise<ScdbSupportSkillList[]> {
+    return this.dataSource.getRepository(ScdbSupportSkillList).find();
+  }
+
   /**
    * @param {number} idolId
    * @param {number} queryType
@@ -227,5 +235,39 @@ export class InfoService {
       .orderBy('cardList.releaseDate', 'DESC');
 
     return src.getOne();
+  }
+
+  async querySupportSkill(
+    queryData: QuerySupportSkill,
+  ): Promise<ScdbCardList[]> {
+    const src = this.dataSource
+      .getRepository(ScdbCardList)
+      .createQueryBuilder('cardList')
+      .select('cardList.enzaId')
+      .addSelect('cardList.smlPic');
+    src.leftJoin('cardList.cardSupportSkills', 'supportSkills');
+    if (queryData.queryIdols.length) {
+      src.where('cardList.idolId IN (:...ids)', {
+        ids: queryData.queryIdols,
+      });
+    }
+
+    const querySkills = new Brackets((q) => {
+      for (const s of queryData.querySkills) {
+        q.orWhere(
+          new Brackets((q2) => {
+            q2.where('supportSkills.skillName REGEXP :skillName', {
+              skillName: s[0],
+            }).andWhere('supportSkills.skillLevel >= :skillLevel', {
+              skillLevel: s[1],
+            });
+          }),
+        );
+      }
+    });
+
+    src.andWhere(querySkills);
+    src.orderBy('cardList.enzaId', 'ASC');
+    return src.getMany();
   }
 }

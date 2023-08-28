@@ -8,7 +8,7 @@ import {
 import { ScdbIdols } from './ScdbIdols';
 
 @Index('UnitID', ['unitId'], { unique: true })
-@Entity('SCDB_Units', { schema: 'dev_shinycolors' })
+@Entity('SCDB_Units', { schema: 'shinycolors' })
 export class ScdbUnits {
   @PrimaryGeneratedColumn({ type: 'int', name: 'UnitID' })
   unitId: number;

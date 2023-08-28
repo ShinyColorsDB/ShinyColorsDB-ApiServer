@@ -9,7 +9,7 @@ import {
 import { ScdbCardList } from './ScdbCardList';
 
 @Index('EnzaID', ['enzaId'], {})
-@Entity('SCDB_ProduceAptitude', { schema: 'dev_shinycolors' })
+@Entity('SCDB_ProduceAptitude', { schema: 'shinycolors' })
 export class ScdbProduceAptitude {
   @PrimaryGeneratedColumn({ type: 'int', name: 'AptIndex' })
   aptIndex: number;

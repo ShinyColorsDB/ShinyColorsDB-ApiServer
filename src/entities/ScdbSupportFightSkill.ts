@@ -9,7 +9,7 @@ import {
 import { ScdbCardList } from './ScdbCardList';
 
 @Index('EnzaId', ['enzaId'], {})
-@Entity('SCDB_SupportFightSkill', { schema: 'dev_shinycolors' })
+@Entity('SCDB_SupportFightSkill', { schema: 'shinycolors' })
 export class ScdbSupportFightSkill {
   @PrimaryGeneratedColumn({ type: 'int', name: 'FtIndex' })
   ftIndex: number;

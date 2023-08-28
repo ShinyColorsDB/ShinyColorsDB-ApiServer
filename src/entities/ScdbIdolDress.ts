@@ -9,7 +9,7 @@ import {
 import { ScdbIdols } from './ScdbIdols';
 
 @Index('IdolID', ['idolId'], {})
-@Entity('SCDB_IdolDress', { schema: 'dev_shinycolors' })
+@Entity('SCDB_IdolDress', { schema: 'shinycolors' })
 export class ScdbIdolDress {
   @PrimaryGeneratedColumn({ type: 'int', name: 'DressIndex' })
   dressIndex: number;

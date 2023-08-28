@@ -17,13 +17,19 @@ import { ScdbSpinePreset } from './ScdbSpinePreset';
 @Index('IDX_d6dc406e941c2d9876683d456b', ['idolName'], { unique: true })
 @Index('Unit', ['unitId'], {})
 @Index('IdolName', ['idolName'], {})
-@Entity('SCDB_Idols', { schema: 'dev_shinycolors' })
+@Entity('SCDB_Idols', { schema: 'shinycolors' })
 export class ScdbIdols {
   @PrimaryGeneratedColumn({ type: 'int', name: 'IdolID' })
   idolId: number;
 
   @Column('varchar', { name: 'IdolName', unique: true, length: 6 })
   idolName: string;
+
+  @Column('text', { name: 'IdolFirstName' })
+  idolFirstName: string;
+
+  @Column('text', { name: 'IdolLastName' })
+  idolLastName: string;
 
   @Column('text', { name: 'Hiragana' })
   hiragana: string;

@@ -22,7 +22,7 @@ import { ScdbSupportFightSkill } from './ScdbSupportFightSkill';
 @Index('Index', ['cardIndex'], { unique: true })
 @Index('IdolID', ['idolId'], {})
 @Index('EnzaID', ['enzaId'], {})
-@Entity('SCDB_CardList', { schema: 'dev_shinycolors' })
+@Entity('SCDB_CardList', { schema: 'shinycolors' })
 export class ScdbCardList {
   @PrimaryGeneratedColumn({
     type: 'int',

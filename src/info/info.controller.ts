@@ -1,12 +1,17 @@
 import {
+  Body,
   Controller,
   Get,
   Header,
   Headers,
   NotFoundException,
+  Post,
   Query,
   UnprocessableEntityException,
 } from '@nestjs/common';
+
+import { QuerySupportSkill } from '../interfaces/querysupportskill';
+
 import { InfoService } from './info.service';
 import * as xmlbuilder2 from 'xmlbuilder2';
 
@@ -14,12 +19,12 @@ import * as xmlbuilder2 from 'xmlbuilder2';
 export class InfoController {
   constructor(private infoService: InfoService) {}
 
-  @Get('idollist')
+  @Get('idolList')
   async getIdolList() {
     return await this.infoService.getIdollist();
   }
 
-  @Get('idolinfo')
+  @Get('idolInfo')
   async getIdolInfo(
     @Query('idolId') idolId: number,
     @Headers('CF-IPCountry') country: string,
@@ -39,12 +44,12 @@ export class InfoController {
     return await this.infoService.getIdolInfo(idolId);
   }
 
-  @Get('unitinfo')
+  @Get('unitInfo')
   async getUnitInfo() {
     return this.infoService.getUnitInfo();
   }
 
-  @Get('pcardinfo')
+  @Get('pCardInfo')
   async getPCardInfo(
     @Query('cardId') cardId: string,
     @Headers('CF-IPCountry') country: string,
@@ -65,7 +70,7 @@ export class InfoController {
     }
   }
 
-  @Get('scardinfo')
+  @Get('sCardInfo')
   async getSCardInfo(
     @Query('cardId') cardId: string,
     @Headers('CF-IPCountry') country: string,
@@ -86,19 +91,24 @@ export class InfoController {
     }
   }
 
-  @Get('latestpinfo')
+  @Get('latestPInfo')
   async getLatestInfo() {
     return await this.infoService.getLatestPInfo();
   }
 
-  @Get('latestsinfo')
+  @Get('latestSInfo')
   async getLatestSInfo() {
     return await this.infoService.getLatestSInfo();
   }
 
-  @Get('updatehistory')
+  @Get('updateHistory')
   async getUpdateHistory() {
     return await this.infoService.getUpdateHistory();
+  }
+
+  @Get('supportSkillList')
+  async getSupportSkillList() {
+    return await this.infoService.getSupportSkillList();
   }
 
   @Get('sitelist')
@@ -220,5 +230,12 @@ export class InfoController {
   @Header('Content-Type', 'application/json')
   async getAllTable() {
     return await this.infoService.getTableByType(2);
+  }
+
+  @Post('querySupportSkill')
+  @Header('Content-Type', 'application/json')
+  async querySupportSkill(@Body() queryData: QuerySupportSkill) {
+    console.log(queryData);
+    return await this.infoService.querySupportSkill(queryData);
   }
 }

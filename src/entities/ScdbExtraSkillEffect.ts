@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ScdbCardMemoryAppeal } from './ScdbCardMemoryAppeal';
 import { ScdbCardPanel } from './ScdbCardPanel';
 
-@Entity('SCDB_ExtraSkillEffect', { schema: 'dev_shinycolors' })
+@Entity('SCDB_ExtraSkillEffect', { schema: 'shinycolors' })
 export class ScdbExtraSkillEffect {
   @PrimaryGeneratedColumn({ type: 'int', name: 'ExtraSkillIndex' })
   extraSkillIndex: number;

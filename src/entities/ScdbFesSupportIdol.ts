@@ -3,7 +3,7 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 @Index('EnzaId', ['enzaId'], {})
 @Index('IdolId', ['idolId'], {})
 @Index('FesIdolIndex', ['fesIdolIndex'], {})
-@Entity('SCDB_FesSupportIdol', { schema: 'dev_shinycolors' })
+@Entity('SCDB_FesSupportIdol', { schema: 'shinycolors' })
 export class ScdbFesSupportIdol {
   @PrimaryGeneratedColumn({ type: 'int', name: 'FesSupportIdolIndex' })
   fesSupportIdolIndex: number;

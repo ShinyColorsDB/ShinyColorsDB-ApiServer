@@ -1,7 +1,7 @@
 {
   "name": "shinycolorsdb-apiserver",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "API Server for ShinyColorsDB",
   "license": "MIT",
   "scripts": {

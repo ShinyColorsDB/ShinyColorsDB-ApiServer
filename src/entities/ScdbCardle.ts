@@ -11,7 +11,7 @@ import { ScdbCardList } from './ScdbCardList';
 import { ScdbCardleChunk } from './ScdbCardleChunk';
 
 @Index('SCDB_Cradle_ibfk_1', ['enzaId'], {})
-@Entity('SCDB_Cardle', { schema: 'dev_shinycolors' })
+@Entity('SCDB_Cardle', { schema: 'shinycolors' })
 export class ScdbCardle {
   @PrimaryGeneratedColumn({ type: 'int', name: 'CardleIndex' })
   cardleIndex: number;
