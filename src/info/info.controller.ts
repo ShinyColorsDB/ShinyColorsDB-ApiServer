@@ -127,7 +127,52 @@ export class InfoController {
       .txt('https://shinycolors.moe/')
       .up()
       .ele('lastmod')
-      .txt('2021-05-25')
+      .txt('2023-08-29')
+      .up()
+      .ele('changefreq')
+      .txt('yearly')
+      .up()
+      .ele('priority')
+      .txt('1')
+      .up();
+
+    siteMap
+      .ele('url')
+      .ele('loc')
+      .txt('https://shinycolors.moe/timetable')
+      .up()
+      .ele('lastmod')
+      .txt('2023-04-01')
+      .up()
+      .ele('changefreq')
+      .txt('yearly')
+      .up()
+      .ele('priority')
+      .txt('1')
+      .up();
+
+    siteMap
+      .ele('url')
+      .ele('loc')
+      .txt('https://shinycolors.moe/cardle')
+      .up()
+      .ele('lastmod')
+      .txt('2023-07-05')
+      .up()
+      .ele('changefreq')
+      .txt('yearly')
+      .up()
+      .ele('priority')
+      .txt('1')
+      .up();
+
+    siteMap
+      .ele('url')
+      .ele('loc')
+      .txt('https://shinycolors.moe/r-lookup')
+      .up()
+      .ele('lastmod')
+      .txt('2023-08-28')
       .up()
       .ele('changefreq')
       .txt('yearly')
@@ -198,6 +243,9 @@ export class InfoController {
       sList = await this.infoService.getScardList();
 
     let sitelist2 = 'https://shinycolors.moe/\n';
+    sitelist2 += 'https://shinycolors.moe/timetable\n';
+    sitelist2 += 'https://shinycolors.moe/cardle\n';
+    sitelist2 += 'https://shinycolors.moe/r-lookup\n';
 
     for (const i of iList) {
       sitelist2 += `https://shinycolors.moe/idolinfo?idolid=${i.idolId}\n`;
