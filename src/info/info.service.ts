@@ -244,17 +244,21 @@ export class InfoService {
       .getRepository(ScdbCardList)
       .createQueryBuilder('cardList')
       .select('cardList.enzaId')
-      .addSelect('cardList.smlPic');
-    src.leftJoin('cardList.cardSupportSkills', 'supportSkills');
+      .addSelect('cardList.cardUuid')
+      .addSelect('cardList.cardType')
+      .addSelect('cardList.cardName');
+    src.leftJoinAndSelect('cardList.cardSupportSkills', 'supportSkills');
+    src.addOrderBy('supportSkills', 'ASC');
+    src.where('cardList.cardType REGEXP "S_"');
     if (queryData.queryIdols.length) {
-      src.where('cardList.idolId IN (:...ids)', {
+      src.andWhere('cardList.idolId IN (:...ids)', {
         ids: queryData.queryIdols,
       });
     }
 
     const querySkills = new Brackets((q) => {
       for (const s of queryData.querySkills) {
-        q.orWhere(
+        q.andWhere(
           new Brackets((q2) => {
             q2.where('supportSkills.skillName REGEXP :skillName', {
               skillName: s[0],
