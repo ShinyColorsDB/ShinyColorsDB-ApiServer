@@ -20,7 +20,7 @@ export class SpineService {
     });
   }
 
-  async getDressList(idolId: number): Promise<ScdbIdolDress[]> {
+  async getDressList(idolId: number): Promise<any[]> {
     if (idolId == undefined) {
       throw new UnprocessableEntityException(
         'Query variable `idolId` is required',
@@ -31,11 +31,25 @@ export class SpineService {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
     }
 
-    return this.dataSource.query(
-      'SELECT SCDB_IdolDress.IdolId as idolId, SCDB_IdolDress.DressName as dressName, SCDB_IdolDress.DressUUID as dressUuid, SCDB_IdolDress.Sml_Cloth0 as sml_Cloth0, SCDB_IdolDress.Sml_Cloth1 as sml_Cloth1, SCDB_IdolDress.Big_Cloth0 as big_Cloth0, SCDB_IdolDress.Big_Cloth1 as big_Cloth1, SCDB_IdolDress.DressType as dressType, SCDB_IdolDress.Exist as exist FROM `SCDB_IdolDress` WHERE `IdolID` = ' +
-        idolId.toString() +
-        ' AND Exist != 0 ORDER BY FIELD (`DressType`, "P_SSR", "P_SR", "Anniversary", "Mizugi", "Special", "FesReward", "FesTour", "Other"), `EnzaId`',
-    );
+    return this.dataSource
+      .getRepository(ScdbIdolDress)
+      .createQueryBuilder('dress')
+      .select('dress.IdolId', 'idolId')
+      .addSelect('dress.DressName', 'dressName')
+      .addSelect('dress.DressUUID', 'dressUuid')
+      .addSelect('dress.Sml_Cloth0', 'sml_Cloth0')
+      .addSelect('dress.Sml_Cloth1', 'sml_Cloth1')
+      .addSelect('dress.Big_Cloth0', 'big_Cloth0')
+      .addSelect('dress.Big_Cloth1', 'big_Cloth1')
+      .addSelect('dress.DressType', 'dressType')
+      .addSelect('dress.Exist', 'exist')
+      .where('dress.IdolId = :idolId', { idolId: idolId })
+      .andWhere('dress.Exist != 0')
+      .orderBy(
+        'FIELD (dress.DressType, "P_SSR", "P_SR", "Anniversary", "Mizugi", "Special", "FesReward", "FesTour", "Other")',
+      )
+      .addOrderBy('dress.EnzaId', 'ASC')
+      .getRawMany();
   }
 
   async getSpinePreset(idolId: number): Promise<ScdbSpinePreset[]> {

@@ -283,7 +283,33 @@ export class InfoController {
   @Post('querySupportSkill')
   @Header('Content-Type', 'application/json')
   async querySupportSkill(@Body() queryData: QuerySupportSkill) {
-    console.log(queryData);
-    return await this.infoService.querySupportSkill(queryData);
+    switch (queryData.querySkills.length) {
+      case 1:
+        return (await this.infoService.query1SupportSkill(queryData)).filter(
+          (e) => {
+            return e.RowNum == '1';
+          },
+        );
+      case 2:
+        return (await this.infoService.query2SupportSkill(queryData)).filter(
+          (e) => {
+            return e.RowNum == '1';
+          },
+        );
+      case 3:
+        return (await this.infoService.query3SupportSkill(queryData)).filter(
+          (e) => {
+            return e.RowNum == '1';
+          },
+        );
+      case 4:
+        return (await this.infoService.query4SupportSkill(queryData)).filter(
+          (e) => {
+            return e.RowNum == '1';
+          },
+        );
+      default:
+        break;
+    }
   }
 }

@@ -15,9 +15,9 @@ export class UpdateController {
     @Headers('X-CREDENTIAL') credential: string,
     @Headers('X-TOKEN') token: string,
   ): Promise<any> {
-    this.updateService.checkPayload(payload);
     this.updateService.checkCredential(credential);
     this.updateService.checkToken(token);
+    this.updateService.checkPayload(payload);
     if (payload.hasOwnProperty('idolId')) {
       console.log('new Produce card');
       const idolId: string = (payload as any as UpdatePCard).idolId;
