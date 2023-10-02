@@ -42,6 +42,7 @@ export class SpineService {
       .addSelect('dress.Big_Cloth0', 'big_Cloth0')
       .addSelect('dress.Big_Cloth1', 'big_Cloth1')
       .addSelect('dress.DressType', 'dressType')
+      .addSelect('dress.EnzaID', 'enzaId')
       .addSelect('dress.Exist', 'exist')
       .where('dress.IdolId = :idolId', { idolId: idolId })
       .andWhere('dress.Exist != 0')
