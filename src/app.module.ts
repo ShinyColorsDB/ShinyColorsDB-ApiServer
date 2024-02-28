@@ -20,13 +20,13 @@ import { ScdbSupportFightSkill } from './entities/ScdbSupportFightSkill';
 import { ScdbSpinePreset } from './entities/ScdbSpinePreset';
 import { ScdbCardle } from './entities/ScdbCardle';
 import { ScdbSupportSkillList } from './entities/ScdbSupportSkillList';
+import { ScdbCardleChunk } from './entities/ScdbCardleChunk';
 
 /* Other modules */
 import { SpineModule } from './spine/spine.module';
 import { InfoModule } from './info/info.module';
 import { UpdateModule } from './update/update.module';
 import { CardleModule } from './cardle/cardle.module';
-import { ScdbCardleChunk } from './entities/ScdbCardleChunk';
 
 @Module({
   imports: [

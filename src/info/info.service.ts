@@ -85,7 +85,7 @@ export class InfoService {
 
   async getLatestPInfo(): Promise<ScdbCardList[]> {
     const latestPInfo = [];
-    for (let i = 1; i <= 26; i++) {
+    for (let i = 1; i <= 28; i++) {
       latestPInfo.push(
         await this.dataSource
           .getRepository(ScdbCardList)
@@ -102,7 +102,7 @@ export class InfoService {
 
   async getLatestSInfo(): Promise<ScdbCardList[]> {
     const latestSInfo = [];
-    for (let i = 1; i <= 26; i++) {
+    for (let i = 1; i <= 28; i++) {
       latestSInfo.push(
         await this.dataSource
           .getRepository(ScdbCardList)
