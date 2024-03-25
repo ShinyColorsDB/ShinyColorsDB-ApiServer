@@ -60,10 +60,10 @@ export class InfoController {
     }
 
     const thisCard = await this.infoService.getPCardInfo(cardId);
-    console.log(`${country} user accessing pCard ${thisCard.cardName}`);
-    console.log(`Forwarded by ${forwarder}`);
 
     if (thisCard) {
+      console.log(`${country} user accessing pCard ${thisCard.cardName}`);
+      console.log(`Forwarded by ${forwarder}`);
       return thisCard;
     } else {
       throw new NotFoundException(`Card Id ${cardId} not found`);
@@ -81,10 +81,10 @@ export class InfoController {
     }
 
     const thisCard = await this.infoService.getSCardInfo(cardId);
-    console.log(`${country} user accessing sCard ${thisCard.cardName}`);
-    console.log(`Forwarded by ${forwarder}`);
 
     if (thisCard) {
+      console.log(`${country} user accessing sCard ${thisCard.cardName}`);
+      console.log(`Forwarded by ${forwarder}`);
       return thisCard;
     } else {
       throw new NotFoundException(`Card Id ${cardId} not found`);
