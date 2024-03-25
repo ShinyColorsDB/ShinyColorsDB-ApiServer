@@ -1,4 +1,11 @@
-import { Body, Controller, Headers, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Headers,
+  HttpCode,
+  Post,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 
 import { UpdateService } from './update.service';
 import { UpdatePCard } from '../interfaces/updatepcard';
@@ -39,6 +46,25 @@ export class UpdateController {
         payload,
         (payload as any as UpdateSCard).supportIdolId + '.json',
       );
+    }
+  }
+
+  @Post('idolinfo')
+  @HttpCode(201)
+  async idolInfo(
+    @Body() payload: JSON,
+    @Headers('X-CREDENTIAL') credential: string,
+    @Headers('X-TOKEN') token: string,
+  ): Promise<any> {
+    this.updateService.checkCredential(credential);
+    this.updateService.checkToken(token);
+    if (payload.hasOwnProperty('id')) {
+      this.updateService.saveIdolInfo(
+        payload,
+        String((payload as any).id).padStart(2, '0') + '.json',
+      );
+    } else {
+      throw new UnprocessableEntityException('Error format.');
     }
   }
 }

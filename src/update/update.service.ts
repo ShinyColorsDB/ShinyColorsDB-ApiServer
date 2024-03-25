@@ -38,7 +38,15 @@ export class UpdateService {
   saveJsonFile(payload: JSON, fileName: string) {
     console.log('Saving cardId ' + fileName + ' to filesystem');
     fs.writeFileSync(
-      path.join(process.env.FILE_CARDJSON_PATH, fileName),
+      path.join(process.env.FILE_CARDJSON_TEMP_PATH, fileName),
+      JSON.stringify(payload),
+    );
+  }
+
+  saveIdolInfo(payload: JSON, fileName: string) {
+    console.log('Saving idolId ' + fileName + ' to filesystem');
+    fs.writeFileSync(
+      path.join(process.env.FILE_IDOLINFO_PATH, fileName),
       JSON.stringify(payload),
     );
   }

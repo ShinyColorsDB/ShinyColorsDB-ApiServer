@@ -18,6 +18,7 @@ import { ScdbCardSupportSkill } from './ScdbCardSupportSkill';
 import { ScdbCardle } from './ScdbCardle';
 import { ScdbProduceAptitude } from './ScdbProduceAptitude';
 import { ScdbSupportFightSkill } from './ScdbSupportFightSkill';
+import { ScdbCardStatus } from './ScdbCardStatus';
 
 @Index('Index', ['cardIndex'], { unique: true })
 @Index('IdolID', ['idolId'], {})
@@ -121,4 +122,7 @@ export class ScdbCardList {
     (supportFightSkill) => supportFightSkill.enza,
   )
   supportFightSkills: ScdbSupportFightSkill[];
+
+  @OneToOne(() => ScdbCardStatus, (cardStatus) => cardStatus.enza)
+  cardStatus: ScdbCardStatus;
 }

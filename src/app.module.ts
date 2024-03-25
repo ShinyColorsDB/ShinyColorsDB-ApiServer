@@ -27,6 +27,7 @@ import { SpineModule } from './spine/spine.module';
 import { InfoModule } from './info/info.module';
 import { UpdateModule } from './update/update.module';
 import { CardleModule } from './cardle/cardle.module';
+import { ScdbCardStatus } from './entities/ScdbCardStatus';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { CardleModule } from './cardle/cardle.module';
         ScdbCardle,
         ScdbCardleChunk,
         ScdbSupportSkillList,
+        ScdbCardStatus,
       ],
       logging: false,
       synchronize: process.env.ENV_PRODUCTION != 'true',
