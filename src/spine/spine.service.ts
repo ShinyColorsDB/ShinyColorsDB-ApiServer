@@ -27,7 +27,11 @@ export class SpineService {
       );
     }
 
-    if (idolId < 0 || (idolId > 28 && idolId < 801) || idolId > 803) {
+    if (
+      idolId < 0 ||
+      (idolId > 28 && idolId < 801 && idolId != 91) ||
+      idolId > 804
+    ) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
     }
 

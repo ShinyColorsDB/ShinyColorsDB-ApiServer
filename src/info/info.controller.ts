@@ -32,8 +32,7 @@ export class InfoController {
   ) {
     if (
       isNaN(idolId) ||
-      idolId < 1 ||
-      (idolId > 28 && idolId < 801) ||
+      (idolId > 28 && idolId < 801 && idolId != 91) ||
       idolId > 804
     ) {
       throw new NotFoundException(`Idol Id ${idolId} not found`);
