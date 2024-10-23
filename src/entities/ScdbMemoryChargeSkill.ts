@@ -26,7 +26,7 @@ export class ScdbMemoryChargeSkill {
   @Column('int', { name: 'ReleaseEvolution' })
   releaseEvolution: number;
 
-  @ManyToOne(() => ScdbCardList, (cardList) => cardList.memoryChrageSkills, {
+  @ManyToOne(() => ScdbCardList, (cardList) => cardList.memoryChargeSkills, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

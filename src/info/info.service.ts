@@ -59,7 +59,7 @@ export class InfoService {
       .leftJoinAndSelect('panels.extraEffect', 'extraPanelEffect')
       .leftJoinAndSelect('pcard.cardProduceAptitude', 'aptitudes')
       .leftJoinAndSelect('pcard.cardStatus', 'status')
-      .leftJoinAndSelect('pcard.memoryChrageSkills', 'memoryChargeSkills')
+      .leftJoinAndSelect('pcard.memoryChargeSkills', 'memoryChargeSkills')
       .orderBy('panels.panelId', 'ASC')
       .addOrderBy('memoryAppeals.memoryId', 'ASC')
       .addOrderBy('idolEvents.eventId', 'ASC')

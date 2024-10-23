@@ -131,5 +131,5 @@ export class ScdbCardList {
     () => ScdbMemoryChargeSkill,
     (cardMemoryChargeSkill) => cardMemoryChargeSkill.enza,
   )
-  memoryChrageSkills: ScdbMemoryChargeSkill[];
+  memoryChargeSkills: ScdbMemoryChargeSkill[];
 }
