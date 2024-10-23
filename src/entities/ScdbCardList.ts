@@ -19,6 +19,7 @@ import { ScdbCardle } from './ScdbCardle';
 import { ScdbProduceAptitude } from './ScdbProduceAptitude';
 import { ScdbSupportFightSkill } from './ScdbSupportFightSkill';
 import { ScdbCardStatus } from './ScdbCardStatus';
+import { ScdbMemoryChargeSkill } from './ScdbMemoryChargeSkill';
 
 @Index('Index', ['cardIndex'], { unique: true })
 @Index('IdolID', ['idolId'], {})
@@ -125,4 +126,10 @@ export class ScdbCardList {
 
   @OneToOne(() => ScdbCardStatus, (cardStatus) => cardStatus.enza)
   cardStatus: ScdbCardStatus;
+
+  @OneToMany(
+    () => ScdbMemoryChargeSkill,
+    (cardMemoryChargeSkill) => cardMemoryChargeSkill.enza,
+  )
+  memoryChrageSkills: ScdbMemoryChargeSkill[];
 }
