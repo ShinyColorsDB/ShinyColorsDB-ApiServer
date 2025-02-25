@@ -8,6 +8,7 @@ import { ScdbSupportSkillList } from '../entities/ScdbSupportSkillList';
 import { ScdbCardSupportSkill } from 'src/entities/ScdbCardSupportSkill';
 
 import { QuerySupportSkill } from '../interfaces/querysupportskill';
+import { ScdbLiveInfo } from 'src/entities/ScdbLiveInfo';
 
 @Injectable()
 export class InfoService {
@@ -87,6 +88,15 @@ export class InfoService {
       .getOne();
   }
 
+  async getRecentUpdate(): Promise<ScdbCardList[]> {
+    return this.dataSource
+      .getRepository(ScdbCardList)
+      .createQueryBuilder('cardList')
+      .orderBy('cardList.releaseDate', 'DESC')
+      .limit(12)
+      .getMany();
+  }
+
   async getLatestPInfo(): Promise<ScdbCardList[]> {
     const latestPInfo = [];
     for (let i = 1; i <= 28; i++) {
@@ -148,6 +158,22 @@ export class InfoService {
       .orderBy('cardList.idolId', 'ASC')
       .addOrderBy('cardList.enzaId', 'ASC')
       .getMany();
+  }
+
+  async getLiveInfos(): Promise<ScdbLiveInfo[]> {
+    return this.dataSource
+      .getRepository(ScdbLiveInfo)
+      .createQueryBuilder('live')
+      .orderBy('live.liveIndex', 'ASC')
+      .getMany();
+  }
+
+  async getLiveInfo(liveId: string): Promise<ScdbLiveInfo> {
+    return this.dataSource
+      .getRepository(ScdbLiveInfo)
+      .createQueryBuilder('live')
+      .where('live.liveID = :liveId', { liveId: liveId })
+      .getOne();
   }
 
   async getTableByType(type: number) {

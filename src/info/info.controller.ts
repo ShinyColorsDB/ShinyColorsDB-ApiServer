@@ -90,6 +90,11 @@ export class InfoController {
     }
   }
 
+  @Get('recentUpdate')
+  async getRecentUpdate() {
+    return await this.infoService.getRecentUpdate();
+  }
+
   @Get('latestPInfo')
   async getLatestInfo() {
     return await this.infoService.getLatestPInfo();
@@ -98,6 +103,16 @@ export class InfoController {
   @Get('latestSInfo')
   async getLatestSInfo() {
     return await this.infoService.getLatestSInfo();
+  }
+
+  @Get('liveInfos')
+  async getLiveInfos() {
+    return await this.infoService.getLiveInfos();
+  }
+
+  @Get('liveInfo')
+  async getLiveInfo(@Query('liveId') liveId: string) {
+    return await this.infoService.getLiveInfo(liveId);
   }
 
   @Get('updateHistory')
