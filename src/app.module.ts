@@ -30,6 +30,8 @@ import { CardleModule } from './cardle/cardle.module';
 import { ScdbCardStatus } from './entities/ScdbCardStatus';
 import { ScdbMemoryChargeSkill } from './entities/ScdbMemoryChargeSkill';
 import { ScdbLiveInfo } from './entities/ScdbLiveInfo';
+import { ScdbAlbum } from './entities/ScdbAlbum';
+import { ScdbAlbumDetail } from './entities/ScdbAlbumDetail';
 
 @Module({
   imports: [
@@ -66,6 +68,8 @@ import { ScdbLiveInfo } from './entities/ScdbLiveInfo';
         ScdbCardStatus,
         ScdbMemoryChargeSkill,
         ScdbLiveInfo,
+        ScdbAlbum,
+        ScdbAlbumDetail,
       ],
       logging: false,
       synchronize: process.env.ENV_PRODUCTION != 'true',

@@ -117,14 +117,17 @@ export class ScdbLiveInfo {
   present_idol28: number;
 
   @Column('text', { name: 'LiveLocation' })
-  liveLocation: number;
+  liveLocation: string;
 
   @Column('text', { name: 'LiveBuilding' })
-  liveBuilding: number;
+  liveBuilding: string;
 
   @Column('text', { name: 'LiveLogo' })
-  liveLogo: number;
+  liveLogo: string;
+
+  @Column('text', { name: 'LiveLogoBG' })
+  liveLogoBg: string;
 
   @Column('text', { name: 'LiveMemo' })
-  liveMemo: number;
+  liveMemo: string;
 }

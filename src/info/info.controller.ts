@@ -115,6 +115,11 @@ export class InfoController {
     return await this.infoService.getLiveInfo(liveId);
   }
 
+  @Get('albumInfos')
+  async getAlbumInfos() {
+    return await this.infoService.getAlbumInfos();
+  }
+
   @Get('updateHistory')
   async getUpdateHistory() {
     return await this.infoService.getUpdateHistory();

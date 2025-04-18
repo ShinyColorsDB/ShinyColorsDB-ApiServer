@@ -9,6 +9,7 @@ import { ScdbCardSupportSkill } from 'src/entities/ScdbCardSupportSkill';
 
 import { QuerySupportSkill } from '../interfaces/querysupportskill';
 import { ScdbLiveInfo } from 'src/entities/ScdbLiveInfo';
+import { ScdbAlbum } from 'src/entities/ScdbAlbum';
 
 @Injectable()
 export class InfoService {
@@ -164,7 +165,7 @@ export class InfoService {
     return this.dataSource
       .getRepository(ScdbLiveInfo)
       .createQueryBuilder('live')
-      .orderBy('live.liveIndex', 'ASC')
+      .orderBy('live.liveID', 'DESC')
       .getMany();
   }
 
@@ -173,7 +174,20 @@ export class InfoService {
       .getRepository(ScdbLiveInfo)
       .createQueryBuilder('live')
       .where('live.liveID = :liveId', { liveId: liveId })
+      .limit(6)
       .getOne();
+  }
+
+  async getAlbumInfos(): Promise<ScdbAlbum[]> {
+    return this.dataSource
+      .getRepository(ScdbAlbum)
+      .createQueryBuilder('album')
+      .where('album.albumCategory != :category', {
+        category: '',
+      })
+      .orderBy('album.albumIndex', 'DESC')
+      .limit(9)
+      .getMany();
   }
 
   async getTableByType(type: number) {
