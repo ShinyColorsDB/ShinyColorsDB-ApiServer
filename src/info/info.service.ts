@@ -166,6 +166,7 @@ export class InfoService {
       .getRepository(ScdbLiveInfo)
       .createQueryBuilder('live')
       .orderBy('live.liveID', 'DESC')
+      .limit(6)
       .getMany();
   }
 
@@ -174,7 +175,6 @@ export class InfoService {
       .getRepository(ScdbLiveInfo)
       .createQueryBuilder('live')
       .where('live.liveID = :liveId', { liveId: liveId })
-      .limit(6)
       .getOne();
   }
 
