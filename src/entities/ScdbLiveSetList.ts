@@ -1,37 +1,25 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ScdbLiveSetList } from './ScdbLiveSetList';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ScdbLiveInfo } from './ScdbLiveInfo';
 
-@Entity('SCDB_LiveInfo', { schema: 'shinycolors' })
-export class ScdbLiveInfo {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'LiveIndex' })
-  liveIndex: number;
+@Entity('SCDB_LiveSetList', { schema: 'shinycolors' })
+export class ScdbLiveSetList {
+  @PrimaryGeneratedColumn({ type: 'int', name: 'SetListIndex' })
+  setListIndex: number;
 
-  @Column('text', { name: 'LiveTitle' })
-  liveTitle: string;
-
-  @Column('text', { name: 'LiveSubtitle' })
-  liveSubtitle: string;
-
-  @Column('text', { name: 'LiveID' })
+  @Column('int', { name: 'LiveID' })
   liveId: number;
 
-  @Column('date', { name: 'LiveDay1' })
-  liveDay1: string;
+  @Column('text', { name: 'SongName' })
+  songName: string;
 
-  @Column('text', { name: 'Day1Open' })
-  day1Open: string;
-
-  @Column('text', { name: 'Day1Start' })
-  day1Start: string;
-
-  @Column('date', { name: 'LiveDay2' })
-  liveDay2: string;
-
-  @Column('text', { name: 'Day2Open' })
-  day2Open: string;
-
-  @Column('text', { name: 'Day2Start' })
-  day2Start: string;
+  @Column('int', { name: 'SongID', nullable: true })
+  songId: number;
 
   @Column('tinyint', { name: 'Idol01' })
   idol01: number;
@@ -117,21 +105,10 @@ export class ScdbLiveInfo {
   @Column('tinyint', { name: 'Idol28' })
   idol28: number;
 
-  @Column('text', { name: 'LiveLocation' })
-  liveLocation: string;
-
-  @Column('text', { name: 'LiveBuilding' })
-  liveBuilding: string;
-
-  @Column('text', { name: 'LiveLogo' })
-  liveLogo: string;
-
-  @Column('text', { name: 'LiveLogoBG' })
-  liveLogoBg: string;
-
-  @Column('text', { name: 'LiveMemo' })
-  liveMemo: string;
-
-  @OneToMany(() => ScdbLiveSetList, (liveSetList) => liveSetList.live)
-  liveSetLists: ScdbLiveSetList[];
+  @ManyToOne(() => ScdbLiveInfo, (liveInfo) => liveInfo.liveSetLists, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'LiveID', referencedColumnName: 'liveId' }])
+  live: ScdbLiveInfo;
 }

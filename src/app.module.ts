@@ -32,6 +32,7 @@ import { ScdbMemoryChargeSkill } from './entities/ScdbMemoryChargeSkill';
 import { ScdbLiveInfo } from './entities/ScdbLiveInfo';
 import { ScdbAlbum } from './entities/ScdbAlbum';
 import { ScdbAlbumDetail } from './entities/ScdbAlbumDetail';
+import { ScdbLiveSetList } from './entities/ScdbLiveSetList';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { ScdbAlbumDetail } from './entities/ScdbAlbumDetail';
         ScdbCardStatus,
         ScdbMemoryChargeSkill,
         ScdbLiveInfo,
+        ScdbLiveSetList,
         ScdbAlbum,
         ScdbAlbumDetail,
       ],

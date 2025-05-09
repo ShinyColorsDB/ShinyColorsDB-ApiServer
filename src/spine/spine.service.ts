@@ -51,7 +51,7 @@ export class SpineService {
       .where('dress.IdolId = :idolId', { idolId: idolId })
       .andWhere('dress.Exist != 0')
       .orderBy(
-        'FIELD (dress.DressType, "P_SSR", "P_SR", "Anniversary", "Mizugi", "Special", "FesReward", "FesTour", "Other")',
+        'FIELD (dress.DressType, "P_UR", "P_SSR", "P_SR", "Anniversary", "Mizugi", "Special", "FesReward", "FesTour", "Other")',
       )
       .addOrderBy('dress.EnzaId', 'ASC')
       .getRawMany();

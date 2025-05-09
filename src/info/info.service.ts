@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Brackets, Not } from 'typeorm';
+import { DataSource, Brackets } from 'typeorm';
 
 import { ScdbCardList } from '../entities/ScdbCardList';
 import { ScdbIdols } from '../entities/ScdbIdols';
@@ -17,12 +17,12 @@ export class InfoService {
   readonly MYSONG = 'MySongCollection';
   readonly LIMITED = 'LimitedGasha';
   readonly GENERAL = 'GeneralGasha';
+  readonly PARALLEL = 'ParallelCollection';
   constructor(private dataSource: DataSource) {}
 
   async getIdollist(): Promise<ScdbIdols[]> {
     return this.dataSource.getRepository(ScdbIdols).find({
-      select: ['idolId', 'idolName'],
-      where: { idolId: Not(0) },
+      select: ['idolId', 'idolName', 'cv'],
       order: { idolId: 'ASC' },
     });
   }
@@ -175,6 +175,7 @@ export class InfoService {
       .getRepository(ScdbLiveInfo)
       .createQueryBuilder('live')
       .where('live.liveID = :liveId', { liveId: liveId })
+      .leftJoinAndSelect('live.liveSetLists', 'liveSetLists')
       .getOne();
   }
 
