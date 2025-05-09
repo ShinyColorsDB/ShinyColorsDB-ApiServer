@@ -32,89 +32,89 @@ export class ScdbLiveInfo {
   @Column('text', { name: 'Day2Start' })
   day2Start: string;
 
-  @Column('tinyint', { name: 'Present_Idol01' })
-  present_idol01: number;
+  @Column('tinyint', { name: 'Idol01' })
+  idol01: number;
 
-  @Column('tinyint', { name: 'Present_Idol02' })
-  present_idol02: number;
+  @Column('tinyint', { name: 'Idol02' })
+  idol02: number;
 
-  @Column('tinyint', { name: 'Present_Idol03' })
-  present_idol03: number;
+  @Column('tinyint', { name: 'Idol03' })
+  idol03: number;
 
-  @Column('tinyint', { name: 'Present_Idol04' })
-  present_idol04: number;
+  @Column('tinyint', { name: 'Idol04' })
+  idol04: number;
 
-  @Column('tinyint', { name: 'Present_Idol05' })
-  present_idol05: number;
+  @Column('tinyint', { name: 'Idol05' })
+  idol05: number;
 
-  @Column('tinyint', { name: 'Present_Idol06' })
-  present_idol06: number;
+  @Column('tinyint', { name: 'Idol06' })
+  idol06: number;
 
-  @Column('tinyint', { name: 'Present_Idol07' })
-  present_idol07: number;
+  @Column('tinyint', { name: 'Idol07' })
+  idol07: number;
 
-  @Column('tinyint', { name: 'Present_Idol08' })
-  present_idol08: number;
+  @Column('tinyint', { name: 'Idol08' })
+  idol08: number;
 
-  @Column('tinyint', { name: 'Present_Idol09' })
-  present_idol09: number;
+  @Column('tinyint', { name: 'Idol09' })
+  idol09: number;
 
-  @Column('tinyint', { name: 'Present_Idol10' })
-  present_idol10: number;
+  @Column('tinyint', { name: 'Idol10' })
+  idol10: number;
 
-  @Column('tinyint', { name: 'Present_Idol11' })
-  present_idol11: number;
+  @Column('tinyint', { name: 'Idol11' })
+  idol11: number;
 
-  @Column('tinyint', { name: 'Present_Idol12' })
-  present_idol12: number;
+  @Column('tinyint', { name: 'Idol12' })
+  idol12: number;
 
-  @Column('tinyint', { name: 'Present_Idol13' })
-  present_idol13: number;
+  @Column('tinyint', { name: 'Idol13' })
+  idol13: number;
 
-  @Column('tinyint', { name: 'Present_Idol14' })
-  present_idol14: number;
+  @Column('tinyint', { name: 'Idol14' })
+  idol14: number;
 
-  @Column('tinyint', { name: 'Present_Idol15' })
-  present_idol15: number;
+  @Column('tinyint', { name: 'Idol15' })
+  idol15: number;
 
-  @Column('tinyint', { name: 'Present_Idol16' })
-  present_idol16: number;
+  @Column('tinyint', { name: 'Idol16' })
+  idol16: number;
 
-  @Column('tinyint', { name: 'Present_Idol17' })
-  present_idol17: number;
+  @Column('tinyint', { name: 'Idol17' })
+  idol17: number;
 
-  @Column('tinyint', { name: 'Present_Idol18' })
-  present_idol18: number;
+  @Column('tinyint', { name: 'Idol18' })
+  idol18: number;
 
-  @Column('tinyint', { name: 'Present_Idol19' })
-  present_idol19: number;
+  @Column('tinyint', { name: 'Idol19' })
+  idol19: number;
 
-  @Column('tinyint', { name: 'Present_Idol20' })
-  present_idol20: number;
+  @Column('tinyint', { name: 'Idol20' })
+  idol20: number;
 
-  @Column('tinyint', { name: 'Present_Idol21' })
-  present_idol21: number;
+  @Column('tinyint', { name: 'Idol21' })
+  idol21: number;
 
-  @Column('tinyint', { name: 'Present_Idol22' })
-  present_idol22: number;
+  @Column('tinyint', { name: 'Idol22' })
+  idol22: number;
 
-  @Column('tinyint', { name: 'Present_Idol23' })
-  present_idol23: number;
+  @Column('tinyint', { name: 'Idol23' })
+  idol23: number;
 
-  @Column('tinyint', { name: 'Present_Idol24' })
-  present_idol24: number;
+  @Column('tinyint', { name: 'Idol24' })
+  idol24: number;
 
-  @Column('tinyint', { name: 'Present_Idol25' })
-  present_idol25: number;
+  @Column('tinyint', { name: 'Idol25' })
+  idol25: number;
 
-  @Column('tinyint', { name: 'Present_Idol26' })
-  present_idol26: number;
+  @Column('tinyint', { name: 'Idol26' })
+  idol26: number;
 
-  @Column('tinyint', { name: 'Present_Idol27' })
-  present_idol27: number;
+  @Column('tinyint', { name: 'Idol27' })
+  idol27: number;
 
-  @Column('tinyint', { name: 'Present_Idol28' })
-  present_idol28: number;
+  @Column('tinyint', { name: 'Idol28' })
+  idol28: number;
 
   @Column('text', { name: 'LiveLocation' })
   liveLocation: string;
