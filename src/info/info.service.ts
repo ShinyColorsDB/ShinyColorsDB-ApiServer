@@ -273,10 +273,10 @@ export class InfoService {
 
     switch (cardType) {
       case 0:
-        src.andWhere('cardList.cardType = "P_SSR"');
+        src.andWhere('cardList.cardType = :cardType1', { cardType1: 'P_SSR' });
         break;
       case 1:
-        src.andWhere('cardList.cardType = "S_SSR"');
+        src.andWhere('cardList.cardType = :cardType2', { cardType2: 'S_SSR' });
         break;
     }
 
