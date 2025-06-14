@@ -1,32 +1,26 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbCardle } from './ScdbCardle';
 
-@Index('CardleIndex', ['cardleIndex'], {})
-@Entity('SCDB_CardleChunk', { schema: 'shinycolors' })
+@Index('idx_16481_cardleindex', ['cardleIndex'], {})
+@Index('idx_16481_primary', ['chunkIndex'], { unique: true })
+@Entity('scdb_cardlechunk', { schema: 'shinycolors' })
 export class ScdbCardleChunk {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'ChunkIndex' })
+  @Column('integer', { primary: true, name: 'chunkindex' })
   chunkIndex: number;
 
-  @Column('int', { name: 'CardleIndex' })
+  @Column('int', { name: 'cardleindex' })
   cardleIndex: number;
 
-  @Column('int', { name: 'ChunkX' })
+  @Column('int', { name: 'chunkx' })
   chunkX: number;
 
-  @Column('int', { name: 'ChunkY' })
+  @Column('int', { name: 'chunky' })
   chunkY: number;
 
   @ManyToOne(() => ScdbCardle, (cardle) => cardle.cardleChunks, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'CardleIndex', referencedColumnName: 'cardleIndex' }])
+  @JoinColumn([{ name: 'cardleindex', referencedColumnName: 'cardleIndex' }])
   cardleIndex2: ScdbCardle;
 }

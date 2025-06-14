@@ -6,7 +6,6 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ScdbCardIdolEvent } from './ScdbCardIdolEvent';
 import { ScdbIdols } from './ScdbIdols';
@@ -21,55 +20,55 @@ import { ScdbSupportFightSkill } from './ScdbSupportFightSkill';
 import { ScdbCardStatus } from './ScdbCardStatus';
 import { ScdbMemoryChargeSkill } from './ScdbMemoryChargeSkill';
 
-@Index('Index', ['cardIndex'], { unique: true })
-@Index('IdolID', ['idolId'], {})
-@Index('EnzaID', ['enzaId'], {})
-@Entity('SCDB_CardList', { schema: 'shinycolors' })
+@Index('idx_16444_index', ['cardIndex'], { unique: true })
+@Index('idx_16444_primary', ['cardIndex'], { unique: true })
+@Index('idx_16444_enzaid', ['enzaId'], {})
+@Index('idx_16444_idolid', ['idolId'], {})
+@Entity('scdb_cardlist', { schema: 'shinycolors' })
 export class ScdbCardList {
-  @PrimaryGeneratedColumn({
-    type: 'int',
-    name: 'CardIndex',
-    comment: 'self defined index',
-  })
+  @Column('integer', { primary: true, name: 'cardindex' })
   cardIndex: number;
 
-  @Column('bigint', { name: 'EnzaID', comment: 'enza ID' })
+  @Column('bigint', { name: 'enzaid', comment: 'enza ID' })
   enzaId: string;
 
-  @Column('int', { name: 'IdolID' })
+  @Column('int', { name: 'idolid' })
   idolId: number;
 
-  @Column('text', { name: 'CardName' })
+  @Column('text', { name: 'cardname' })
   cardName: string;
 
-  @Column('text', { name: 'CardUUID' })
+  @Column('text', { name: 'carduuid' })
   cardUuid: string;
 
-  @Column('text', { name: 'BigPic1', nullable: true })
+  @Column('text', { name: 'bigpic1', nullable: true })
   bigPic1: string | null;
 
-  @Column('text', { name: 'BigPic2', nullable: true })
+  @Column('text', { name: 'bigpic2', nullable: true })
   bigPic2: string | null;
 
-  @Column('text', { name: 'SmlPic', nullable: true })
+  @Column('text', { name: 'smlpic', nullable: true })
   smlPic: string | null;
 
-  @Column('text', { name: 'CardType' })
+  @Column('text', { name: 'cardtype' })
   cardType: string;
 
-  @Column('text', { name: 'GetMethod', nullable: true })
+  @Column('text', { name: 'getmethod', nullable: true })
   getMethod: string | null;
 
-  @Column('text', { name: 'IdeaMark', nullable: true })
+  @Column('text', { name: 'ideamark', nullable: true })
   ideaMark: string | null;
 
-  @Column('text', { name: 'CardHash', nullable: true })
+  @Column('integer', { name: 'panelspoffset', default: () => '0' })
+  panelSPOffset: number;
+
+  @Column('text', { name: 'cardhash', nullable: true })
   cardHash: string | null;
 
-  @Column('date', { name: 'ReleaseDate', nullable: true })
+  @Column('date', { name: 'releasedate', nullable: true })
   releaseDate: string | null;
 
-  @Column('date', { name: 'LastModified', nullable: true })
+  @Column('date', { name: 'lastmodified', nullable: true })
   lastModified: string | null;
 
   @OneToMany(() => ScdbCardIdolEvent, (cardIdolEvent) => cardIdolEvent.enza)
@@ -79,7 +78,7 @@ export class ScdbCardList {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'IdolID', referencedColumnName: 'idolId' }])
+  @JoinColumn([{ name: 'idolid', referencedColumnName: 'idolId' }])
   idol: ScdbIdols;
 
   @OneToMany(

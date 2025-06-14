@@ -1,47 +1,41 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 
-@Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardSupportEvent', { schema: 'shinycolors' })
+@Index('idx_16468_cardindex', ['enzaId'], {})
+@Index('idx_16468_primary', ['eventIndex'], { unique: true })
+@Entity('scdb_cardsupportevent', { schema: 'shinycolors' })
 export class ScdbCardSupportEvent {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'EventIndex' })
+  @Column('integer', { primary: true, name: 'eventindex' })
   eventIndex: number;
 
-  @Column('bigint', { name: 'EnzaID', comment: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid', comment: 'EnzaID' })
   enzaId: string;
 
-  @Column('int', { name: 'EventID' })
+  @Column('int', { name: 'eventid' })
   eventId: number;
 
-  @Column('text', { name: 'EventName' })
+  @Column('text', { name: 'eventname' })
   eventName: string;
 
-  @Column('int', { name: 'EventAddVo' })
+  @Column('int', { name: 'eventaddvo' })
   eventAddVo: number;
 
-  @Column('int', { name: 'EventAddDa' })
+  @Column('int', { name: 'eventaddda' })
   eventAddDa: number;
 
-  @Column('int', { name: 'EventAddVi' })
+  @Column('int', { name: 'eventaddvi' })
   eventAddVi: number;
 
-  @Column('int', { name: 'EventAddMe' })
+  @Column('int', { name: 'eventaddme' })
   eventAddMe: number;
 
-  @Column('int', { name: 'EventAddSp' })
+  @Column('int', { name: 'eventaddsp' })
   eventAddSp: number;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardSupportEvents, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

@@ -1,53 +1,47 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbIdols } from './ScdbIdols';
 
-@Index('IdolID', ['idolId'], {})
-@Entity('SCDB_IdolDress', { schema: 'shinycolors' })
+@Index('idx_16512_primary', ['dressIndex'], { unique: true })
+@Index('idx_16512_idolid', ['idolId'], {})
+@Entity('scdb_idoldress', { schema: 'shinycolors' })
 export class ScdbIdolDress {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'DressIndex' })
+  @Column('integer', { primary: true, name: 'dressindex' })
   dressIndex: number;
 
-  @Column('int', { name: 'IdolID' })
+  @Column('int', { name: 'idolid' })
   idolId: number;
 
-  @Column('bigint', { name: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('text', { name: 'DressName' })
+  @Column('text', { name: 'dressname' })
   dressName: string;
 
-  @Column('text', { name: 'DressUUID' })
+  @Column('text', { name: 'dressuuid' })
   dressUuid: string;
 
-  @Column('tinyint', { name: 'Sml_Cloth0', width: 1 })
+  @Column('boolean', { name: 'sml_cloth0' })
   smlCloth0: boolean;
 
-  @Column('tinyint', { name: 'Sml_Cloth1', width: 1 })
+  @Column('boolean', { name: 'sml_cloth1' })
   smlCloth1: boolean;
 
-  @Column('tinyint', { name: 'Big_Cloth0', width: 1 })
+  @Column('boolean', { name: 'big_cloth0' })
   bigCloth0: boolean;
 
-  @Column('tinyint', { name: 'Big_Cloth1', width: 1 })
+  @Column('boolean', { name: 'big_cloth1' })
   bigCloth1: boolean;
 
-  @Column('text', { name: 'DressType' })
+  @Column('text', { name: 'dresstype' })
   dressType: string;
 
-  @Column('tinyint', { name: 'Exist', width: 1 })
+  @Column('boolean', { name: 'exist' })
   exist: boolean;
 
   @ManyToOne(() => ScdbIdols, (scdbIdols) => scdbIdols.idolDresses, {
     onDelete: 'RESTRICT',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'IdolID', referencedColumnName: 'idolId' }])
+  @JoinColumn([{ name: 'idolid', referencedColumnName: 'idolId' }])
   idol: ScdbIdols;
 }

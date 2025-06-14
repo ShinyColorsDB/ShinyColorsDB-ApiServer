@@ -1,17 +1,18 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Index('FesIdolIndex', ['fesIdolIndex'], {})
-@Entity('SCDB_FesIdolSkills', { schema: 'shinycolors' })
+@Index('idx_16499_fesidolindex', ['fesIdolIndex'], {})
+@Index('idx_16499_primary', ['fesIdolSkillIndex'], { unique: true })
+@Entity('scdb_fesidolskills', { schema: 'shinycolors' })
 export class ScdbFesIdolSkills {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'FesIdolSkillIndex' })
+  @Column('integer', { primary: true, name: 'fesidolskillindex' })
   fesIdolSkillIndex: number;
 
-  @Column('int', { name: 'FesIdolIndex' })
+  @Column('int', { name: 'fesidolindex' })
   fesIdolIndex: number;
 
-  @Column('text', { name: 'SkillType' })
+  @Column('text', { name: 'skilltype' })
   skillType: string;
 
-  @Column('bigint', { name: 'SkillId' })
+  @Column('bigint', { name: 'skillid' })
   skillId: string;
 }

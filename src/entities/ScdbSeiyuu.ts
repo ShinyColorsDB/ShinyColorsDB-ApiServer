@@ -1,28 +1,29 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_Seiyuu', { schema: 'shinycolors' })
+@Index('idx_16603_primary', ['seiyuuIndex'], { unique: true })
+@Entity('scdb_seiyuu', { schema: 'shinycolors' })
 export class ScdbSeiyuu {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'SeiyuuIndex' })
+  @Column('integer', { primary: true, name: 'seiyuuindex' })
   seiyuuIndex: number;
 
-  @Column('text', { name: 'SeiyuuName' })
+  @Column('text', { name: 'seiyuuname' })
   seiyuuName: string;
 
-  @Column('text', { name: 'SeiyuuPhoto' })
+  @Column('text', { name: 'seiyuuphoto' })
   seiyuuPhoto: string;
 
-  @Column('text', { name: 'SeiyuuBirthYear', nullable: true })
+  @Column('text', { name: 'seiyuubirthyear', nullable: true })
   seiyuuBirthYear: string | null;
 
-  @Column('text', { name: 'SeiyuuBirthDate' })
+  @Column('text', { name: 'seiyuubirthdate' })
   seiyuuBirthDate: string;
 
-  @Column('text', { name: 'BelongingFirm' })
+  @Column('text', { name: 'belongingfirm' })
   belongingFirm: string;
 
-  @Column('text', { name: 'SeiyuuTwitter', nullable: true })
+  @Column('text', { name: 'seiyuutwitter', nullable: true })
   seiyuuTwitter: string | null;
 
-  @Column('text', { name: 'SeiyuuChokume', nullable: true })
+  @Column('text', { name: 'seiyuuchokume', nullable: true })
   seiyuuChokume: string | null;
 }

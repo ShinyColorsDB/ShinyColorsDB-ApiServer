@@ -1,26 +1,27 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Index('FesIndex', ['fesIndex'], {})
-@Entity('SCDB_FesUnit', { schema: 'shinycolors' })
+@Index('idx_16507_fesindex', ['fesIndex'], {})
+@Index('idx_16507_primary', ['fesUnitIndex'], { unique: true })
+@Entity('scdb_fesunit', { schema: 'shinycolors' })
 export class ScdbFesUnit {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'FesUnitIndex' })
+  @Column('integer', { primary: true, name: 'fesunitindex' })
   fesUnitIndex: number;
 
-  @Column('int', { name: 'FesIndex' })
+  @Column('int', { name: 'fesindex' })
   fesIndex: number;
 
-  @Column('date', { name: 'Username' })
+  @Column('date', { name: 'username' })
   username: string;
 
-  @Column('text', { name: 'FesGroup' })
+  @Column('text', { name: 'fesgroup' })
   fesGroup: string;
 
-  @Column('int', { name: 'FesGrade' })
+  @Column('int', { name: 'fesgrade' })
   fesGrade: number;
 
-  @Column('int', { name: 'FesRank' })
+  @Column('int', { name: 'fesrank' })
   fesRank: number;
 
-  @Column('timestamp', { name: 'LogTime' })
+  @Column('timestamp', { name: 'logtime' })
   logTime: Date;
 }

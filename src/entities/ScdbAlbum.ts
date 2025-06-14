@@ -1,30 +1,31 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { ScdbAlbumDetail } from './ScdbAlbumDetail';
 
-@Entity('SCDB_Album', { schema: 'shinycolors' })
+@Index('idx_16396_primary', ['albumIndex'], { unique: true })
+@Entity('scdb_album', { schema: 'shinycolors' })
 export class ScdbAlbum {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'AlbumIndex' })
+  @Column('integer', { primary: true, name: 'albumindex' })
   albumIndex: number;
 
-  @Column('text', { name: 'AlbumID' })
+  @Column('text', { name: 'albumid' })
   albumId: string;
 
-  @Column('text', { name: 'AlbumTitle' })
+  @Column('text', { name: 'albumtitle' })
   albumTitle: string;
 
-  @Column('text', { name: 'AlbumName' })
+  @Column('text', { name: 'albumname' })
   albumName: string;
 
-  @Column('text', { name: 'AlbumArtist', nullable: true })
+  @Column('text', { name: 'albumartist', nullable: true })
   albumArtist: string | null;
 
-  @Column('text', { name: 'ArtistDetail', nullable: true })
+  @Column('text', { name: 'artistdetail', nullable: true })
   artistDetail: string | null;
 
-  @Column('text', { name: 'AlbumCategory', nullable: true })
+  @Column('text', { name: 'albumcategory', nullable: true })
   albumCategory: string | null;
 
-  @Column('date', { name: 'AlbumReleaseDate' })
+  @Column('date', { name: 'albumreleasedate' })
   albumReleaseDate: string;
 
   @OneToMany(() => ScdbAlbumDetail, (albumDetail) => albumDetail.albumId)

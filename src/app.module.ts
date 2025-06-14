@@ -42,12 +42,13 @@ import { ScdbLiveSetList } from './entities/ScdbLiveSetList';
     CardleModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: (process.env?.DATABASE_TYPE as 'postgres' | 'mysql') || 'postgres',
       host: process.env.DATABASE_HOST,
       port: parseInt(process.env?.DATABASE_PORT) || 3306,
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      schema: 'shinycolors',
       entities: [
         ScdbCardIdolEvent,
         ScdbCardList,

@@ -1,47 +1,41 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 
-@Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardSupportSkill', { schema: 'shinycolors' })
+@Index('idx_16473_cardindex', ['enzaId'], {})
+@Index('idx_16473_primary', ['skillIndex'], { unique: true })
+@Entity('scdb_cardsupportskill', { schema: 'shinycolors' })
 export class ScdbCardSupportSkill {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'SkillIndex' })
+  @Column('integer', { primary: true, name: 'skillindex' })
   skillIndex: number;
 
-  @Column('bigint', { name: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('text', { name: 'SkillID' })
+  @Column('text', { name: 'skillid' })
   skillId: string;
 
-  @Column('text', { name: 'SkillName' })
+  @Column('text', { name: 'skillname' })
   skillName: string;
 
-  @Column('text', { name: 'SkillDesc' })
+  @Column('text', { name: 'skilldesc' })
   skillDesc: string;
 
-  @Column('text', { name: 'SkillAttribute' })
+  @Column('text', { name: 'skillattribute' })
   skillAttribute: string;
 
-  @Column('text', { name: 'SkillType' })
+  @Column('text', { name: 'skilltype' })
   skillType: string;
 
-  @Column('int', { name: 'GainedAt' })
+  @Column('int', { name: 'gainedat' })
   gainedAt: number;
 
-  @Column('int', { name: 'SkillLevel' })
+  @Column('int', { name: 'skilllevel' })
   skillLevel: number;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardSupportSkills, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

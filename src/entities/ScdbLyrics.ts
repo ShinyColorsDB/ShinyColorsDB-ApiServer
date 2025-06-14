@@ -1,16 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_Lyrics', { schema: 'shinycolors' })
+@Index('idx_16588_primary', ['lyricIndex'], { unique: true })
+@Entity('scdb_lyrics', { schema: 'shinycolors' })
 export class ScdbLyrics {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'LyricIndex' })
+  @Column('integer', { primary: true, name: 'lyricindex' })
   lyricIndex: number;
 
-  @Column('text', { name: 'SongName' })
+  @Column('text', { name: 'songname' })
   songName: string;
 
-  @Column('text', { name: 'SongLyrics' })
+  @Column('text', { name: 'songlyrics' })
   songLyrics: string;
 
-  @Column('text', { name: 'SongLyricsZH' })
+  @Column('text', { name: 'songlyricszh' })
   songLyricsZh: string;
 }

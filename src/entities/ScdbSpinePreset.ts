@@ -1,59 +1,53 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbIdols } from './ScdbIdols';
 
-@Index('IdolID', ['idolId'], {})
-@Entity('SCDB_SpinePreset', { schema: 'shinycolors' })
+@Index('idx_16613_idolid', ['idolId'], {})
+@Index('idx_16613_primary', ['presetIndex'], { unique: true })
+@Entity('scdb_spinepreset', { schema: 'shinycolors' })
 export class ScdbSpinePreset {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'PresetIndex' })
+  @Column('integer', { primary: true, name: 'presetindex' })
   presetIndex: number;
 
-  @Column('text', { name: 'PresetID' })
+  @Column('text', { name: 'presetid' })
   presetId: string;
 
-  @Column('int', { name: 'IdolID' })
+  @Column('int', { name: 'idolid' })
   idolId: number;
 
-  @Column('text', { name: 'Animation1' })
+  @Column('text', { name: 'animation1' })
   animation1: string;
 
-  @Column('text', { name: 'Animation2' })
+  @Column('text', { name: 'animation2' })
   animation2: string;
 
-  @Column('text', { name: 'Animation3' })
+  @Column('text', { name: 'animation3' })
   animation3: string;
 
-  @Column('text', { name: 'Animation4' })
+  @Column('text', { name: 'animation4' })
   animation4: string;
 
-  @Column('text', { name: 'Lip' })
+  @Column('text', { name: 'lip' })
   lip: string;
 
-  @Column('text', { name: 'Comment' })
+  @Column('text', { name: 'comment' })
   comment: string;
 
-  @Column('text', { name: 'SpeakerName' })
+  @Column('text', { name: 'speakername' })
   speakerName: string;
 
-  @Column('text', { name: 'Voice' })
+  @Column('text', { name: 'voice' })
   voice: string;
 
-  @Column('text', { name: 'VoiceName' })
+  @Column('text', { name: 'voicename' })
   voiceName: string;
 
-  @Column('text', { name: 'ReleaseCondition' })
+  @Column('text', { name: 'releasecondition' })
   releaseCondition: string;
 
   @ManyToOne(() => ScdbIdols, (idols) => idols.spinePresets, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'IdolID', referencedColumnName: 'idolId' }])
+  @JoinColumn([{ name: 'idolid', referencedColumnName: 'idolId' }])
   idol: ScdbIdols;
 }

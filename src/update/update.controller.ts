@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Headers,
@@ -22,6 +23,9 @@ export class UpdateController {
     @Headers('X-CREDENTIAL') credential: string,
     @Headers('X-TOKEN') token: string,
   ): Promise<any> {
+    if (!process.env.UPDATE_ENABLED || process.env.UPDATE_ENABLED != 'true') {
+      throw new BadRequestException('Update service is not enabled.');
+    }
     this.updateService.checkCredential(credential);
     this.updateService.checkToken(token);
     this.updateService.checkPayload(payload);

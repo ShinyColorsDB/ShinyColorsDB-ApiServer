@@ -1,44 +1,38 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 
-@Index('EnzaId', ['enzaId'], {})
-@Entity('SCDB_SupportFightSkill', { schema: 'shinycolors' })
+@Index('idx_16623_enzaid', ['enzaId'], {})
+@Index('idx_16623_primary', ['ftIndex'], { unique: true })
+@Entity('scdb_supportfightskill', { schema: 'shinycolors' })
 export class ScdbSupportFightSkill {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'FtIndex' })
+  @Column('integer', { primary: true, name: 'ftindex' })
   ftIndex: number;
 
-  @Column('bigint', { name: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('text', { name: 'FtComment' })
+  @Column('text', { name: 'ftcomment' })
   ftComment: string;
 
-  @Column('int', { name: 'FtId' })
+  @Column('int', { name: 'ftid' })
   ftId: number;
 
-  @Column('text', { name: 'FtName' })
+  @Column('text', { name: 'ftname' })
   ftName: string;
 
-  @Column('json', { name: 'FtNormal' })
+  @Column('json', { name: 'ftnormal' })
   ftNormal: object;
 
-  @Column('json', { name: 'FtGood' })
+  @Column('json', { name: 'ftgood' })
   ftGood: object;
 
-  @Column('json', { name: 'FtPerfect' })
+  @Column('json', { name: 'ftperfect' })
   ftPerfect: object;
 
   @OneToOne(() => ScdbCardList, (cardList) => cardList.supportFightSkills, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

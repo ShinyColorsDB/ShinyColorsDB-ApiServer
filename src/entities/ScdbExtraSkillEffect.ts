@@ -1,25 +1,26 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { ScdbCardMemoryAppeal } from './ScdbCardMemoryAppeal';
 import { ScdbCardPanel } from './ScdbCardPanel';
 
-@Entity('SCDB_ExtraSkillEffect', { schema: 'shinycolors' })
+@Index('idx_16484_primary', ['extraSkillIndex'], { unique: true })
+@Entity('scdb_extraskilleffect', { schema: 'shinycolors' })
 export class ScdbExtraSkillEffect {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'ExtraSkillIndex' })
+  @Column('integer', { primary: true, name: 'extraskillindex' })
   extraSkillIndex: number;
 
-  @Column('text', { name: 'ExtraEffectType' })
+  @Column('text', { name: 'extraeffecttype' })
   extraEffectType: string;
 
-  @Column('bigint', { name: 'ExtraEffectId' })
+  @Column('bigint', { name: 'extraeffectid' })
   extraEffectId: string;
 
-  @Column('text', { name: 'ExtraEffectDesc' })
+  @Column('text', { name: 'extraeffectdesc' })
   extraEffectDesc: string;
 
-  @Column('text', { name: 'ExtraEffectMember', nullable: true })
+  @Column('text', { name: 'extraeffectmember', nullable: true })
   extraEffectMember: string | null;
 
-  @Column('json', { name: 'ExtraSkillEffect' })
+  @Column('json', { name: 'extraskilleffect' })
   extraSkillEffect: object;
 
   @OneToMany(

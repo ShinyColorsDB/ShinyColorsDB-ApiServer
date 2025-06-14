@@ -1,68 +1,62 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 import { ScdbExtraSkillEffect } from './ScdbExtraSkillEffect';
 
-@Index('CardIndex', ['enzaId'], {})
-@Index('ExtraSkillEffectIndex', ['extraSkillIndex'], {})
-@Entity('SCDB_CardPanel', { schema: 'shinycolors' })
+@Index('idx_16455_cardindex', ['enzaId'], {})
+@Index('idx_16455_extraskilleffectindex', ['extraSkillIndex'], {})
+@Index('idx_16455_primary', ['tableIndex'], { unique: true })
+@Entity('scdb_cardpanel', { schema: 'shinycolors' })
 export class ScdbCardPanel {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'TableIndex' })
+  @Column('integer', { primary: true, name: 'tableindex' })
   tableIndex: number;
 
-  @Column('bigint', { name: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('bigint', { name: 'PanelID' })
+  @Column('bigint', { name: 'panelid' })
   panelId: string;
 
-  @Column('int', { name: 'PanelIcon' })
+  @Column('int', { name: 'panelicon' })
   panelIcon: number;
 
-  @Column('bigint', { name: 'SkillID' })
+  @Column('bigint', { name: 'skillid' })
   skillId: string;
 
-  @Column('int', { name: 'PanelSlot' })
+  @Column('int', { name: 'panelslot' })
   panelSlot: number;
 
-  @Column('tinyint', { name: 'PanelIsGold', width: 1 })
-  panelIsGold: boolean;
+  @Column('smallint', { name: 'panelisgold' })
+  panelIsGold: number;
 
-  @Column('int', { name: 'PanelReleaseEvolution' })
+  @Column('int', { name: 'panelreleaseevolution' })
   panelReleaseEvolution: number;
 
-  @Column('tinyint', { name: 'PanelReleaseByEvent', width: 1 })
-  panelReleaseByEvent: boolean;
+  @Column('int', { name: 'panelreleasebyevent' })
+  panelReleaseByEvent: number;
 
-  @Column('text', { name: 'PanelReleaseDesc', nullable: true })
+  @Column('text', { name: 'panelreleasedesc', nullable: true })
   panelReleaseDesc: string | null;
 
-  @Column('text', { name: 'SkillTitle' })
+  @Column('text', { name: 'skilltitle' })
   skillTitle: string;
 
-  @Column('text', { name: 'SkillDesc' })
+  @Column('text', { name: 'skilldesc' })
   skillDesc: string;
 
-  @Column('text', { name: 'SkillType' })
+  @Column('text', { name: 'skilltype' })
   skillType: string;
 
-  @Column('json', { name: 'SkillEffects' })
+  @Column('json', { name: 'skilleffects' })
   skillEffects: object;
 
-  @Column('int', { name: 'ExtraSkillIndex', nullable: true })
+  @Column('int', { name: 'extraskillindex', nullable: true })
   extraSkillIndex: number | null;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardPanels, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 
   @ManyToOne(
@@ -71,7 +65,7 @@ export class ScdbCardPanel {
     { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   @JoinColumn([
-    { name: 'ExtraSkillIndex', referencedColumnName: 'extraSkillIndex' },
+    { name: 'extraskillindex', referencedColumnName: 'extraSkillIndex' },
   ])
   extraEffect: ScdbExtraSkillEffect;
 }
