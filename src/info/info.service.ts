@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Brackets } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { ScdbCardList } from '../entities/ScdbCardList';
 import { ScdbIdols } from '../entities/ScdbIdols';
@@ -18,6 +18,7 @@ export class InfoService {
   readonly LIMITED = 'LimitedGasha';
   readonly GENERAL = 'GeneralGasha';
   readonly PARALLEL = 'ParallelCollection';
+  readonly COLLAB = 'CollabTwilightCollection';
   constructor(private dataSource: DataSource) {}
 
   async getIdollist(): Promise<ScdbIdols[]> {
@@ -192,19 +193,8 @@ export class InfoService {
   }
 
   async getTableByType(type: number) {
-    const produceList = [],
-      supportList = [];
-
-    for (const k of await this.getIdollist()) {
-      const pElement = await this.getGap(k.idolId, type, 0),
-        sElement = await this.getGap(k.idolId, type, 1);
-      if (pElement) {
-        produceList.push(pElement);
-      }
-      if (sElement) {
-        supportList.push(sElement);
-      }
-    }
+    const produceList = await this.getLatestGashaCards(type, 0),
+      supportList = await this.getLatestGashaCards(type, 1);
 
     return {
       produce: produceList,
@@ -216,75 +206,64 @@ export class InfoService {
     return this.dataSource.getRepository(ScdbSupportSkillList).find();
   }
 
-  /**
-   * @param {number} idolId
-   * @param {number} queryType
-   * 0: `limited only`,
-   * 1: `general only`,
-   * 2: `all`
-   * @param {number} cardType
-   * 0: P, 1: S
-   **/
-  async getGap(
-    idolId: number,
-    queryType: number,
-    cardType: number,
-  ): Promise<ScdbCardList> {
-    const src = this.dataSource
-      .getRepository(ScdbCardList)
-      .createQueryBuilder('cardList');
-
+  getQueryType(queryType: number) {
     switch (queryType) {
       case 0:
-        src.where(
-          new Brackets((q) => {
-            q.where('cardList.getMethod = :getMethod1', {
-              getMethod1: this.LIMITED,
-            }).orWhere('cardList.getMethod = :getMethod2', {
-              getMethod2: this.TWILIGHT,
-            });
-          }),
-        );
-        break;
+        return [
+          this.TWILIGHT,
+          this.MYSONG,
+          this.LIMITED,
+          this.PARALLEL,
+          this.COLLAB,
+        ];
       case 1:
-        src.where('cardList.getMethod = :getMethod', {
-          getMethod: this.GENERAL,
-        });
-        break;
+        return [this.GENERAL];
       case 2:
-        src.where(
-          new Brackets((q) => {
-            q.where('cardList.getMethod = :getMethod1', {
-              getMethod1: this.LIMITED,
+        return [
+          this.TWILIGHT,
+          this.MYSONG,
+          this.LIMITED,
+          this.PARALLEL,
+          this.COLLAB,
+          this.GENERAL,
+        ];
+    }
+  }
+
+  async getLatestGashaCards(
+    queryType: number,
+    cardType: number,
+  ): Promise<ScdbCardList[]> {
+    const cardRepository = this.dataSource.getRepository(ScdbCardList);
+
+    // Single query to get the latest card for each idol
+    const cards = await cardRepository
+      .createQueryBuilder('card')
+      .innerJoin(
+        (qb) =>
+          qb
+            .select('idolid')
+            .addSelect('MAX(releaseDate)', 'maxReleaseDate')
+            .from(ScdbCardList, 'sub')
+            .where('sub.getmethod IN (:...getMethods)', {
+              getMethods: this.getQueryType(queryType),
             })
-              .orWhere('cardList.getMethod = :getMethod2', {
-                getMethod2: this.GENERAL,
-              })
-              .orWhere('cardList.getMethod = :getMethod3', {
-                getMethod3: this.TWILIGHT,
-              })
-              .orWhere('cardList.getMethod = :getMethod4', {
-                getMethod4: this.MYSONG,
-              });
-          }),
-        );
-        break;
-    }
+            .andWhere('sub.cardtype = :cardType', {
+              cardType: cardType === 0 ? 'P_SSR' : 'S_SSR',
+            })
+            .andWhere('sub.idolid BETWEEN 1 AND 28')
+            .groupBy('sub.idolid'),
+        'latest',
+        'card.idolid = latest.idolid AND card.releaseDate = latest."maxReleaseDate"',
+      )
+      .where('card.getmethod IN (:...getMethods)', {
+        getMethods: this.getQueryType(queryType),
+      })
+      .andWhere('card.idolid BETWEEN 1 AND 28')
+      .orderBy('card.idolid', 'ASC')
+      .getMany();
 
-    switch (cardType) {
-      case 0:
-        src.andWhere('cardList.cardType = :cardType1', { cardType1: 'P_SSR' });
-        break;
-      case 1:
-        src.andWhere('cardList.cardType = :cardType2', { cardType2: 'S_SSR' });
-        break;
-    }
-
-    src
-      .andWhere('cardList.idolId = :idolId', { idolId: idolId })
-      .orderBy('cardList.releaseDate', 'DESC');
-
-    return src.getOne();
+    return cards;
   }
 
   async query1SupportSkill(queryData: QuerySupportSkill): Promise<any> {
