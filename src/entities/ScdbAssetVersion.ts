@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_AssetVersion', { schema: 'shinycolors' })
+@Index('idx_16434_primary', ['assetIndex'], { unique: true })
+@Entity('scdb_assetversion', { schema: 'shinycolors' })
 export class ScdbAssetVersion {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'AssetIndex' })
+  @Column('integer', { primary: true, name: 'assetIndex' })
   assetIndex: number;
 
   @Column('text', { name: 'AssetChunk', nullable: true })
@@ -17,6 +18,6 @@ export class ScdbAssetVersion {
   @Column('int', { name: 'AssetVersion' })
   assetVersion: number;
 
-  @Column('tinyint', { name: 'AssetExist', width: 1 })
+  @Column('boolean', { name: 'AssetExist' })
   assetExist: boolean;
 }

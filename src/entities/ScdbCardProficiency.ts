@@ -1,32 +1,26 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 
-@Index('CardIndex', ['enzaId'], {})
-@Entity('SCDB_CardProficiency', { schema: 'shinycolors' })
+@Index('idx_16460_cardindex', ['enzaId'], {})
+@Index('idx_16460_primary', ['proficiencyIndex'], { unique: true })
+@Entity('scdb_cardproficiency', { schema: 'shinycolors' })
 export class ScdbCardProficiency {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'ProficiencyIndex' })
+  @Column('integer', { primary: true, name: 'proficiencyindex' })
   proficiencyIndex: number;
 
-  @Column('bigint', { name: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('text', { name: 'Proficiency' })
+  @Column('text', { name: 'proficiency' })
   proficiency: string;
 
-  @Column('int', { name: 'Value' })
+  @Column('int', { name: 'value' })
   value: number;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardProficiencies, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

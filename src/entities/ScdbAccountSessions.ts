@@ -1,16 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_AccountSessions', { schema: 'shinycolors' })
+@Index('idx_16391_primary', ['accountindex'], { unique: true })
+@Entity('scdb_accountsessions', { schema: 'shinycolors' })
 export class ScdbAccountSessions {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'AccountIndex' })
+  @Column('integer', { primary: true, name: 'accountindex' })
   accountIndex: number;
 
-  @Column('text', { name: 'AppToken' })
+  @Column('text', { name: 'apptoken' })
   appToken: string;
 
-  @Column('text', { name: 'AccountSession' })
+  @Column('text', { name: 'accountsession' })
   accountSession: string;
 
-  @Column('text', { name: 'AccountAppToken' })
+  @Column('text', { name: 'accountapptoken' })
   accountAppToken: string;
 }

@@ -1,19 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_Fes', { schema: 'shinycolors' })
+@Index('idx_16489_primary', ['fesIndex'], { unique: true })
+@Entity('scdb_fes', { schema: 'shinycolors' })
 export class ScdbFes {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'FesIndex' })
+  @Column('integer', { primary: true, name: 'fesindex' })
   fesIndex: number;
 
-  @Column('timestamp', { name: 'FesStart' })
+  @Column('timestamp', { name: 'fesstart' })
   fesStart: Date;
 
-  @Column('timestamp', { name: 'FesEnd' })
+  @Column('timestamp', { name: 'fesend' })
   fesEnd: Date;
 
-  @Column('text', { name: 'Rules' })
+  @Column('text', { name: 'rules' })
   rules: string;
 
-  @Column('text', { name: 'BonusTeam' })
+  @Column('text', { name: 'bonusteam' })
   bonusTeam: string;
 }

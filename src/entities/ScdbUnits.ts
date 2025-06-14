@@ -1,31 +1,26 @@
-import {
-  Column,
-  Entity,
-  Index,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { ScdbIdols } from './ScdbIdols';
 
-@Index('UnitID', ['unitId'], { unique: true })
-@Entity('SCDB_Units', { schema: 'shinycolors' })
+@Index('idx_16633_unitid', ['unitId'], { unique: true })
+@Index('idx_16633_primary', ['unitId'], { unique: true })
+@Entity('scdb_units', { schema: 'shinycolors' })
 export class ScdbUnits {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'UnitID' })
+  @Column('integer', { primary: true, name: 'unitid' })
   unitId: number;
 
-  @Column('text', { name: 'UnitName' })
+  @Column('text', { name: 'unitname' })
   unitName: string;
 
-  @Column('text', { name: 'UnitHiragana' })
+  @Column('text', { name: 'unithiragana' })
   unitHiragana: string;
 
-  @Column('text', { name: 'Color1' })
+  @Column('text', { name: 'color1' })
   color1: string;
 
-  @Column('text', { name: 'Color2' })
+  @Column('text', { name: 'color2' })
   color2: string;
 
-  @Column('text', { name: 'UnitPV' })
+  @Column('text', { name: 'unitpv' })
   unitPv: string;
 
   @OneToMany(() => ScdbIdols, (idols) => idols.unit)

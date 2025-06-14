@@ -1,34 +1,35 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Index('EnzaId', ['enzaId'], {})
-@Index('IdolId', ['idolId'], {})
-@Index('FesIdolIndex', ['fesIdolIndex'], {})
-@Entity('SCDB_FesSupportIdol', { schema: 'shinycolors' })
+@Index('idx_16504_enzaid', ['enzaId'], {})
+@Index('idx_16504_fesidolindex', ['fesIdolIndex'], {})
+@Index('idx_16504_primary', ['fessupportIdolIndex'], { unique: true })
+@Index('idx_16504_idolid', ['idolId'], {})
+@Entity('scdb_fessupportidol', { schema: 'shinycolors' })
 export class ScdbFesSupportIdol {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'FesSupportIdolIndex' })
+  @Column('integer', { primary: true, name: 'fessupportidolindex' })
   fesSupportIdolIndex: number;
 
-  @Column('int', { name: 'FesIdolIndex' })
+  @Column('int', { name: 'fesidolindex' })
   fesIdolIndex: number;
 
-  @Column('int', { name: 'IdolId' })
+  @Column('int', { name: 'idolid' })
   idolId: number;
 
-  @Column('bigint', { name: 'EnzaId' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('int', { name: 'Level' })
+  @Column('int', { name: 'level' })
   level: number;
 
-  @Column('int', { name: 'EvolutionStage' })
+  @Column('int', { name: 'evolutionstage' })
   evolutionStage: number;
 
-  @Column('int', { name: 'ExSkill1', nullable: true })
+  @Column('int', { name: 'exskill1', nullable: true })
   exSkill1: number | null;
 
-  @Column('int', { name: 'ExSkill2', nullable: true })
+  @Column('int', { name: 'exskill2', nullable: true })
   exSkill2: number | null;
 
-  @Column('int', { name: 'ExSkill3', nullable: true })
+  @Column('int', { name: 'exskill3', nullable: true })
   exSkill3: number | null;
 }

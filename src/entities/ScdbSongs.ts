@@ -1,40 +1,42 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_Songs', { schema: 'shinycolors' })
+@Index('idx_16608_songid', ['songId'], { unique: true })
+@Index('idx_16608_primary', ['songIndex'], { unique: true })
+@Entity('scdb_songs', { schema: 'shinycolors' })
 export class ScdbSongs {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'SongIndex' })
+  @Column('integer', { primary: true, name: 'songindex' })
   songIndex: number;
 
-  @Column('int', { name: 'SongID' })
+  @Column('int', { name: 'songid' })
   songId: number;
 
-  @Column('text', { name: 'SongTitle' })
+  @Column('text', { name: 'songtitle' })
   songTitle: string;
 
-  @Column('text', { name: 'SongDesc' })
+  @Column('text', { name: 'songdesc' })
   songDesc: string;
 
-  @Column('text', { name: 'Artist' })
+  @Column('text', { name: 'artist' })
   artist: string;
 
-  @Column('int', { name: 'SongSecs' })
+  @Column('int', { name: 'songsecs' })
   songSecs: number;
 
-  @Column('text', { name: 'MusicStyle' })
+  @Column('text', { name: 'musicstyle' })
   musicStyle: string;
 
-  @Column('text', { name: 'Performance' })
+  @Column('text', { name: 'performance' })
   performance: string;
 
-  @Column('text', { name: 'SongHash' })
+  @Column('text', { name: 'songhash' })
   songHash: string;
 
-  @Column('int', { name: 'MvIdolID' })
+  @Column('int', { name: 'mvidolid' })
   mvIdolId: number;
 
-  @Column('int', { name: 'UnitID' })
+  @Column('int', { name: 'unitid' })
   unitId: number;
 
-  @Column('text', { name: 'SalesUrl' })
+  @Column('text', { name: 'salesurl' })
   salesUrl: string;
 }

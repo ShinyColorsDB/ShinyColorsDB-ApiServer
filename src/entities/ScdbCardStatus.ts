@@ -1,36 +1,32 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 
-@Entity('SCDB_CardStatus', { schema: 'shinycolors' })
+@Index('idx_16465_enzaid', ['enzaId'], {})
+@Index('idx_16465_primary', ['statusIndex'], { unique: true })
+@Entity('scdb_cardstatus', { schema: 'shinycolors' })
 export class ScdbCardStatus {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'StatusIndex' })
+  @Column('integer', { primary: true, name: 'statusindex' })
   statusIndex: number;
 
-  @Column('bigint', { name: 'EnzaID', select: false })
+  @Column('bigint', { name: 'enzaid', select: false })
   enzaId: string;
 
-  @Column('int', { name: 'Vocal' })
+  @Column('int', { name: 'vocal' })
   vocal: number;
 
-  @Column('int', { name: 'Dance' })
+  @Column('int', { name: 'dance' })
   dance: number;
 
-  @Column('int', { name: 'Visual' })
+  @Column('int', { name: 'visual' })
   visual: number;
 
-  @Column('int', { name: 'Mental' })
+  @Column('int', { name: 'mental' })
   mental: number;
 
   @OneToOne(() => ScdbCardList, (cardList) => cardList.enzaId, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 }

@@ -5,41 +5,41 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 import { ScdbExtraSkillEffect } from './ScdbExtraSkillEffect';
 
-@Index('CardIndex', ['enzaId'], {})
-@Index('ExtraSkillEffectIndex', ['extraSkillIndex'], {})
-@Entity('SCDB_CardMemoryAppeal', { schema: 'shinycolors' })
+@Index('idx_16450_cardindex', ['enzaId'], {})
+@Index('idx_16450_extraskilleffectindex', ['extraSkillIndex'], {})
+@Index('idx_16450_primary', ['memoryIndex'], { unique: true })
+@Entity('scdb_cardmemoryappeal', { schema: 'shinycolors' })
 export class ScdbCardMemoryAppeal {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'MemoryIndex' })
+  @Column('integer', { primary: true, name: 'memoryindex' })
   memoryIndex: number;
 
-  @Column('bigint', { name: 'EnzaID' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('bigint', { name: 'MemoryID' })
+  @Column('bigint', { name: 'memoryid' })
   memoryId: string;
 
-  @Column('text', { name: 'MemoryTitle' })
+  @Column('text', { name: 'memorytitle' })
   memoryTitle: string;
 
-  @Column('text', { name: 'MemoryDesc' })
+  @Column('text', { name: 'memorydesc' })
   memoryDesc: string;
 
-  @Column('json', { name: 'MemoryEffects' })
+  @Column('json', { name: 'memoryeffects' })
   memoryEffects: object;
 
-  @Column('int', { name: 'ExtraSkillIndex', nullable: true })
+  @Column('int', { name: 'extraskillindex', nullable: true })
   extraSkillIndex: number | null;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardMemoryAppeals, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaID', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 
   @OneToOne(
@@ -48,7 +48,7 @@ export class ScdbCardMemoryAppeal {
     { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   @JoinColumn([
-    { name: 'ExtraSkillIndex', referencedColumnName: 'extraSkillIndex' },
+    { name: 'extraskillindex', referencedColumnName: 'extraSkillIndex' },
   ])
   extraEffect: ScdbExtraSkillEffect;
 }

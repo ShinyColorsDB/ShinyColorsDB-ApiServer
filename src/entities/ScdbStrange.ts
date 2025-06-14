@@ -1,28 +1,29 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_Strange', { schema: 'shinycolors' })
+@Index('idx_16618_primary', ['strangeindex'], { unique: true })
+@Entity('scdb_strange', { schema: 'shinycolors' })
 export class ScdbStrange {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'StrangeIndex' })
+  @Column('integer', { primary: true, name: 'strangeindex' })
   strangeIndex: number;
 
-  @Column('text', { name: 'Title' })
+  @Column('text', { name: 'title' })
   title: string;
 
-  @Column('text', { name: 'SubTitle' })
+  @Column('text', { name: 'subtitle' })
   subTitle: string;
 
-  @Column('text', { name: 'PageName' })
+  @Column('text', { name: 'pagename' })
   pageName: string;
 
-  @Column('datetime', { name: 'FromDateTime' })
+  @Column('datetime', { name: 'fromdatetime' })
   fromDateTime: Date;
 
-  @Column('text', { name: 'Background' })
+  @Column('text', { name: 'background' })
   background: string;
 
-  @Column('text', { name: 'OverlayColor' })
+  @Column('text', { name: 'overlaycolor' })
   overlayColor: string;
 
-  @Column('text', { name: 'Note' })
+  @Column('text', { name: 'note' })
   note: string;
 }

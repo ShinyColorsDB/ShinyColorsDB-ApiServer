@@ -38,22 +38,36 @@ export class SpineService {
     return this.dataSource
       .getRepository(ScdbIdolDress)
       .createQueryBuilder('dress')
-      .select('dress.IdolId', 'idolId')
-      .addSelect('dress.DressName', 'dressName')
-      .addSelect('dress.DressUUID', 'dressUuid')
-      .addSelect('dress.Sml_Cloth0', 'sml_Cloth0')
-      .addSelect('dress.Sml_Cloth1', 'sml_Cloth1')
-      .addSelect('dress.Big_Cloth0', 'big_Cloth0')
-      .addSelect('dress.Big_Cloth1', 'big_Cloth1')
-      .addSelect('dress.DressType', 'dressType')
-      .addSelect('dress.EnzaID', 'enzaId')
-      .addSelect('dress.Exist', 'exist')
-      .where('dress.IdolId = :idolId', { idolId: idolId })
-      .andWhere('dress.Exist != 0')
-      .orderBy(
-        'FIELD (dress.DressType, "P_UR", "P_SSR", "P_SR", "Anniversary", "Mizugi", "Special", "FesReward", "FesTour", "Other")',
+      .select('dress.idolid', 'idolId')
+      .addSelect('dress.dressname', 'dressName')
+      .addSelect('dress.dressuuid', 'dressUuid')
+      .addSelect('dress.sml_cloth0', 'sml_Cloth0')
+      .addSelect('dress.sml_cloth1', 'sml_Cloth1')
+      .addSelect('dress.big_cloth0', 'big_Cloth0')
+      .addSelect('dress.big_cloth1', 'big_Cloth1')
+      .addSelect('dress.dresstype', 'dressType')
+      .addSelect('dress.enzaid', 'enzaId')
+      .addSelect('dress.exist', 'exist')
+      .where('dress.idolid = :idolId', { idolId: idolId })
+      .addSelect(
+        `
+        CASE dress.dresstype
+          WHEN 'P_UR' THEN 1
+          WHEN 'P_SSR' THEN 2
+          WHEN 'P_SR' THEN 3
+          WHEN 'Anniversary' THEN 4
+          WHEN 'Mizugi' THEN 5
+          WHEN 'Special' THEN 6
+          WHEN 'FesReward' THEN 7
+          WHEN 'FesTour' THEN 8
+          WHEN 'Other' THEN 9
+          ELSE 10
+        END
+      `,
+        'dress_type_order',
       )
-      .addOrderBy('dress.EnzaId', 'ASC')
+      .orderBy('dress_type_order', 'ASC')
+      .addOrderBy('dress.enzaid', 'ASC')
       .getRawMany();
   }
 
@@ -61,8 +75,8 @@ export class SpineService {
     return this.dataSource
       .getRepository(ScdbSpinePreset)
       .createQueryBuilder('preset')
-      .where('preset.idolId = :idolId', { idolId: idolId })
-      .orderBy('preset.presetId', 'ASC')
+      .where('preset.idolid = :idolId', { idolId: idolId })
+      .orderBy('preset.presetid', 'ASC')
       .getMany();
   }
 }

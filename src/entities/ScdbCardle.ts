@@ -5,34 +5,31 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 import { ScdbCardleChunk } from './ScdbCardleChunk';
 
-@Index('SCDB_Cradle_ibfk_1', ['enzaId'], {})
-@Entity('SCDB_Cardle', { schema: 'shinycolors' })
+@Index('idx_16477_primary', ['cardleIndex'], { unique: true })
+@Index('idx_16477_scdb_cradle_ibfk_1', ['enzaId'], {})
+@Entity('scdb_cardle', { schema: 'shinycolors' })
 export class ScdbCardle {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'CardleIndex' })
+  @Column('integer', { primary: true, name: 'cardleindex' })
   cardleIndex: number;
 
-  @Column('timestamp', { name: 'CardleDate' })
+  @Column('timestamp', { name: 'cardledate' })
   cardleDate: Date;
 
-  @Column('bigint', { name: 'EnzaId' })
+  @Column('bigint', { name: 'enzaid' })
   enzaId: string;
 
-  @Column('int', {
-    name: 'CardleType',
-    comment: '0 for S & P normal, 1 for costume ',
-  })
+  @Column('integer', { name: 'cardletype' })
   cardleType: number;
 
   @ManyToOne(() => ScdbCardList, (cardList) => cardList.cardles, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'EnzaId', referencedColumnName: 'enzaId' }])
+  @JoinColumn([{ name: 'enzaid', referencedColumnName: 'enzaId' }])
   enza: ScdbCardList;
 
   @OneToMany(() => ScdbCardleChunk, (cardleChunk) => cardleChunk.cardleIndex2)

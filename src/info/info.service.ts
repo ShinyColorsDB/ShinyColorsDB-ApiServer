@@ -74,13 +74,13 @@ export class InfoService {
     return this.dataSource
       .getRepository(ScdbCardList)
       .createQueryBuilder('scard')
-      .leftJoinAndSelect('scard.idol', 'idol')
-      .leftJoinAndSelect('scard.cardSupportEvents', 'supportEvents')
-      .leftJoinAndSelect('scard.cardSupportSkills', 'supportSkills')
+      .leftJoinAndSelect('scard.idol', 'idolid')
+      .leftJoinAndSelect('scard.cardSupportEvents', 'supportevents')
+      .leftJoinAndSelect('scard.cardSupportSkills', 'supportskills')
       .leftJoinAndSelect('scard.cardProficiencies', 'proficiencies')
       .leftJoinAndSelect('scard.cardPanels', 'panels')
-      .leftJoinAndSelect('panels.extraEffect', 'extraPanelEffect')
-      .leftJoinAndSelect('scard.supportFightSkills', 'supportFightSkills')
+      .leftJoinAndSelect('panels.extraEffect', 'extrapaneleffect')
+      .leftJoinAndSelect('scard.supportFightSkills', 'supportfightskills')
       .leftJoinAndSelect('scard.cardStatus', 'status')
       .orderBy('supportEvents.eventId', 'ASC')
       .addOrderBy('supportSkills.skillId', 'ASC')
@@ -291,29 +291,29 @@ export class InfoService {
     const rankedQuery = this.dataSource
       .getRepository(ScdbCardSupportSkill)
       .createQueryBuilder('A')
-      .select('E.IdolID', 'E_IdolID')
-      .addSelect('E.CardUUID', 'E_CardUuid')
-      .addSelect('E.CardName', 'E_CardName')
-      .addSelect('E.CardType', 'E_CardType')
-      .addSelect('A.EnzaID', 'EnzaID')
-      .addSelect('A.SkillName', 'A_SkillName')
-      .addSelect('A.SkillDesc', 'A_SkillDesc')
-      .addSelect('A.SkillLevel', 'A_SkillLevel')
-      .addSelect('A.GainedAt', 'A_GainedAt')
+      .select('E.idolid', 'E_IdolID')
+      .addSelect('E.carduuid', 'E_CardUuid')
+      .addSelect('E.cardname', 'E_CardName')
+      .addSelect('E.cardtype', 'E_CardType')
+      .addSelect('A.enzaid', 'EnzaID')
+      .addSelect('A.skillname', 'A_SkillName')
+      .addSelect('A.skilldesc', 'A_SkillDesc')
+      .addSelect('A.skilllevel', 'A_SkillLevel')
+      .addSelect('A.gainedat', 'A_GainedAt')
       .addSelect(
-        '(ROW_NUMBER() OVER (PARTITION BY A.EnzaID ORDER BY A.EnzaID ASC, A.SkillLevel ASC))',
+        '(ROW_NUMBER() OVER (PARTITION BY A.enzaid ORDER BY A.enzaid ASC, A.skilllevel ASC))',
         'RowNum',
       )
-      .innerJoin(ScdbCardList, 'E', 'A.EnzaID = E.EnzaID');
+      .innerJoin(ScdbCardList, 'E', 'A.enzaid = E.enzaid');
 
     if (queryData.queryIdols.length) {
-      rankedQuery.where('E.IdolID IN (:...idolIds)', {
+      rankedQuery.where('E.idolid IN (:...idolIds)', {
         idolIds: queryData.queryIdols,
       });
     }
 
     rankedQuery.andWhere(
-      '(A.SkillName = :aSkillName AND A.SkillLevel >= :aSkillLevel)',
+      '(A.skillname = :aSkillName AND A.skilllevel >= :aSkillLevel)',
       {
         aSkillName: queryData.querySkills[0][0],
         aSkillLevel: queryData.querySkills[0][1],
@@ -327,42 +327,42 @@ export class InfoService {
     const rankedQuery = this.dataSource
       .getRepository(ScdbCardSupportSkill)
       .createQueryBuilder('A')
-      .select('E.IdolID', 'E_IdolID')
-      .addSelect('E.CardUUID', 'E_CardUuid')
-      .addSelect('E.CardName', 'E_CardName')
-      .addSelect('E.CardType', 'E_CardType')
-      .addSelect('A.EnzaID', 'EnzaID')
-      .addSelect('A.SkillName', 'A_SkillName')
-      .addSelect('A.SkillDesc', 'A_SkillDesc')
-      .addSelect('A.SkillLevel', 'A_SkillLevel')
-      .addSelect('A.GainedAt', 'A_GainedAt')
-      .addSelect('B.SkillName', 'B_SkillName')
-      .addSelect('B.SkillDesc', 'B_SkillDesc')
-      .addSelect('B.SkillLevel', 'B_SkillLevel')
-      .addSelect('B.GainedAt', 'B_GainedAt')
+      .select('E.idolid', 'E_IdolID')
+      .addSelect('E.carduuid', 'E_CardUuid')
+      .addSelect('E.cardname', 'E_CardName')
+      .addSelect('E.cardtype', 'E_CardType')
+      .addSelect('A.enzaid', 'EnzaID')
+      .addSelect('A.skillname', 'A_SkillName')
+      .addSelect('A.skilldesc', 'A_SkillDesc')
+      .addSelect('A.skilllevel', 'A_SkillLevel')
+      .addSelect('A.gainedat', 'A_GainedAt')
+      .addSelect('B.skillname', 'B_SkillName')
+      .addSelect('B.skilldesc', 'B_SkillDesc')
+      .addSelect('B.skilllevel', 'B_SkillLevel')
+      .addSelect('B.gainedat', 'B_GainedAt')
       .addSelect(
-        '(ROW_NUMBER() OVER (PARTITION BY A.EnzaID ORDER BY A.EnzaID ASC, A.SkillLevel ASC, B.SkillLevel ASC))',
+        '(ROW_NUMBER() OVER (PARTITION BY A.enzaid ORDER BY A.enzaid ASC, A.skilllevel ASC, B.skilllevel ASC))',
         'RowNum',
       )
-      .innerJoin(ScdbCardSupportSkill, 'B', 'A.EnzaID = B.EnzaID')
-      .innerJoin(ScdbCardList, 'E', 'A.EnzaID = E.EnzaID');
+      .innerJoin(ScdbCardSupportSkill, 'B', 'A.enzaid = B.enzaid')
+      .innerJoin(ScdbCardList, 'E', 'A.enzaid = E.enzaid');
 
     if (queryData.queryIdols.length) {
-      rankedQuery.where('E.IdolID IN (:...idolIds)', {
+      rankedQuery.where('E.idolid IN (:...idolIds)', {
         idolIds: queryData.queryIdols,
       });
     }
 
     rankedQuery
       .andWhere(
-        '(A.SkillName = :aSkillName AND A.SkillLevel >= :aSkillLevel)',
+        '(A.skillname = :aSkillName AND A.skilllevel >= :aSkillLevel)',
         {
           aSkillName: queryData.querySkills[0][0],
           aSkillLevel: queryData.querySkills[0][1],
         },
       )
       .andWhere(
-        '(B.SkillName = :bSkillName AND B.SkillLevel >= :bSkillLevel)',
+        '(B.skillname = :bSkillName AND B.skilllevel >= :bSkillLevel)',
         {
           bSkillName: queryData.querySkills[1][0],
           bSkillLevel: queryData.querySkills[1][1],
@@ -376,54 +376,54 @@ export class InfoService {
     const rankedQuery = this.dataSource
       .getRepository(ScdbCardSupportSkill)
       .createQueryBuilder('A')
-      .select('E.IdolID', 'E_IdolID')
-      .addSelect('E.CardUUID', 'E_CardUuid')
-      .addSelect('E.CardName', 'E_CardName')
-      .addSelect('E.CardType', 'E_CardType')
-      .addSelect('A.EnzaID', 'EnzaID')
-      .addSelect('A.SkillName', 'A_SkillName')
-      .addSelect('A.SkillDesc', 'A_SkillDesc')
-      .addSelect('A.SkillLevel', 'A_SkillLevel')
-      .addSelect('A.GainedAt', 'A_GainedAt')
-      .addSelect('B.SkillName', 'B_SkillName')
-      .addSelect('B.SkillDesc', 'B_SkillDesc')
-      .addSelect('B.SkillLevel', 'B_SkillLevel')
-      .addSelect('B.GainedAt', 'B_GainedAt')
-      .addSelect('C.SkillName', 'C_SkillName')
-      .addSelect('C.SkillDesc', 'C_SkillDesc')
-      .addSelect('C.SkillLevel', 'C_SkillLevel')
-      .addSelect('C.GainedAt', 'C_GainedAt')
+      .select('E.idolid', 'E_IdolID')
+      .addSelect('E.carduuid', 'E_CardUuid')
+      .addSelect('E.cardname', 'E_CardName')
+      .addSelect('E.cardtype', 'E_CardType')
+      .addSelect('A.enzaid', 'EnzaID')
+      .addSelect('A.skillname', 'A_SkillName')
+      .addSelect('A.skilldesc', 'A_SkillDesc')
+      .addSelect('A.skilllevel', 'A_SkillLevel')
+      .addSelect('A.gainedat', 'A_GainedAt')
+      .addSelect('B.skillname', 'B_SkillName')
+      .addSelect('B.skilldesc', 'B_SkillDesc')
+      .addSelect('B.skilllevel', 'B_SkillLevel')
+      .addSelect('B.gainedat', 'B_GainedAt')
+      .addSelect('C.skillname', 'C_SkillName')
+      .addSelect('C.skilldesc', 'C_SkillDesc')
+      .addSelect('C.skilllevel', 'C_SkillLevel')
+      .addSelect('C.gainedat', 'C_GainedAt')
       .addSelect(
-        '(ROW_NUMBER() OVER (PARTITION BY A.EnzaID ORDER BY A.EnzaID ASC, A.SkillLevel ASC, B.SkillLevel ASC, C.SkillLevel ASC))',
+        '(ROW_NUMBER() OVER (PARTITION BY A.enzaid ORDER BY A.enzaid ASC, A.skilllevel ASC, B.skilllevel ASC, C.skilllevel ASC))',
         'RowNum',
       )
-      .innerJoin(ScdbCardSupportSkill, 'B', 'A.EnzaID = B.EnzaID')
-      .innerJoin(ScdbCardSupportSkill, 'C', 'A.EnzaID = C.EnzaID')
-      .innerJoin(ScdbCardList, 'E', 'A.EnzaID = E.EnzaID');
+      .innerJoin(ScdbCardSupportSkill, 'B', 'A.enzaid = B.enzaid')
+      .innerJoin(ScdbCardSupportSkill, 'C', 'A.enzaid = C.enzaid')
+      .innerJoin(ScdbCardList, 'E', 'A.enzaid = E.enzaid');
 
     if (queryData.queryIdols.length) {
-      rankedQuery.where('E.IdolID IN (:...idolIds)', {
+      rankedQuery.where('E.idolid IN (:...idolIds)', {
         idolIds: queryData.queryIdols,
       });
     }
 
     rankedQuery
       .andWhere(
-        '(A.SkillName = :aSkillName AND A.SkillLevel >= :aSkillLevel)',
+        '(A.skillname = :aSkillName AND A.skilllevel >= :aSkillLevel)',
         {
           aSkillName: queryData.querySkills[0][0],
           aSkillLevel: queryData.querySkills[0][1],
         },
       )
       .andWhere(
-        '(B.SkillName = :bSkillName AND B.SkillLevel >= :bSkillLevel)',
+        '(B.skillname = :bSkillName AND B.skilllevel >= :bSkillLevel)',
         {
           bSkillName: queryData.querySkills[1][0],
           bSkillLevel: queryData.querySkills[1][1],
         },
       )
       .andWhere(
-        '(C.SkillName = :cSkillName AND C.SkillLevel >= :cSkillLevel)',
+        '(C.skillname = :cSkillName AND C.skilllevel >= :cSkillLevel)',
         {
           cSkillName: queryData.querySkills[2][0],
           cSkillLevel: queryData.querySkills[2][1],
@@ -437,66 +437,66 @@ export class InfoService {
     const rankedQuery = this.dataSource
       .getRepository(ScdbCardSupportSkill)
       .createQueryBuilder('A')
-      .select('E.IdolID', 'E_IdolID')
-      .addSelect('E.CardUUID', 'E_CardUuid')
-      .addSelect('E.CardName', 'E_CardName')
-      .addSelect('E.CardType', 'E_CardType')
-      .addSelect('A.EnzaID', 'EnzaID')
-      .addSelect('A.SkillName', 'A_SkillName')
-      .addSelect('A.SkillDesc', 'A_SkillDesc')
-      .addSelect('A.SkillLevel', 'A_SkillLevel')
-      .addSelect('A.GainedAt', 'A_GainedAt')
-      .addSelect('B.SkillName', 'B_SkillName')
-      .addSelect('B.SkillDesc', 'B_SkillDesc')
-      .addSelect('B.SkillLevel', 'B_SkillLevel')
-      .addSelect('B.GainedAt', 'B_GainedAt')
-      .addSelect('C.SkillName', 'C_SkillName')
-      .addSelect('C.SkillDesc', 'C_SkillDesc')
-      .addSelect('C.SkillLevel', 'C_SkillLevel')
-      .addSelect('C.GainedAt', 'C_GainedAt')
-      .addSelect('D.SkillName', 'D_SkillName')
-      .addSelect('D.SkillDesc', 'D_SkillDesc')
-      .addSelect('D.SkillLevel', 'D_SkillLevel')
-      .addSelect('D.GainedAt', 'D_GainedAt')
+      .select('E.idolid', 'E_IdolID')
+      .addSelect('E.carduuid', 'E_CardUuid')
+      .addSelect('E.cardname', 'E_CardName')
+      .addSelect('E.cardtype', 'E_CardType')
+      .addSelect('A.enzaid', 'EnzaID')
+      .addSelect('A.skillname', 'A_SkillName')
+      .addSelect('A.skilldesc', 'A_SkillDesc')
+      .addSelect('A.skilllevel', 'A_SkillLevel')
+      .addSelect('A.gainedat', 'A_GainedAt')
+      .addSelect('B.skillname', 'B_SkillName')
+      .addSelect('B.skilldesc', 'B_SkillDesc')
+      .addSelect('B.skilllevel', 'B_SkillLevel')
+      .addSelect('B.gainedat', 'B_GainedAt')
+      .addSelect('C.skillname', 'C_SkillName')
+      .addSelect('C.skilldesc', 'C_SkillDesc')
+      .addSelect('C.skilllevel', 'C_SkillLevel')
+      .addSelect('C.gainedat', 'C_GainedAt')
+      .addSelect('D.skillname', 'D_SkillName')
+      .addSelect('D.skilldesc', 'D_SkillDesc')
+      .addSelect('D.skilllevel', 'D_SkillLevel')
+      .addSelect('D.gainedat', 'D_GainedAt')
       .addSelect(
-        '(ROW_NUMBER() OVER (PARTITION BY A.EnzaID ORDER BY A.EnzaID ASC, A.SkillLevel ASC, B.SkillLevel ASC, C.SkillLevel ASC, D.SkillLevel ASC))',
+        '(ROW_NUMBER() OVER (PARTITION BY A.enzaid ORDER BY A.enzaid ASC, A.skilllevel ASC, B.skilllevel ASC, C.skilllevel ASC, D.skilllevel ASC))',
         'RowNum',
       )
-      .innerJoin(ScdbCardSupportSkill, 'B', 'A.EnzaID = B.EnzaID')
-      .innerJoin(ScdbCardSupportSkill, 'C', 'A.EnzaID = C.EnzaID')
-      .innerJoin(ScdbCardSupportSkill, 'D', 'A.EnzaID = D.EnzaID')
-      .innerJoin(ScdbCardList, 'E', 'A.EnzaID = E.EnzaID');
+      .innerJoin(ScdbCardSupportSkill, 'B', 'A.enzaid = B.enzaid')
+      .innerJoin(ScdbCardSupportSkill, 'C', 'A.enzaid = C.enzaid')
+      .innerJoin(ScdbCardSupportSkill, 'D', 'A.enzaid = D.enzaid')
+      .innerJoin(ScdbCardList, 'E', 'A.enzaid = E.enzaid');
 
     if (queryData.queryIdols.length) {
-      rankedQuery.where('E.IdolID IN (:...idolIds)', {
+      rankedQuery.where('E.idolid IN (:...idolIds)', {
         idolIds: queryData.queryIdols,
       });
     }
 
     rankedQuery
       .andWhere(
-        '(A.SkillName = :aSkillName AND A.SkillLevel >= :aSkillLevel)',
+        '(A.skillname = :aSkillName AND A.skilllevel >= :aSkillLevel)',
         {
           aSkillName: queryData.querySkills[0][0],
           aSkillLevel: queryData.querySkills[0][1],
         },
       )
       .andWhere(
-        '(B.SkillName = :bSkillName AND B.SkillLevel >= :bSkillLevel)',
+        '(B.skillname = :bSkillName AND B.skilllevel >= :bSkillLevel)',
         {
           bSkillName: queryData.querySkills[1][0],
           bSkillLevel: queryData.querySkills[1][1],
         },
       )
       .andWhere(
-        '(C.SkillName = :cSkillName AND C.SkillLevel >= :cSkillLevel)',
+        '(C.skillname = :cSkillName AND C.skilllevel >= :cSkillLevel)',
         {
           cSkillName: queryData.querySkills[2][0],
           cSkillLevel: queryData.querySkills[2][1],
         },
       )
       .andWhere(
-        '(D.SkillName = :dSkillName AND D.SkillLevel >= :dSkillLevel)',
+        '(D.skillname = :dSkillName AND D.skilllevel >= :dSkillLevel)',
         {
           dSkillName: queryData.querySkills[3][0],
           dSkillLevel: queryData.querySkills[3][1],

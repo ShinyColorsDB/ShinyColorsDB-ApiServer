@@ -1,135 +1,137 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { ScdbLiveSetList } from './ScdbLiveSetList';
 
-@Entity('SCDB_LiveInfo', { schema: 'shinycolors' })
+@Index('idx_16522_liveid', ['liveId'], { unique: true })
+@Index('idx_16522_primary', ['liveIndex'], { unique: true })
+@Entity('scdb_liveinfo', { schema: 'shinycolors' })
 export class ScdbLiveInfo {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'LiveIndex' })
+  @Column('integer', { primary: true, name: 'liveindex' })
   liveIndex: number;
 
-  @Column('text', { name: 'LiveTitle' })
+  @Column('text', { name: 'livetitle' })
   liveTitle: string;
 
-  @Column('text', { name: 'LiveSubtitle' })
+  @Column('text', { name: 'livesubtitle' })
   liveSubtitle: string;
 
-  @Column('text', { name: 'LiveID' })
+  @Column('text', { name: 'liveid' })
   liveId: number;
 
-  @Column('date', { name: 'LiveDay1' })
+  @Column('date', { name: 'liveday1' })
   liveDay1: string;
 
-  @Column('text', { name: 'Day1Open' })
+  @Column('text', { name: 'day1open' })
   day1Open: string;
 
-  @Column('text', { name: 'Day1Start' })
+  @Column('text', { name: 'day1start' })
   day1Start: string;
 
-  @Column('date', { name: 'LiveDay2' })
+  @Column('date', { name: 'liveday2' })
   liveDay2: string;
 
-  @Column('text', { name: 'Day2Open' })
+  @Column('text', { name: 'day2open' })
   day2Open: string;
 
-  @Column('text', { name: 'Day2Start' })
+  @Column('text', { name: 'day2start' })
   day2Start: string;
 
-  @Column('tinyint', { name: 'Idol01' })
+  @Column('smallint', { name: 'idol01', default: () => "'0'" })
   idol01: number;
 
-  @Column('tinyint', { name: 'Idol02' })
+  @Column('smallint', { name: 'idol02', default: () => "'0'" })
   idol02: number;
 
-  @Column('tinyint', { name: 'Idol03' })
+  @Column('smallint', { name: 'idol03', default: () => "'0'" })
   idol03: number;
 
-  @Column('tinyint', { name: 'Idol04' })
+  @Column('smallint', { name: 'idol04', default: () => "'0'" })
   idol04: number;
 
-  @Column('tinyint', { name: 'Idol05' })
+  @Column('smallint', { name: 'idol05', default: () => "'0'" })
   idol05: number;
 
-  @Column('tinyint', { name: 'Idol06' })
+  @Column('smallint', { name: 'idol06', default: () => "'0'" })
   idol06: number;
 
-  @Column('tinyint', { name: 'Idol07' })
+  @Column('smallint', { name: 'idol07', default: () => "'0'" })
   idol07: number;
 
-  @Column('tinyint', { name: 'Idol08' })
+  @Column('smallint', { name: 'idol08', default: () => "'0'" })
   idol08: number;
 
-  @Column('tinyint', { name: 'Idol09' })
+  @Column('smallint', { name: 'idol09', default: () => "'0'" })
   idol09: number;
 
-  @Column('tinyint', { name: 'Idol10' })
+  @Column('smallint', { name: 'idol10', default: () => "'0'" })
   idol10: number;
 
-  @Column('tinyint', { name: 'Idol11' })
+  @Column('smallint', { name: 'idol11', default: () => "'0'" })
   idol11: number;
 
-  @Column('tinyint', { name: 'Idol12' })
+  @Column('smallint', { name: 'idol12', default: () => "'0'" })
   idol12: number;
 
-  @Column('tinyint', { name: 'Idol13' })
+  @Column('smallint', { name: 'idol13', default: () => "'0'" })
   idol13: number;
 
-  @Column('tinyint', { name: 'Idol14' })
+  @Column('smallint', { name: 'idol14', default: () => "'0'" })
   idol14: number;
 
-  @Column('tinyint', { name: 'Idol15' })
+  @Column('smallint', { name: 'idol15', default: () => "'0'" })
   idol15: number;
 
-  @Column('tinyint', { name: 'Idol16' })
+  @Column('smallint', { name: 'idol16', default: () => "'0'" })
   idol16: number;
 
-  @Column('tinyint', { name: 'Idol17' })
+  @Column('smallint', { name: 'idol17', default: () => "'0'" })
   idol17: number;
 
-  @Column('tinyint', { name: 'Idol18' })
+  @Column('smallint', { name: 'idol18', default: () => "'0'" })
   idol18: number;
 
-  @Column('tinyint', { name: 'Idol19' })
+  @Column('smallint', { name: 'idol19', default: () => "'0'" })
   idol19: number;
 
-  @Column('tinyint', { name: 'Idol20' })
+  @Column('smallint', { name: 'idol20', default: () => "'0'" })
   idol20: number;
 
-  @Column('tinyint', { name: 'Idol21' })
+  @Column('smallint', { name: 'idol21', default: () => "'0'" })
   idol21: number;
 
-  @Column('tinyint', { name: 'Idol22' })
+  @Column('smallint', { name: 'idol22', default: () => "'0'" })
   idol22: number;
 
-  @Column('tinyint', { name: 'Idol23' })
+  @Column('smallint', { name: 'idol23', default: () => "'0'" })
   idol23: number;
 
-  @Column('tinyint', { name: 'Idol24' })
+  @Column('smallint', { name: 'idol24', default: () => "'0'" })
   idol24: number;
 
-  @Column('tinyint', { name: 'Idol25' })
+  @Column('smallint', { name: 'idol25', default: () => "'0'" })
   idol25: number;
 
-  @Column('tinyint', { name: 'Idol26' })
+  @Column('smallint', { name: 'idol26', default: () => "'0'" })
   idol26: number;
 
-  @Column('tinyint', { name: 'Idol27' })
+  @Column('smallint', { name: 'idol27', default: () => "'0'" })
   idol27: number;
 
-  @Column('tinyint', { name: 'Idol28' })
+  @Column('smallint', { name: 'idol28', default: () => "'0'" })
   idol28: number;
 
-  @Column('text', { name: 'LiveLocation' })
+  @Column('text', { name: 'livelocation' })
   liveLocation: string;
 
-  @Column('text', { name: 'LiveBuilding' })
+  @Column('text', { name: 'livebuilding' })
   liveBuilding: string;
 
-  @Column('text', { name: 'LiveLogo' })
+  @Column('text', { name: 'livelogo' })
   liveLogo: string;
 
-  @Column('text', { name: 'LiveLogoBG' })
+  @Column('text', { name: 'livelogobg' })
   liveLogoBg: string;
 
-  @Column('text', { name: 'LiveMemo' })
+  @Column('text', { name: 'livememo' })
   liveMemo: string;
 
   @OneToMany(() => ScdbLiveSetList, (liveSetList) => liveSetList.live)

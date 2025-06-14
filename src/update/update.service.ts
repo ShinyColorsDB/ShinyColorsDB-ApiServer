@@ -57,7 +57,7 @@ export class UpdateService {
       (await this.dataSource
         .getRepository(ScdbCardList)
         .createQueryBuilder('cardlist')
-        .where('cardlist.enzaId = :enzaId', { enzaId: enzaId })
+        .where('cardlist.enzaid = :enzaId', { enzaId: enzaId })
         .getOne()) != null
     ) {
       console.error('Card already exists');

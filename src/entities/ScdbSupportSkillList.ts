@@ -1,13 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-@Entity('SCDB_SupportSkillList', { schema: 'shinycolors' })
+@Index('idx_16628_primary', ['supSkillIndex'], { unique: true })
+@Entity('scdb_supportskilllist', { schema: 'shinycolors' })
 export class ScdbSupportSkillList {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'SupSkillIndex' })
+  @Column('integer', { primary: true, name: 'supskillindex' })
   supSkillIndex: number;
 
-  @Column('text', { name: 'SupSkillName' })
+  @Column('text', { name: 'supskillname' })
   supSkillName: string;
 
-  @Column('tinyint', { name: 'HasSubOption' })
+  @Column('boolean', { name: 'hassuboption' })
   hasSubOption: boolean;
 }
