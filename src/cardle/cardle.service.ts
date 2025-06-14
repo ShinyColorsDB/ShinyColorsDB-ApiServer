@@ -14,12 +14,19 @@ export class CardleService {
     timeZone: 'Asia/Tokyo',
   })
   async setCardle(): Promise<void> {
+    if (
+      !process.env.ENABLE_CARDLE_GENERATION ||
+      process.env.ENABLE_CARDLE_GENERATION !== 'true'
+    ) {
+      console.log('Cardle generation is disabled');
+      return;
+    }
     const cardToday = await this.dataSource
       .getRepository(ScdbCardList)
       .createQueryBuilder('cardlist')
       .select('cardlist.enzaId')
       .addSelect('cardlist.cardType')
-      .orderBy('RAND()')
+      .orderBy('RANDOM()')
       .getOne();
 
     const today = new Date();
