@@ -146,7 +146,7 @@ export class InfoService {
     return this.dataSource
       .getRepository(ScdbCardList)
       .createQueryBuilder('cardList')
-      .where('cardList.cardType REGEXP "P_"')
+      .where('cardList.cardType LIKE :pattern', { pattern: 'P_%' })
       .orderBy('cardList.idolId', 'ASC')
       .addOrderBy('cardList.enzaId', 'ASC')
       .getMany();
@@ -156,7 +156,7 @@ export class InfoService {
     return this.dataSource
       .getRepository(ScdbCardList)
       .createQueryBuilder('cardList')
-      .where('cardList.cardType REGEXP "S_"')
+      .where('cardList.cardType LIKE :pattern', { pattern: 'S_%' })
       .orderBy('cardList.idolId', 'ASC')
       .addOrderBy('cardList.enzaId', 'ASC')
       .getMany();
