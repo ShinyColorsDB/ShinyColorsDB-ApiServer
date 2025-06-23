@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ScdbCardList } from './ScdbCardList';
 import { ScdbCardleChunk } from './ScdbCardleChunk';
@@ -13,7 +14,7 @@ import { ScdbCardleChunk } from './ScdbCardleChunk';
 @Index('idx_16477_scdb_cradle_ibfk_1', ['enzaId'], {})
 @Entity('scdb_cardle', { schema: 'shinycolors' })
 export class ScdbCardle {
-  @Column('integer', { primary: true, name: 'cardleindex' })
+  @PrimaryGeneratedColumn({ name: 'cardleindex' })
   cardleIndex: number;
 
   @Column('timestamp', { name: 'cardledate' })

@@ -36,13 +36,15 @@ export class CardleService {
       ? Math.floor(Math.random() * 2)
       : 0;
     newCardle.enzaId = cardToday.enzaId;
-    await this.dataSource.getRepository(ScdbCardle).save(newCardle);
+    const savedCardle = await this.dataSource
+      .getRepository(ScdbCardle)
+      .save(newCardle);
 
     for (let i = 0; i < 6; i++) {
       const newChunk = new ScdbCardleChunk();
       newChunk.chunkX = this._randomNumber(1036);
       newChunk.chunkY = this._randomNumber(540);
-      newChunk.cardleIndex2 = newCardle;
+      newChunk.cardleIndex = savedCardle.cardleIndex;
       await this.dataSource.getRepository(ScdbCardleChunk).save(newChunk);
     }
   }

@@ -10,6 +10,8 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+
 import { QuerySupportSkill } from '../interfaces/querysupportskill';
 
 import { InfoService } from './info.service';
@@ -21,7 +23,19 @@ export class InfoController {
 
   @Get('idolList')
   async getIdolList() {
-    return await this.infoService.getIdollist();
+    if (existsSync(`${process.env.CACHE_PATH}/info/idolList.json`)) {
+      const idolList = JSON.parse(
+        readFileSync(`${process.env.CACHE_PATH}/info/idolList.json`, 'utf-8'),
+      );
+      return idolList;
+    } else {
+      const r = await this.infoService.getIdollist();
+      writeFileSync(
+        `${process.env.CACHE_PATH}/info/idolList.json`,
+        JSON.stringify(r),
+      );
+      return r;
+    }
   }
 
   @Get('idolInfo')
@@ -40,12 +54,39 @@ export class InfoController {
     console.log(`${country} user accessing iInfo ${idolId}`);
     console.log(`Forwarded by ${forwarder}`);
 
-    return await this.infoService.getIdolInfo(idolId);
+    if (existsSync(`${process.env.CACHE_PATH}/info/idolInfo/${idolId}.json`)) {
+      const idolInfo = JSON.parse(
+        readFileSync(
+          `${process.env.CACHE_PATH}/info/idolInfo/${idolId}.json`,
+          'utf-8',
+        ),
+      );
+      return idolInfo;
+    } else {
+      const r = await this.infoService.getIdolInfo(idolId);
+      writeFileSync(
+        `${process.env.CACHE_PATH}/info/idolInfo/${idolId}.json`,
+        JSON.stringify(r),
+      );
+      return r;
+    }
   }
 
   @Get('unitInfo')
   async getUnitInfo() {
-    return this.infoService.getUnitInfo();
+    if (existsSync(`${process.env.CACHE_PATH}/info/unitInfo.json`)) {
+      const unitInfo = JSON.parse(
+        readFileSync(`${process.env.CACHE_PATH}/info/unitInfo.json`, 'utf-8'),
+      );
+      return unitInfo;
+    } else {
+      const r = await this.infoService.getUnitInfo();
+      writeFileSync(
+        `${process.env.CACHE_PATH}/info/unitInfo.json`,
+        JSON.stringify(r),
+      );
+      return r;
+    }
   }
 
   @Get('pCardInfo')
@@ -58,14 +99,30 @@ export class InfoController {
       throw new UnprocessableEntityException('Card Id is required');
     }
 
-    const thisCard = await this.infoService.getPCardInfo(cardId);
-
-    if (thisCard) {
-      console.log(`${country} user accessing pCard ${thisCard.cardName}`);
+    if (existsSync(`${process.env.CACHE_PATH}/info/pCardInfo/${cardId}.json`)) {
+      const pCardInfo = JSON.parse(
+        readFileSync(
+          `${process.env.CACHE_PATH}/info/pCardInfo/${cardId}.json`,
+          'utf-8',
+        ),
+      );
+      console.log(`${country} user accessing pCard ${pCardInfo.cardName}`);
       console.log(`Forwarded by ${forwarder}`);
-      return thisCard;
+      return pCardInfo;
     } else {
-      throw new NotFoundException(`Card Id ${cardId} not found`);
+      const thisCard = await this.infoService.getPCardInfo(cardId);
+
+      if (thisCard) {
+        console.log(`${country} user accessing pCard ${thisCard.cardName}`);
+        console.log(`Forwarded by ${forwarder}`);
+        writeFileSync(
+          `${process.env.CACHE_PATH}/info/pCardInfo/${cardId}.json`,
+          JSON.stringify(thisCard),
+        );
+        return thisCard;
+      } else {
+        throw new NotFoundException(`Card Id ${cardId} not found`);
+      }
     }
   }
 
@@ -79,14 +136,30 @@ export class InfoController {
       throw new UnprocessableEntityException('Card Id is required');
     }
 
-    const thisCard = await this.infoService.getSCardInfo(cardId);
-
-    if (thisCard) {
-      console.log(`${country} user accessing sCard ${thisCard.cardName}`);
+    if (existsSync(`${process.env.CACHE_PATH}/info/sCardInfo/${cardId}.json`)) {
+      const sCardInfo = JSON.parse(
+        readFileSync(
+          `${process.env.CACHE_PATH}/info/sCardInfo/${cardId}.json`,
+          'utf-8',
+        ),
+      );
+      console.log(`${country} user accessing sCard ${sCardInfo.cardName}`);
       console.log(`Forwarded by ${forwarder}`);
-      return thisCard;
+      return sCardInfo;
     } else {
-      throw new NotFoundException(`Card Id ${cardId} not found`);
+      const thisCard = await this.infoService.getSCardInfo(cardId);
+
+      if (thisCard) {
+        console.log(`${country} user accessing sCard ${thisCard.cardName}`);
+        console.log(`Forwarded by ${forwarder}`);
+        writeFileSync(
+          `${process.env.CACHE_PATH}/info/sCardInfo/${cardId}.json`,
+          JSON.stringify(thisCard),
+        );
+        return thisCard;
+      } else {
+        throw new NotFoundException(`Card Id ${cardId} not found`);
+      }
     }
   }
 

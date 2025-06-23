@@ -1,11 +1,18 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ScdbCardle } from './ScdbCardle';
 
 @Index('idx_16481_cardleindex', ['cardleIndex'], {})
 @Index('idx_16481_primary', ['chunkIndex'], { unique: true })
 @Entity('scdb_cardlechunk', { schema: 'shinycolors' })
 export class ScdbCardleChunk {
-  @Column('integer', { primary: true, name: 'chunkindex' })
+  @PrimaryGeneratedColumn({ name: 'chunkindex' })
   chunkIndex: number;
 
   @Column('int', { name: 'cardleindex' })
