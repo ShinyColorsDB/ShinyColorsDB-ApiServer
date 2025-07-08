@@ -12,6 +12,9 @@ export class ScdbLiveSetList {
   @Column('int', { name: 'liveid' })
   liveId: number;
 
+  @Column('int', { name: 'day' })
+  day: number;
+
   @Column('text', { name: 'songname' })
   songName: string;
 

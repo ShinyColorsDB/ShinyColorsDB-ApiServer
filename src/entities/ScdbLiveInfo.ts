@@ -1,11 +1,17 @@
-import { Column, Entity, Index, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ScdbLiveSetList } from './ScdbLiveSetList';
 
 @Index('idx_16522_liveid', ['liveId'], { unique: true })
 @Index('idx_16522_primary', ['liveIndex'], { unique: true })
 @Entity('scdb_liveinfo', { schema: 'shinycolors' })
 export class ScdbLiveInfo {
-  @Column('integer', { primary: true, name: 'liveindex' })
+  @PrimaryGeneratedColumn({ name: 'liveindex' })
   liveIndex: number;
 
   @Column('text', { name: 'livetitle' })
@@ -136,4 +142,10 @@ export class ScdbLiveInfo {
 
   @OneToMany(() => ScdbLiveSetList, (liveSetList) => liveSetList.live)
   liveSetLists: ScdbLiveSetList[];
+
+  @OneToMany(() => ScdbLiveSetList, (liveSetList) => liveSetList.live)
+  day1SetList: ScdbLiveSetList[];
+
+  @OneToMany(() => ScdbLiveSetList, (liveSetList) => liveSetList.live)
+  day2SetList: ScdbLiveSetList[];
 }

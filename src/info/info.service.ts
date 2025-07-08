@@ -176,7 +176,16 @@ export class InfoService {
       .getRepository(ScdbLiveInfo)
       .createQueryBuilder('live')
       .where('live.liveID = :liveId', { liveId: liveId })
-      .leftJoinAndSelect('live.liveSetLists', 'liveSetLists')
+      .leftJoinAndSelect(
+        'live.day1SetList',
+        'day1SetList',
+        'day1SetList.liveId = live.liveId AND day1SetList.day = 1',
+      )
+      .leftJoinAndSelect(
+        'live.day2SetList',
+        'day2SetList',
+        'day2SetList.liveId = live.liveId AND day2SetList.day = 2',
+      )
       .getOne();
   }
 

@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DataSource } from 'typeorm';
-import { existsSync, mkdirSync } from 'fs';
 /* Entities */
 import { ScdbCardIdolEvent } from './entities/ScdbCardIdolEvent';
 import { ScdbCardList } from './entities/ScdbCardList';
@@ -82,14 +81,5 @@ import { ScdbLiveSetList } from './entities/ScdbLiveSetList';
   ],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {
-    if (!process.env.CACHE_PATH) {
-      process.env.CACHE_PATH = '/tmp/SCDB_Cache';
-    }
-
-    if (!existsSync(process.env.CACHE_PATH)) {
-      console.log('Creating cache directory at /tmp/SCDB_Cache');
-      mkdirSync(process.env.CACHE_PATH, { recursive: true });
-    }
-  }
+  constructor(private dataSource: DataSource) {}
 }
