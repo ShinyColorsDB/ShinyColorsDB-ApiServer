@@ -58,7 +58,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          cat > ${{ secrets.DEPLOYMENT_PATH }}/.env << 'EOF'
+          cat > artifact/.env << 'EOF'
           DATABASE_TYPE="${{ secrets.DATABASE_TYPE }}"
           DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
           DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
