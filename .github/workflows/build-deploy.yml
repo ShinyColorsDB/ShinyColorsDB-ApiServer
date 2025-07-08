@@ -73,6 +73,7 @@ jobs:
         with:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ secrets.API_SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: dist/*
           target: ${{ secrets.DEPLOYMENT_PATH }}
 
