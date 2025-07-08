@@ -71,7 +71,7 @@ jobs:
       - name: Copy artifact to VM in ${{ matrix.server }}
         uses: appleboy/scp-action@v1
         with:
-          host: ${{ DEPLOY_HOST }}
+          host: ${{ env.DEPLOY_HOST }}
           username: ${{ secrets.API_SERVER_USER }}
           source: dist/*
           target: ${{ secrets.DEPLOYMENT_PATH }}
@@ -79,7 +79,7 @@ jobs:
       - name: Restart pm2
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ DEPLOY_HOST }}
+          host: ${{ env.DEPLOY_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             pm2 restart 0
