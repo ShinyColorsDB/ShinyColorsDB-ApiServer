@@ -33,15 +33,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     strategy:
-      matrix:
-        server:
-          - { name: TW, host: ${{ secrets.API_SERVER_TW }} }
-          - { name: JP, host: ${{ secrets.API_SERVER_JP }} }
+    matrix:
+      server: [TW, JP]
     env:
       ENV_PRODUCTION: "true"
       UPDATE_ENABLED: "false"
       ENABLE_CARDLE_GENERATION: "false"
     steps:
+      - name: Set host based on region
+          if [ "${{ matrix.server }}" == "TW" ]; then
+            echo "DEPLOY_HOST=${{ secrets.API_SERVER_TW }}" >> $GITHUB_ENV
+          elif [ "${{ matrix.server }}" == "JP" ]; then
+            echo "DEPLOY_HOST=${{ secrets.API_SERVER_JP }}" >> $GITHUB_ENV
+          fi
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -67,15 +72,15 @@ jobs:
           ENABLE_CARDLE_GENERATION="${{ env.ENABLE_CARDLE_GENERATION }}"
           EOF
 
-      - name: Deploy to VM
+      - name: Deploy to VM-${{ matrix.server }}
         env:
           API_SERVER_USER: ${{ secrets.API_SERVER_USER }}
           DEPLOYMENT_PATH: ${{ secrets.DEPLOYMENT_PATH }}
         run: |
-          ssh-keyscan -H ${{ matrix.server.host }} >> ~/.ssh/known_hosts
-          scp -r dist/* $API_SERVER_USER@${{ matrix.server.host }}:$DEPLOYMENT_PATH
-          ssh $API_SERVER_USER@${{ matrix.server.host }} << 'EOF'
-            cd $DEPLOYMENT_PATH
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          scp -r dist/* "$API_SERVER_USER@$DEPLOY_HOST:$DEPLOYMENT_PATH"
+          ssh "$API_SERVER_USER@$DEPLOY_HOST" << 'EOF'
+            cd "$DEPLOYMENT_PATH"
             npm install --production || exit 1
             pm2 restart 0 || exit 1
           EOF
