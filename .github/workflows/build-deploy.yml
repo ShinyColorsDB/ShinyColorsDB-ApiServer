@@ -27,7 +27,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist-${{ github.run_id }}
-          path: dist/
+          path: |
+            dist/
+            package.json
 
   Deploy:
     runs-on: ubuntu-latest
@@ -52,11 +54,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-${{ github.run_id }}
-          path: dist/
+          path: artifact/
 
       - name: Create .env file
         run: |
-          cat > dist/.env << 'EOF'
+          cat > ${{ secrets.DEPLOYMENT_PATH }}/.env << 'EOF'
           DATABASE_TYPE="${{ secrets.DATABASE_TYPE }}"
           DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
           DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
@@ -74,7 +76,7 @@ jobs:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ secrets.API_SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: dist/*
+          source: artifact/*
           target: ${{ secrets.DEPLOYMENT_PATH }}
 
       - name: Restart pm2
@@ -83,4 +85,7 @@ jobs:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ secrets.API_SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: pm2 restart 0
+          script: |
+            cd ${{ secrets.DEPLOYMENT_PATH }}
+            npm install
+            pm2 restart 0
