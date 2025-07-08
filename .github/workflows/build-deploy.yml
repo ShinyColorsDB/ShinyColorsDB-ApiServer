@@ -54,11 +54,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-${{ github.run_id }}
-          path: artifact/
+          path: ./
 
       - name: Create .env file
         run: |
-          cat > artifact/.env << 'EOF'
+          cat > ./.env << 'EOF'
           DATABASE_TYPE="${{ secrets.DATABASE_TYPE }}"
           DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
           DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
@@ -76,7 +76,7 @@ jobs:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ secrets.API_SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: artifact/*
+          source: ./*
           target: ${{ secrets.DEPLOYMENT_PATH }}
 
       - name: Restart pm2
@@ -87,5 +87,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.DEPLOYMENT_PATH }}
-            npm install
-            pm2 restart 0
+            npm install || exit 1
+            pm2 restart 0 || exit 1
