@@ -29,6 +29,8 @@ jobs:
           name: dist-${{ github.run_id }}
           path: |
             dist/
+            node_modules/
+            package-lock.json
             package.json
 
   Deploy:
