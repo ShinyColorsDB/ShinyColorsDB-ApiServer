@@ -41,6 +41,7 @@ jobs:
       ENABLE_CARDLE_GENERATION: "false"
     steps:
       - name: Set host based on region
+        run: |
           if [ "${{ matrix.server }}" == "TW" ]; then
             echo "DEPLOY_HOST=${{ secrets.API_SERVER_TW }}" >> $GITHUB_ENV
           elif [ "${{ matrix.server }}" == "JP" ]; then
