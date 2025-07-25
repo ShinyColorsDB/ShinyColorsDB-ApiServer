@@ -17,8 +17,8 @@ export class ScdbLiveInfo {
   @Column('text', { name: 'livetitle' })
   liveTitle: string;
 
-  @Column('text', { name: 'livesubtitle' })
-  liveSubtitle: string;
+  @Column('text', { name: 'livesubtitle', default: null, nullable: true })
+  liveSubtitle: string | null;
 
   @Column('text', { name: 'liveid' })
   liveId: number;

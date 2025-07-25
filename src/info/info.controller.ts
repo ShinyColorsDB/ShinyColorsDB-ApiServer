@@ -7,8 +7,11 @@ import {
   NotFoundException,
   Post,
   Query,
+  Res,
   UnprocessableEntityException,
 } from '@nestjs/common';
+
+import { Response } from 'express';
 
 import { QuerySupportSkill } from '../interfaces/querysupportskill';
 
@@ -61,6 +64,7 @@ export class InfoController {
     @Query('cardId') cardId: string,
     @Headers('CF-IPCountry') country: string,
     @Headers('X-Forwarded-For') forwarder: string,
+    @Res({ passthrough: true }) res: Response,
   ) {
     if (!cardId) {
       throw new UnprocessableEntityException('Card Id is required');
@@ -71,6 +75,12 @@ export class InfoController {
     if (thisCard) {
       console.log(`${country} user accessing pCard ${thisCard.cardName}`);
       console.log(`Forwarded by ${forwarder}`);
+
+      if (thisCard.getMethod !== '') {
+        res.setHeader('Cache-Control', 'max-age=86400, public');
+      } else {
+        res.setHeader('Cache-Control', 'no-store');
+      }
 
       return thisCard;
     } else {
@@ -83,6 +93,7 @@ export class InfoController {
     @Query('cardId') cardId: string,
     @Headers('CF-IPCountry') country: string,
     @Headers('X-Forwarded-For') forwarder: string,
+    @Res({ passthrough: true }) res: Response,
   ) {
     if (!cardId) {
       throw new UnprocessableEntityException('Card Id is required');
@@ -93,6 +104,12 @@ export class InfoController {
     if (thisCard) {
       console.log(`${country} user accessing sCard ${thisCard.cardName}`);
       console.log(`Forwarded by ${forwarder}`);
+
+      if (thisCard.getMethod !== '') {
+        res.setHeader('Cache-Control', 'max-age=86400, public');
+      } else {
+        res.setHeader('Cache-Control', 'no-store');
+      }
 
       return thisCard;
     } else {
