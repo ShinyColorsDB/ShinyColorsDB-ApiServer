@@ -88,4 +88,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.DEPLOYMENT_PATH }}
+            npm install || exit 1
             pm2 restart 0 || exit 1
