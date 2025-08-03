@@ -37,7 +37,7 @@ jobs:
     needs: Build
     strategy:
       matrix:
-        server: [TW, JP]
+        server: [JP]
     env:
       ENV_PRODUCTION: "true"
       UPDATE_ENABLED: "false"
