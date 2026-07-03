@@ -48,6 +48,7 @@ export class SpineService {
       .addSelect('dress.dresstype', 'dressType')
       .addSelect('dress.enzaid', 'enzaId')
       .addSelect('dress.exist', 'exist')
+      .addSelect('dress.assets', 'assets')
       .where('dress.idolid = :idolId', { idolId: idolId })
       .addSelect(
         `
