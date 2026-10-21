@@ -5,11 +5,11 @@ import { ScdbCardList } from '../entities/ScdbCardList';
 import { ScdbIdols } from '../entities/ScdbIdols';
 import { ScdbUnits } from '../entities/ScdbUnits';
 import { ScdbSupportSkillList } from '../entities/ScdbSupportSkillList';
-import { ScdbCardSupportSkill } from 'src/entities/ScdbCardSupportSkill';
+import { ScdbCardSupportSkill } from '../entities/ScdbCardSupportSkill';
 
 import { QuerySupportSkill } from '../interfaces/querysupportskill';
-import { ScdbLiveInfo } from 'src/entities/ScdbLiveInfo';
-import { ScdbAlbum } from 'src/entities/ScdbAlbum';
+import { ScdbLiveInfo } from '../entities/ScdbLiveInfo';
+import { ScdbAlbum } from '../entities/ScdbAlbum';
 
 @Injectable()
 export class InfoService {

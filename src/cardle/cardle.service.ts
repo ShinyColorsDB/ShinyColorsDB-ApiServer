@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { ScdbCardle } from 'src/entities/ScdbCardle';
-import { ScdbCardList } from 'src/entities/ScdbCardList';
-import { ScdbCardleChunk } from 'src/entities/ScdbCardleChunk';
+import { ScdbCardle } from '../entities/ScdbCardle';
+import { ScdbCardList } from '../entities/ScdbCardList';
+import { ScdbCardleChunk } from '../entities/ScdbCardleChunk';
 
 @Injectable()
 export class CardleService {
